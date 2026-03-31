@@ -722,33 +722,9 @@ async function submitLog(){
   btn.textContent='AIが分析中... ✦';
 
   // Build prompt
-  const historyText=logs.slice(0,3).map(l=>`${l.date}: ${l.type}/${l.club}、メモ:${l.note}`).join('\n');
-  const prompt=`あなたはプロゴルフコーチAIです。以下の練習ログを分析して、具体的な改善アドバイスと今日の練習プランを日本語で回答してください。
+  const prompt=`ゴルフコーチAI。練習を分析してJSONのみ返答してください。種類:${type},番手:${club},球数:${balls||'?'},スコア:${score||'?'},調子:${selectedMood||'?'},メモ:${note}。必ずこのJSON形式のみで返答:{"title":"タイトル20字以内","analysis":"分析60字以内","drills":[{"name":"ドリル1","detail":"方法","balls":"30球"},{"name":"ドリル2","detail":"方法","balls":"30球"},{"name":"ドリル3","detail":"方法","balls":"30球"}],"tags":["タグ1","タグ2","タグ3"]}`;
 
-【今日の練習】
-- 種類: ${type}
-- 番手: ${club}
-- 球数/ホール: ${balls||'未記入'}
-- スコア: ${score||'未記入'}
-- 調子: ${selectedMood||'未記入'}
-- メモ: ${note}
-
-【過去の練習履歴】
-${historyText||'履歴なし'}
-
-以下のJSON形式で回答してください（他のテキストは不要）:
-{
-  "title": "今日の練習プランタイトル（20文字以内）",
-  "analysis": "課題の分析と改善ポイント（100文字程度）",
-  "drills": [
-    {"name": "ドリル名", "detail": "具体的な練習方法（30文字）", "balls": "球数"},
-    {"name": "ドリル名", "detail": "具体的な練習方法（30文字）", "balls": "球数"},
-    {"name": "ドリル名", "detail": "具体的な練習方法（30文字）", "balls": "球数"}
-  ],
-  "tags": ["タグ1", "タグ2", "タグ3"]
-}`;
-
-  try{
+    try{
     const res=await fetch('https://hook.us2.make.com/z2ywvkqfxtgpyhb62qfy2n9w3vlu6mxj',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
