@@ -5,123 +5,101 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Golf Coach AI — あなた専属のAIゴルフコーチ</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <style>
-:root {
-  --d: #0b2318;
-  --d2: #122e22;
-  --d3: #1a3d2b;
-  --green: #2d6a4f;
-  --pin: #52b788;
-  --flag: #74c69d;
-  --morning: #b7e4c7;
-  --mist: #d8f3dc;
-  --fog: #f0f9f3;
-  --white: #ffffff;
-  --cream: #fafcfb;
-  --text: #0b1f15;
-  --text3: #4a6e5a;
-  --text4: #7a9a88;
-  --muted: #a8c4b4;
-  --gold: #c9a84c;
-  --gold2: #e8c96a;
-  --line: rgba(45,106,79,.12);
-  --line2: rgba(45,106,79,.2);
+:root{
+  --d:#0b2318;--d2:#122e22;--d3:#1a3d2b;--green:#2d6a4f;--pin:#52b788;--flag:#74c69d;
+  --morning:#b7e4c7;--mist:#d8f3dc;--fog:#f0f9f3;--white:#fff;--cream:#fafcfb;
+  --text:#0b1f15;--text3:#4a6e5a;--text4:#7a9a88;--muted:#a8c4b4;
+  --gold:#c9a84c;--gold2:#e8c96a;
+  --line:rgba(45,106,79,.12);--line2:rgba(45,106,79,.2);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;font-size:15px;}
 body{font-family:'Noto Sans JP',sans-serif;background:var(--white);color:var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden;}
 
-/* ── NAV ── */
+/* NAV */
 .nav{position:fixed;top:0;left:0;right:0;z-index:200;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 6vw;background:rgba(11,35,24,.96);backdrop-filter:blur(20px);border-bottom:1px solid rgba(201,168,76,.15);}
 .nav.scrolled{box-shadow:0 4px 40px rgba(0,0,0,.3);}
-.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;}
-.nav-emblem{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--green),var(--pin));display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 2px 12px rgba(82,183,136,.3);}
-.nav-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--white);letter-spacing:.01em;}
-.nav-name span{font-size:10px;font-weight:400;color:rgba(201,168,76,.7);display:block;letter-spacing:.12em;text-transform:uppercase;font-family:'DM Mono',monospace;margin-top:-3px;}
-.nav-links{display:flex;align-items:center;gap:36px;}
-.nav-links a{font-size:13px;color:rgba(255,255,255,.55);text-decoration:none;font-weight:400;transition:color .2s;letter-spacing:.02em;}
+.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;cursor:pointer;}
+.nav-emblem{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--green),var(--pin));display:flex;align-items:center;justify-content:center;font-size:18px;}
+.nav-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--white);}
+.nav-name span{font-size:10px;color:rgba(201,168,76,.7);display:block;letter-spacing:.12em;text-transform:uppercase;font-family:'DM Mono',monospace;margin-top:-3px;}
+.nav-links{display:flex;align-items:center;gap:32px;}
+.nav-links a{font-size:13px;color:rgba(255,255,255,.55);text-decoration:none;font-weight:400;transition:color .2s;cursor:pointer;}
 .nav-links a:hover{color:var(--flag);}
-.nav-btn{background:linear-gradient(135deg,var(--gold),var(--gold2))!important;color:var(--d)!important;padding:9px 22px;border-radius:99px;font-size:13px!important;font-weight:700!important;letter-spacing:.02em;box-shadow:0 2px 16px rgba(201,168,76,.35);transition:all .2s!important;}
+.nav-btn{background:linear-gradient(135deg,var(--gold),var(--gold2))!important;color:var(--d)!important;padding:9px 22px;border-radius:99px;font-size:13px!important;font-weight:700!important;box-shadow:0 2px 16px rgba(201,168,76,.35);transition:all .2s!important;border:none;cursor:pointer;}
 .nav-btn:hover{transform:translateY(-1px)!important;box-shadow:0 6px 24px rgba(201,168,76,.45)!important;}
 
-/* ── HERO (DARK) ── */
+/* ===== LP SECTIONS ===== */
+#lp-view{}
+
+/* HERO */
 .hero{min-height:100vh;background:var(--d);position:relative;overflow:hidden;display:flex;align-items:center;padding-top:68px;}
-.hero-bg{position:absolute;inset:0;}
+.hero-sky{position:absolute;top:0;left:0;right:0;height:62%;background:linear-gradient(180deg,#061410 0%,#0b2318 50%,#0f2e1c 100%);}
 .hero-fairway{position:absolute;bottom:0;left:0;right:0;height:38%;background:linear-gradient(180deg,#1a5c35 0%,#123d22 100%);}
 .hero-stripes{position:absolute;bottom:0;left:0;right:0;height:38%;background:repeating-linear-gradient(90deg,transparent 0%,transparent 6%,rgba(255,255,255,.02) 6%,rgba(255,255,255,.02) 12%);}
-.hero-sky{position:absolute;top:0;left:0;right:0;height:62%;background:linear-gradient(180deg,#061410 0%,#0b2318 50%,#0f2e1c 100%);}
 .hero-glow{position:absolute;top:20%;left:50%;transform:translateX(-50%);width:60vw;height:30vw;background:radial-gradient(ellipse,rgba(82,183,136,.06) 0%,transparent 70%);}
 .hero-trees{position:absolute;bottom:36%;left:0;width:16vw;height:18vw;max-width:200px;max-height:230px;background:#061410;clip-path:polygon(0% 100%,8% 60%,15% 78%,24% 38%,34% 58%,44% 18%,54% 42%,64% 10%,74% 36%,84% 14%,94% 40%,100% 100%);}
-.hero-trees2{position:absolute;bottom:36%;right:0;width:12vw;height:14vw;max-width:160px;max-height:180px;background:#061410;clip-path:polygon(0% 100%,10% 65%,20% 80%,32% 38%,44% 60%,56% 20%,68% 44%,80% 16%,90% 40%,100% 100%);}
 .hero-putting{position:absolute;right:6vw;bottom:11%;width:20vw;height:9vw;max-width:280px;max-height:125px;border-radius:50%;background:radial-gradient(ellipse at 40% 40%,#22704a,#19522f);box-shadow:0 0 40px rgba(30,100,60,.4);}
 .hero-pin-wrap{position:absolute;right:calc(6vw + 8vw);bottom:calc(11% + 9vw);transform:translateX(50%);}
 .hero-pin-flag{width:26px;height:17px;background:linear-gradient(135deg,#d42a24,#a81e1a);clip-path:polygon(0 0,100% 28%,100% 72%,0 100%);margin-left:2px;}
-.hero-pin-stick{width:2px;height:70px;background:linear-gradient(180deg,#ddd8cc,#b8b0a0);margin:0 auto;}
-.hero-content{position:relative;z-index:10;max-width:1100px;margin:0 auto;padding:0 6vw;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;width:100%;}
-.hero-left{}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,168,76,.3);background:rgba(201,168,76,.07);padding:5px 14px;border-radius:99px;margin-bottom:24px;}
-.hero-eyebrow-dot{width:5px;height:5px;border-radius:50%;background:var(--gold2);animation:pulse 2.5s infinite;}
+.hero-pin-stick{width:2px;height:70px;background:linear-gradient(180deg,#ddd,#b8b0a0);margin:0 auto;}
+.hero-inner{position:relative;z-index:10;max-width:1100px;margin:0 auto;padding:0 6vw;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;width:100%;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,168,76,.3);background:rgba(201,168,76,.07);padding:5px 14px;border-radius:99px;margin-bottom:24px;}
+.hero-dot{width:5px;height:5px;border-radius:50%;background:var(--gold2);animation:pulse 2.5s infinite;}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
 .hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(44px,6vw,76px);font-weight:700;line-height:1.08;color:var(--white);letter-spacing:-.02em;margin-bottom:14px;}
 .hero-h1 em{font-style:italic;color:var(--flag);display:block;}
 .hero-sub{font-size:clamp(14px,1.5vw,17px);color:rgba(255,255,255,.5);line-height:1.95;max-width:460px;margin-bottom:38px;font-weight:300;}
 .hero-sub strong{color:rgba(255,255,255,.85);font-weight:500;}
 .hero-btns{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
-.btn-gold{display:inline-flex;align-items:center;gap:9px;padding:15px 34px;border-radius:99px;font-size:15px;font-weight:700;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--d);text-decoration:none;transition:all .2s;box-shadow:0 6px 28px rgba(201,168,76,.4);font-family:'Noto Sans JP',sans-serif;letter-spacing:.01em;}
+.btn-gold{display:inline-flex;align-items:center;gap:9px;padding:15px 34px;border-radius:99px;font-size:15px;font-weight:700;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--d);text-decoration:none;border:none;cursor:pointer;transition:all .2s;box-shadow:0 6px 28px rgba(201,168,76,.4);font-family:'Noto Sans JP',sans-serif;}
 .btn-gold:hover{transform:translateY(-2px);box-shadow:0 10px 36px rgba(201,168,76,.55);}
-.btn-ghost-dark{display:inline-flex;align-items:center;gap:8px;padding:15px 28px;border-radius:99px;font-size:14px;font-weight:500;color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.18);text-decoration:none;transition:all .2s;font-family:'Noto Sans JP',sans-serif;}
-.btn-ghost-dark:hover{color:var(--white);border-color:rgba(255,255,255,.4);background:rgba(255,255,255,.05);}
-.hero-footnote{margin-top:20px;font-size:11px;color:rgba(255,255,255,.22);font-family:'DM Mono',monospace;letter-spacing:.04em;}
-
-/* HERO RIGHT CARD */
-.hero-right{position:relative;}
-.hero-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:28px;backdrop-filter:blur(20px);}
-.hero-card-label{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--flag);margin-bottom:12px;}
-.hero-card-title{font-size:16px;font-weight:700;color:var(--white);margin-bottom:8px;line-height:1.4;}
-.hero-card-text{font-size:12px;color:rgba(255,255,255,.5);line-height:1.75;margin-bottom:14px;}
-.hero-chips{display:flex;gap:6px;flex-wrap:wrap;}
-.hero-chip{font-size:10px;font-weight:600;padding:3px 10px;border-radius:99px;}
-.chip-g{background:rgba(82,183,136,.15);color:var(--flag);border:1px solid rgba(82,183,136,.25);}
-.chip-w{background:rgba(255,255,255,.07);color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.1);}
-.hero-divider{height:1px;background:rgba(255,255,255,.08);margin:18px 0;}
-.hero-score-row{display:flex;justify-content:space-between;}
-.hero-score-item{text-align:center;}
-.hero-score-n{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:var(--white);line-height:1;}
-.hero-score-n em{font-size:14px;font-style:normal;color:var(--flag);}
-.hero-score-l{font-size:10px;color:rgba(255,255,255,.35);font-family:'DM Mono',monospace;margin-top:2px;}
+.btn-ghost-dark{display:inline-flex;align-items:center;gap:8px;padding:15px 28px;border-radius:99px;font-size:14px;font-weight:500;color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.18);text-decoration:none;background:none;cursor:pointer;transition:all .2s;font-family:'Noto Sans JP',sans-serif;}
+.btn-ghost-dark:hover{color:var(--white);border-color:rgba(255,255,255,.4);}
+.hero-footnote{margin-top:20px;font-size:11px;color:rgba(255,255,255,.22);font-family:'DM Mono',monospace;}
+.hero-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:28px;backdrop-filter:blur(20px);position:relative;}
 .hero-float{position:absolute;top:-18px;right:-18px;background:linear-gradient(135deg,var(--gold),var(--gold2));border-radius:16px;padding:12px 16px;box-shadow:0 8px 28px rgba(201,168,76,.45);z-index:2;}
 .hero-float-n{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:var(--d);line-height:1;}
-.hero-float-l{font-size:9px;color:rgba(11,35,24,.65);font-family:'DM Mono',monospace;margin-top:1px;letter-spacing:.04em;}
+.hero-float-l{font-size:9px;color:rgba(11,35,24,.65);font-family:'DM Mono',monospace;margin-top:1px;}
+.hc-label{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--flag);margin-bottom:12px;}
+.hc-title{font-size:16px;font-weight:700;color:var(--white);margin-bottom:8px;}
+.hc-text{font-size:12px;color:rgba(255,255,255,.5);line-height:1.75;margin-bottom:14px;}
+.hc-chips{display:flex;gap:6px;flex-wrap:wrap;}
+.hc-chip{font-size:10px;font-weight:600;padding:3px 10px;border-radius:99px;background:rgba(82,183,136,.15);color:var(--flag);border:1px solid rgba(82,183,136,.25);}
+.hc-div{height:1px;background:rgba(255,255,255,.08);margin:18px 0;}
+.hc-scores{display:flex;justify-content:space-between;}
+.hc-score{text-align:center;}
+.hc-score-n{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--white);line-height:1;}
+.hc-score-n em{font-size:13px;font-style:normal;color:var(--flag);}
+.hc-score-l{font-size:10px;color:rgba(255,255,255,.35);font-family:'DM Mono',monospace;margin-top:2px;}
 
 /* STATS */
-.stats-bar{background:var(--d2);border-top:1px solid rgba(201,168,76,.15);border-bottom:1px solid rgba(201,168,76,.15);padding:30px 6vw;}
-.stats-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;}
+.stats-bar{background:var(--d2);border-top:1px solid rgba(201,168,76,.15);border-bottom:1px solid rgba(201,168,76,.15);padding:28px 6vw;}
+.stats-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);}
 .stat-item{text-align:center;padding:6px 0;}
 .stat-n{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:700;color:var(--white);line-height:1;margin-bottom:4px;}
 .stat-n em{font-size:18px;font-style:normal;color:var(--gold2);}
 .stat-l{font-size:11px;color:rgba(255,255,255,.35);font-family:'DM Mono',monospace;letter-spacing:.04em;}
 
-/* SECTIONS */
+/* SECTION BASE */
 .section{padding:100px 6vw;}
 .inner{max-width:1100px;margin:0 auto;}
-
-/* WHITE SECTION */
 .sec-white{background:var(--white);}
-.eyebrow-dark{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--green);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
-.eyebrow-dark::before{content:'';width:20px;height:1px;background:var(--pin);display:block;}
-.sh-dark{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,52px);font-weight:700;color:var(--text);line-height:1.15;letter-spacing:-.01em;margin-bottom:16px;}
-.sh-dark em{font-style:italic;color:var(--green);}
-.lead-dark{font-size:15px;color:var(--text3);line-height:1.9;max-width:520px;}
-
-/* DARK SECTION */
 .sec-dark{background:var(--d3);}
-.eyebrow-light{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
-.eyebrow-light::before{content:'';width:20px;height:1px;background:var(--gold);display:block;}
-.sh-light{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,52px);font-weight:700;color:var(--white);line-height:1.15;letter-spacing:-.01em;margin-bottom:16px;}
-.sh-light em{font-style:italic;color:var(--flag);}
-.lead-light{font-size:15px;color:rgba(255,255,255,.45);line-height:1.9;max-width:520px;}
+.ey-d{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--green);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.ey-d::before{content:'';width:20px;height:1px;background:var(--pin);display:block;}
+.ey-l{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.ey-l::before{content:'';width:20px;height:1px;background:var(--gold);display:block;}
+.sh-d{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,52px);font-weight:700;color:var(--text);line-height:1.15;letter-spacing:-.01em;margin-bottom:16px;}
+.sh-d em{font-style:italic;color:var(--green);}
+.sh-l{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,52px);font-weight:700;color:var(--white);line-height:1.15;letter-spacing:-.01em;margin-bottom:16px;}
+.sh-l em{font-style:italic;color:var(--flag);}
+.lead-d{font-size:15px;color:var(--text3);line-height:1.9;max-width:520px;}
+.lead-l{font-size:15px;color:rgba(255,255,255,.45);line-height:1.9;max-width:520px;}
 
-/* PROBLEM (WHITE) */
+/* PROBLEM */
 .prob-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:52px;}
 .prob-cell{background:var(--cream);border:1px solid var(--line2);border-radius:20px;padding:36px 32px;position:relative;overflow:hidden;transition:all .25s;}
 .prob-cell::after{content:'';position:absolute;bottom:0;left:32px;width:0;height:2px;background:linear-gradient(90deg,var(--pin),var(--flag));transition:width .3s;}
@@ -131,9 +109,8 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--white);color:var(--t
 .prob-q{font-size:16px;font-weight:700;color:var(--text);line-height:1.5;margin-bottom:10px;}
 .prob-a{font-size:13px;color:var(--text4);line-height:1.8;}
 
-/* HOW IT WORKS (DARK) */
+/* HOW */
 .how-inner{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;}
-.how-steps{margin-top:4px;}
 .how-step{display:flex;gap:20px;padding:26px 0;border-bottom:1px solid rgba(255,255,255,.07);}
 .how-step:last-child{border-bottom:none;}
 .how-num{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:700;color:rgba(255,255,255,.08);line-height:1;flex-shrink:0;width:44px;text-align:right;margin-top:-4px;transition:color .2s;}
@@ -146,10 +123,8 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--white);color:var(--t
 .mock-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--flag);font-family:'DM Mono',monospace;margin-bottom:8px;}
 .mock-title{font-size:13px;font-weight:700;color:var(--white);margin-bottom:5px;}
 .mock-text{font-size:11px;color:rgba(255,255,255,.45);line-height:1.7;}
-.mock-chips{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px;}
-.mock-chip-s{font-size:9px;font-weight:600;padding:2px 8px;border-radius:99px;background:rgba(82,183,136,.12);color:var(--flag);border:1px solid rgba(82,183,136,.2);}
 
-/* FEATURES (WHITE) */
+/* FEATURES */
 .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:52px;}
 .feat-cell{background:var(--cream);border:1px solid var(--line2);border-radius:20px;padding:36px 28px;transition:all .25s;position:relative;overflow:hidden;}
 .feat-cell::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--pin),var(--flag));transform:scaleX(0);transform-origin:left;transition:transform .3s;}
@@ -158,27 +133,26 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--white);color:var(--t
 .feat-ico{width:48px;height:48px;border-radius:14px;background:var(--fog);border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:18px;}
 .feat-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:10px;line-height:1.4;}
 .feat-text{font-size:13px;color:var(--text4);line-height:1.85;}
-.feat-pill{display:inline-block;margin-top:14px;font-size:10px;font-weight:600;letter-spacing:.06em;padding:3px 10px;border-radius:99px;background:var(--fog);color:var(--green);border:1px solid var(--line2);font-family:'DM Mono',monospace;}
+.feat-pill{display:inline-block;margin-top:14px;font-size:10px;font-weight:600;padding:3px 10px;border-radius:99px;background:var(--fog);color:var(--green);border:1px solid var(--line2);font-family:'DM Mono',monospace;}
 
-/* TESTIMONIALS (DARK) */
+/* TESTIMONIALS */
 .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:52px;}
-.testi-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:30px 26px;transition:all .25s;position:relative;overflow:hidden;}
-.testi-card::before{content:'"';position:absolute;top:10px;right:18px;font-family:'Cormorant Garamond',serif;font-size:80px;color:rgba(255,255,255,.04);line-height:1;pointer-events:none;}
+.testi-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:30px 26px;transition:all .25s;}
 .testi-card:hover{background:rgba(255,255,255,.07);transform:translateY(-4px);}
 .testi-stars{font-size:13px;letter-spacing:2px;color:var(--gold2);margin-bottom:12px;}
-.testi-text{font-size:13px;color:rgba(255,255,255,.6);line-height:1.9;margin-bottom:20px;position:relative;z-index:1;}
+.testi-text{font-size:13px;color:rgba(255,255,255,.6);line-height:1.9;margin-bottom:20px;}
 .testi-foot{display:flex;align-items:center;gap:12px;}
 .testi-av{width:40px;height:40px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(--green),var(--pin));display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--white);}
 .testi-name{font-size:13px;font-weight:700;color:var(--white);}
 .testi-info{font-size:11px;color:rgba(255,255,255,.35);margin-top:1px;}
 .score-pill{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;background:rgba(82,183,136,.12);color:var(--flag);padding:2px 9px;border-radius:99px;border:1px solid rgba(82,183,136,.2);margin-top:4px;}
 
-/* PRICING (WHITE) */
+/* PRICING */
 .pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:800px;margin:52px auto 0;}
 .plan{border:1.5px solid var(--line2);border-radius:22px;padding:40px 36px;position:relative;transition:all .2s;background:var(--cream);}
 .plan:hover{transform:translateY(-4px);box-shadow:0 20px 60px rgba(15,51,32,.1);}
 .plan.pro{border-color:var(--pin);background:var(--white);box-shadow:0 0 0 4px rgba(82,183,136,.07);}
-.plan-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--d);font-size:11px;font-weight:700;padding:5px 18px;border-radius:99px;letter-spacing:.04em;white-space:nowrap;box-shadow:0 4px 16px rgba(201,168,76,.35);}
+.plan-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--d);font-size:11px;font-weight:700;padding:5px 18px;border-radius:99px;white-space:nowrap;box-shadow:0 4px 16px rgba(201,168,76,.35);}
 .plan-name{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;}
 .plan-name.hot{color:var(--green);}
 .plan-price{font-family:'Cormorant Garamond',serif;font-size:58px;font-weight:700;color:var(--text);line-height:1;margin-bottom:6px;}
@@ -198,7 +172,7 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--white);color:var(--t
 .btn-plan-free:hover{background:var(--mist);}
 .pricing-note{text-align:center;margin-top:20px;font-size:12px;color:var(--muted);}
 
-/* FAQ (DARK) */
+/* FAQ */
 .faq-wrap{max-width:700px;margin:52px auto 0;}
 .faq-item{border-bottom:1px solid rgba(255,255,255,.07);}
 .faq-q{padding:22px 0;cursor:pointer;font-size:15px;font-weight:600;color:var(--white);display:flex;justify-content:space-between;align-items:center;gap:16px;transition:color .15s;line-height:1.5;}
@@ -208,21 +182,21 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--white);color:var(--t
 .faq-a{font-size:14px;color:rgba(255,255,255,.45);line-height:1.85;max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s;}
 .faq-item.open .faq-a{max-height:300px;padding-bottom:24px;}
 
-/* CTA (DARK + GOLD) */
+/* CTA */
 .cta{background:var(--d);position:relative;overflow:hidden;text-align:center;border-top:1px solid rgba(201,168,76,.15);}
 .cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60vw;height:40vw;background:radial-gradient(ellipse,rgba(201,168,76,.06) 0%,transparent 70%);pointer-events:none;}
 .cta-content{position:relative;z-index:2;}
-.cta-eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;display:flex;align-items:center;justify-content:center;gap:8px;}
-.cta-eyebrow::before,.cta-eyebrow::after{content:'';width:24px;height:1px;background:var(--gold);}
+.cta-ey{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;display:flex;align-items:center;justify-content:center;gap:8px;}
+.cta-ey::before,.cta-ey::after{content:'';width:24px;height:1px;background:var(--gold);}
 .cta-h{font-family:'Cormorant Garamond',serif;font-size:clamp(38px,5.5vw,68px);font-weight:700;color:var(--white);line-height:1.1;letter-spacing:-.01em;margin-bottom:16px;}
 .cta-h em{font-style:italic;color:var(--flag);}
 .cta-sub{font-size:16px;color:rgba(255,255,255,.4);line-height:1.9;margin-bottom:36px;}
-.cta-note{margin-top:18px;font-size:11px;color:rgba(255,255,255,.2);font-family:'DM Mono',monospace;letter-spacing:.04em;}
+.cta-note{margin-top:18px;font-size:11px;color:rgba(255,255,255,.2);font-family:'DM Mono',monospace;}
 
 /* FOOTER */
 footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:44px 6vw 32px;}
 .footer-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;}
-.footer-brand{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:rgba(255,255,255,.55);letter-spacing:.02em;}
+.footer-brand{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:rgba(255,255,255,.55);}
 .footer-links{display:flex;gap:24px;}
 .footer-links a{font-size:12px;color:rgba(255,255,255,.28);text-decoration:none;transition:color .15s;}
 .footer-links a:hover{color:rgba(255,255,255,.6);}
@@ -233,12 +207,103 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
 .r.in{opacity:1;transform:translateY(0);}
 .rd1{transition-delay:.1s;}.rd2{transition-delay:.2s;}.rd3{transition-delay:.3s;}
 
+/* ===== APP VIEW ===== */
+#app-view{display:none;min-height:100vh;background:var(--d);padding-top:68px;}
+
+/* APP HEADER */
+.app-header{background:var(--d2);border-bottom:1px solid rgba(201,168,76,.12);padding:24px 6vw;}
+.app-header-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;}
+.app-user{display:flex;align-items:center;gap:12px;}
+.app-user-av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--pin));display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:var(--white);}
+.app-user-name{font-size:14px;font-weight:600;color:var(--white);}
+.app-user-sub{font-size:11px;color:rgba(255,255,255,.4);font-family:'DM Mono',monospace;}
+.app-tabs{display:flex;gap:4px;background:rgba(255,255,255,.05);border-radius:12px;padding:4px;}
+.app-tab{padding:8px 20px;border-radius:9px;font-size:13px;font-weight:500;color:rgba(255,255,255,.5);cursor:pointer;transition:all .2s;border:none;background:none;font-family:'Noto Sans JP',sans-serif;}
+.app-tab.active{background:var(--green);color:var(--white);}
+.app-tab:hover:not(.active){color:var(--white);}
+
+/* APP CONTENT */
+.app-content{max-width:1100px;margin:0 auto;padding:40px 6vw;}
+
+/* LOG FORM */
+.log-form-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:36px;margin-bottom:32px;}
+.form-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:var(--white);margin-bottom:6px;}
+.form-subtitle{font-size:13px;color:rgba(255,255,255,.4);margin-bottom:32px;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.form-group{display:flex;flex-direction:column;gap:8px;}
+.form-group.full{grid-column:1/-1;}
+.form-label{font-size:12px;font-weight:600;color:rgba(255,255,255,.6);letter-spacing:.04em;font-family:'DM Mono',monospace;}
+.form-input,.form-select,.form-textarea{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:12px 16px;font-size:14px;color:var(--white);font-family:'Noto Sans JP',sans-serif;transition:all .2s;outline:none;width:100%;}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--pin);background:rgba(82,183,136,.08);}
+.form-select option{background:var(--d3);color:var(--white);}
+.form-textarea{resize:vertical;min-height:90px;}
+.mood-btns{display:flex;gap:10px;}
+.mood-btn{flex:1;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:rgba(255,255,255,.5);font-size:20px;cursor:pointer;transition:all .2s;text-align:center;}
+.mood-btn.selected{border-color:var(--pin);background:rgba(82,183,136,.15);transform:scale(1.05);}
+.submit-btn{width:100%;margin-top:24px;padding:16px;border-radius:14px;border:none;cursor:pointer;font-size:15px;font-weight:700;font-family:'Noto Sans JP',sans-serif;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--d);transition:all .2s;box-shadow:0 4px 20px rgba(201,168,76,.3);}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(201,168,76,.45);}
+.submit-btn:disabled{opacity:.6;cursor:not-allowed;transform:none;}
+
+/* AI RESULT */
+.ai-result{background:linear-gradient(135deg,rgba(26,61,43,.8),rgba(18,46,34,.9));border:1px solid rgba(82,183,136,.25);border-radius:24px;padding:36px;margin-bottom:32px;display:none;}
+.ai-result.show{display:block;animation:fadeUp .5s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.ai-badge{display:inline-flex;align-items:center;gap:8px;font-family:'DM Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--flag);background:rgba(82,183,136,.1);border:1px solid rgba(82,183,136,.2);padding:5px 14px;border-radius:99px;margin-bottom:18px;}
+.ai-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--pin);animation:pulse 1.5s infinite;}
+.ai-plan-title{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--white);margin-bottom:10px;}
+.ai-plan-text{font-size:14px;color:rgba(255,255,255,.65);line-height:1.85;margin-bottom:24px;}
+.ai-drills{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px;}
+.ai-drill{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:16px;}
+.ai-drill-num{font-family:'DM Mono',monospace;font-size:10px;color:var(--flag);margin-bottom:6px;}
+.ai-drill-name{font-size:13px;font-weight:700;color:var(--white);margin-bottom:4px;}
+.ai-drill-detail{font-size:11px;color:rgba(255,255,255,.45);}
+.ai-tags{display:flex;gap:8px;flex-wrap:wrap;}
+.ai-tag{font-size:11px;font-weight:600;padding:4px 12px;border-radius:99px;background:rgba(82,183,136,.12);color:var(--flag);border:1px solid rgba(82,183,136,.2);}
+
+/* LOG LIST */
+.log-list{display:flex;flex-direction:column;gap:14px;}
+.log-item{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;transition:all .2s;}
+.log-item:hover{background:rgba(255,255,255,.07);}
+.log-item-left{}
+.log-item-date{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,.35);margin-bottom:6px;}
+.log-item-title{font-size:14px;font-weight:700;color:var(--white);margin-bottom:4px;}
+.log-item-sub{font-size:12px;color:rgba(255,255,255,.45);}
+.log-item-right{text-align:right;}
+.log-item-score{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--white);}
+.log-item-score em{font-size:13px;font-style:normal;color:var(--flag);}
+.log-item-mood{font-size:20px;margin-top:4px;}
+.empty-state{text-align:center;padding:60px 20px;color:rgba(255,255,255,.3);}
+.empty-icon{font-size:48px;margin-bottom:16px;opacity:.4;}
+.empty-text{font-size:14px;}
+
+/* CHARTS */
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.chart-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:28px;}
+.chart-title{font-size:15px;font-weight:700;color:var(--white);margin-bottom:4px;}
+.chart-sub{font-size:12px;color:rgba(255,255,255,.35);margin-bottom:20px;}
+.chart-wrap{position:relative;height:200px;}
+
+/* EMAIL MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:300;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px);display:none;}
+.modal-overlay.show{display:flex;}
+.modal{background:var(--d2);border:1px solid rgba(201,168,76,.2);border-radius:24px;padding:40px;max-width:440px;width:90%;text-align:center;}
+.modal-icon{font-size:48px;margin-bottom:16px;}
+.modal-title{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--white);margin-bottom:8px;}
+.modal-sub{font-size:14px;color:rgba(255,255,255,.5);margin-bottom:28px;line-height:1.7;}
+.modal-input{width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:14px 18px;font-size:14px;color:var(--white);font-family:'Noto Sans JP',sans-serif;outline:none;margin-bottom:14px;}
+.modal-input:focus{border-color:var(--pin);}
+.modal-btn{width:100%;padding:14px;border-radius:12px;border:none;cursor:pointer;font-size:14px;font-weight:700;font-family:'Noto Sans JP',sans-serif;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--d);transition:all .2s;}
+.modal-btn:hover{transform:translateY(-1px);}
+.modal-note{margin-top:12px;font-size:11px;color:rgba(255,255,255,.25);font-family:'DM Mono',monospace;}
+
 @media(max-width:800px){
   .nav-links{display:none;}
-  .hero-content,.how-inner,.prob-grid,.feat-grid,.testi-grid,.pricing-grid{grid-template-columns:1fr;}
-  .hero-right{display:none;}
+  .hero-inner,.how-inner,.prob-grid,.feat-grid,.testi-grid,.pricing-grid,.form-grid,.ai-drills,.chart-grid{grid-template-columns:1fr;}
+  .hero-card{display:none;}
   .stats-inner{grid-template-columns:repeat(2,1fr);}
-  .hero-trees,.hero-trees2,.hero-putting,.hero-pin-wrap{display:none;}
+  .hero-putting,.hero-trees,.hero-pin-wrap{display:none;}
+  .app-tabs{gap:2px;}
+  .app-tab{padding:8px 12px;font-size:12px;}
 }
 </style>
 </head>
@@ -246,71 +311,70 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
 
 <!-- NAV -->
 <nav class="nav" id="nav">
-  <a href="#" class="nav-brand">
+  <div class="nav-brand" onclick="showLP()">
     <div class="nav-emblem">⛳</div>
     <div class="nav-name">Golf Coach AI<span>Powered by AI</span></div>
-  </a>
+  </div>
   <div class="nav-links">
-    <a href="#problem">課題</a>
-    <a href="#howit">使い方</a>
-    <a href="#features">機能</a>
-    <a href="#voice">口コミ</a>
-    <a href="#pricing">料金</a>
-    <a href="#pricing" class="nav-btn">無料で始める</a>
+    <a onclick="showLP();scrollTo('#problem')">課題</a>
+    <a onclick="showLP();scrollTo('#howit')">使い方</a>
+    <a onclick="showLP();scrollTo('#features')">機能</a>
+    <a onclick="showLP();scrollTo('#pricing')">料金</a>
+    <button class="nav-btn" onclick="openModal()">無料で始める</button>
   </div>
 </nav>
 
+<!-- EMAIL MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-icon">⛳</div>
+    <div class="modal-title">無料で始める</div>
+    <div class="modal-sub">メールアドレスを入力するだけ。<br>7日間すべての機能を無料でお試しいただけます。</div>
+    <input type="email" class="modal-input" id="modal-email" placeholder="your@email.com">
+    <button class="modal-btn" onclick="startApp()">今すぐ始める →</button>
+    <div class="modal-note">クレジットカード不要 · いつでも解約OK</div>
+  </div>
+</div>
+
+<!-- ===== LP VIEW ===== -->
+<div id="lp-view">
+
 <!-- HERO -->
 <section class="hero" id="top">
-  <div class="hero-bg">
-    <div class="hero-sky"></div>
-    <div class="hero-fairway"></div>
-    <div class="hero-stripes"></div>
-    <div class="hero-glow"></div>
-    <div class="hero-trees"></div>
-    <div class="hero-trees2"></div>
-    <div class="hero-putting"></div>
-    <div class="hero-pin-wrap">
-      <div class="hero-pin-flag"></div>
-      <div class="hero-pin-stick"></div>
-    </div>
-  </div>
-  <div class="hero-content">
-    <div class="hero-left">
-      <div class="hero-eyebrow"><div class="hero-eyebrow-dot"></div>AI Golf Coach</div>
+  <div class="hero-sky"></div><div class="hero-fairway"></div><div class="hero-stripes"></div><div class="hero-glow"></div>
+  <div class="hero-trees"></div>
+  <div class="hero-putting"></div>
+  <div class="hero-pin-wrap"><div class="hero-pin-flag"></div><div class="hero-pin-stick"></div></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow"><div class="hero-dot"></div>AI Golf Coach</div>
       <h1 class="hero-h1">練習を記録するだけで、<br><em>AIコーチが上達を加速する。</em></h1>
       <p class="hero-sub">打席・ラウンド・課題をスマホで2分記録するだけ。AIが<strong>あなた専用の今日の練習プラン</strong>を具体的に設計します。</p>
       <div class="hero-btns">
-        <a href="https://buy.stripe.com/test_7sY28r2rR3IMbYY6m9f7i00" class="btn-gold">→ 7日間無料で始める</a>
-        <a href="#howit" class="btn-ghost-dark">使い方を見る</a>
+        <button class="btn-gold" onclick="openModal()">→ 7日間無料で始める</button>
+        <a class="btn-ghost-dark" onclick="scrollTo('#howit')">使い方を見る</a>
       </div>
       <div class="hero-footnote">クレジットカード不要 · 7日間無料トライアル · いつでも解約OK</div>
     </div>
-    <div class="hero-right">
-      <div class="hero-float">
-        <div class="hero-float-n">3打</div>
-        <div class="hero-float-l">平均スコア改善</div>
-      </div>
+    <div style="position:relative;">
+      <div class="hero-float"><div class="hero-float-n">3打</div><div class="hero-float-l">平均スコア改善</div></div>
       <div class="hero-card">
-        <div class="hero-card-label">✦ 今日の練習プラン</div>
-        <div class="hero-card-title">ドライバー方向性の矯正</div>
-        <div class="hero-card-text">過去4回のログからスライスの根本原因を特定。本日はビハインドザボールドリルに集中してください。</div>
-        <div class="hero-chips">
-          <span class="hero-chip chip-g">優先 · 30球</span>
-          <span class="hero-chip chip-w">約20分</span>
-        </div>
-        <div class="hero-divider"></div>
-        <div class="hero-score-row">
-          <div class="hero-score-item"><div class="hero-score-n">45</div><div class="hero-score-l">ドライバー</div></div>
-          <div class="hero-score-item"><div class="hero-score-n">72</div><div class="hero-score-l">アイアン</div></div>
-          <div class="hero-score-item"><div class="hero-score-n">92<em>%</em></div><div class="hero-score-l">継続率</div></div>
+        <div class="hc-label">✦ 今日の練習プラン</div>
+        <div class="hc-title">ドライバー方向性の矯正</div>
+        <div class="hc-text">過去4回のログからスライスの根本原因を特定。本日はビハインドザボールドリルに集中してください。</div>
+        <div class="hc-chips"><span class="hc-chip">優先 · 30球</span><span class="hc-chip">約20分</span></div>
+        <div class="hc-div"></div>
+        <div class="hc-scores">
+          <div class="hc-score"><div class="hc-score-n">45</div><div class="hc-score-l">ドライバー</div></div>
+          <div class="hc-score"><div class="hc-score-n">72</div><div class="hc-score-l">アイアン</div></div>
+          <div class="hc-score"><div class="hc-score-n">92<em>%</em></div><div class="hc-score-l">継続率</div></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- STATS BAR -->
+<!-- STATS -->
 <div class="stats-bar">
   <div class="stats-inner">
     <div class="stat-item r"><div class="stat-n">3<em>打</em></div><div class="stat-l">平均スコア改善（1ヶ月）</div></div>
@@ -320,13 +384,10 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
   </div>
 </div>
 
-<!-- PROBLEM (WHITE) -->
+<!-- PROBLEM -->
 <section class="section sec-white" id="problem">
   <div class="inner">
-    <div class="r">
-      <div class="eyebrow-dark">こんな悩みはありませんか？</div>
-      <h2 class="sh-dark">多くのゴルファーが、<br><em>同じ壁</em>にぶつかっている。</h2>
-    </div>
+    <div class="r"><div class="ey-d">こんな悩みはありませんか？</div><h2 class="sh-d">多くのゴルファーが、<br><em>同じ壁</em>にぶつかっている。</h2></div>
     <div class="prob-grid r rd1">
       <div class="prob-cell"><div class="prob-tag">Problem 01</div><div class="prob-q">練習しているのに、スコアが縮まらない</div><div class="prob-a">球を打っているだけで「何が悪いのか」が整理されていない。努力が正しい方向を向いていない。</div></div>
       <div class="prob-cell"><div class="prob-tag">Problem 02</div><div class="prob-q">プロのレッスンは高くて続けられない</div><div class="prob-a">月1〜2回のレッスンでは間隔が空きすぎる。毎週通うには費用も時間もかかりすぎる。</div></div>
@@ -336,88 +397,68 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
   </div>
 </section>
 
-<!-- HOW IT WORKS (DARK) -->
+<!-- HOW -->
 <section class="section sec-dark" id="howit">
   <div class="inner">
     <div class="how-inner">
       <div>
-        <div class="r">
-          <div class="eyebrow-light">使い方</div>
-          <h2 class="sh-light">たった3ステップで、<br><em>プロ級の分析</em>が手に入る。</h2>
-          <p class="lead-light">難しい設定は不要。記録すればするほど、AIの精度が上がっていきます。</p>
-        </div>
-        <div class="how-steps r rd1">
+        <div class="r"><div class="ey-l">使い方</div><h2 class="sh-l">たった3ステップで、<br><em>プロ級の分析</em>が手に入る。</h2><p class="lead-l">難しい設定は不要。記録すればするほど、AIの精度が上がっていきます。</p></div>
+        <div class="r rd1">
           <div class="how-step"><div class="how-num">01</div><div><div class="how-step-title">2分で練習を記録する</div><div class="how-step-text">打席練習・ラウンド・課題メモをタップで記録。番手・球数・調子・気づきをシンプルに入力できます。</div></div></div>
           <div class="how-step"><div class="how-num">02</div><div><div class="how-step-title">AIが過去データをすべて分析する</div><div class="how-step-text">最新ログと過去の練習履歴を照合し、あなたの弱点パターン・改善トレンド・課題の根本原因を特定します。</div></div></div>
           <div class="how-step"><div class="how-num">03</div><div><div class="how-step-title">今日の練習メニューを受け取る</div><div class="how-step-text">「今日やるべきドリル・球数・所要時間」まで明示。練習場に着いたらすぐに迷わずスタートできます。</div></div></div>
         </div>
       </div>
       <div class="how-visual r rd2">
-        <div class="mock-card"><div class="mock-label">✦ 今日の練習プラン</div><div class="mock-title">ドライバー方向性の矯正</div><div class="mock-text">過去4回のログからスライスの根本原因を特定。本日はビハインドザボールドリルに集中。</div><div class="mock-chips"><span class="mock-chip-s">優先 · 30球</span><span class="mock-chip-s">20分</span></div></div>
+        <div class="mock-card"><div class="mock-label">✦ 今日の練習プラン</div><div class="mock-title">ドライバー方向性の矯正</div><div class="mock-text">過去4回のログからスライスの根本原因を特定。本日はビハインドザボールドリルに集中。</div></div>
         <div class="mock-card"><div class="mock-label">📊 課題スコア</div><div class="mock-title">ドライバー 45 / アイアン 72</div><div class="mock-text">先月比：アイアン +12pt 改善中。ドライバーが最優先課題。</div></div>
-        <div class="mock-card"><div class="mock-label">📧 週次サマリー</div><div class="mock-title">今週のフォーカス：飛距離より方向性</div><div class="mock-text">3週連続でドライバーの右ミスが出ています。フェースコントロールを最優先に。</div></div>
+        <div class="mock-card"><div class="mock-label">📧 週次サマリー</div><div class="mock-title">今週のフォーカス：方向性</div><div class="mock-text">3週連続でドライバーの右ミス。フェースコントロールを最優先に。</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FEATURES (WHITE) -->
+<!-- FEATURES -->
 <section class="section sec-white" id="features">
   <div class="inner">
-    <div class="r" style="text-align:center">
-      <div class="eyebrow-dark" style="justify-content:center">主な機能</div>
-      <h2 class="sh-dark" style="text-align:center">上達に必要なすべてが、<br><em>ひとつのアプリに。</em></h2>
-      <p class="lead-dark" style="margin:0 auto;text-align:center">記録・分析・アドバイスを一元化。練習の質が根本から変わります。</p>
-    </div>
+    <div class="r" style="text-align:center"><div class="ey-d" style="justify-content:center">主な機能</div><h2 class="sh-d" style="text-align:center">上達に必要なすべてが、<br><em>ひとつのアプリに。</em></h2></div>
     <div class="feat-grid r rd1">
       <div class="feat-cell"><div class="feat-ico">✦</div><div class="feat-title">今日の練習プラン自動生成</div><div class="feat-text">過去ログをもとに本日のメニューを設計。優先度・球数・ドリルの詳細までパーソナライズ。</div><div class="feat-pill">PRO限定</div></div>
-      <div class="feat-cell"><div class="feat-ico">📊</div><div class="feat-title">スコア・球数・課題の可視化</div><div class="feat-text">スコア推移グラフ、番手別練習量、課題カテゴリ別スコアを自動集計。成長が一目でわかる。</div><div class="feat-pill">全プラン</div></div>
+      <div class="feat-cell"><div class="feat-ico">📊</div><div class="feat-title">スコア・球数の可視化</div><div class="feat-text">スコア推移グラフ、番手別練習量、課題カテゴリ別スコアを自動集計。</div><div class="feat-pill">全プラン</div></div>
       <div class="feat-cell"><div class="feat-ico">🎯</div><div class="feat-title">弱点の根本原因を特定</div><div class="feat-text">「スライスは左肩の開きが原因」など、表面的なミスの裏にあるパターンをAIが言語化。</div><div class="feat-pill">PRO限定</div></div>
-      <div class="feat-cell"><div class="feat-ico">📝</div><div class="feat-title">打席・ラウンド・課題を一元管理</div><div class="feat-text">3種類のログを統合管理。ラウンドでのミスと練習での課題を紐付け、改善の連鎖を作る。</div><div class="feat-pill">全プラン</div></div>
-      <div class="feat-cell"><div class="feat-ico">📧</div><div class="feat-title">週次サマリーメール</div><div class="feat-text">毎週月曜に「先週まとめ＋今週フォーカス」を自動配信。モチベーションを維持。</div><div class="feat-pill">PRO限定</div></div>
-      <div class="feat-cell"><div class="feat-ico">📈</div><div class="feat-title">上達を数字で実感できる</div><div class="feat-text">入会時と現在のスコアを比較表示。「使い始めてから5打縮んだ」実績が継続のモチベーションに。</div><div class="feat-pill">全プラン</div></div>
+      <div class="feat-cell"><div class="feat-ico">📝</div><div class="feat-title">ログ一元管理</div><div class="feat-text">打席・ラウンド・課題の3種類のログを統合管理。改善の連鎖を可視化。</div><div class="feat-pill">全プラン</div></div>
+      <div class="feat-cell"><div class="feat-ico">📧</div><div class="feat-title">週次サマリーメール</div><div class="feat-text">毎週月曜に「先週まとめ＋今週フォーカス」を自動配信。</div><div class="feat-pill">PRO限定</div></div>
+      <div class="feat-cell"><div class="feat-ico">📈</div><div class="feat-title">上達を数字で実感</div><div class="feat-text">入会時と現在のスコアを比較表示。継続のモチベーションに。</div><div class="feat-pill">全プラン</div></div>
     </div>
   </div>
 </section>
 
-<!-- TESTIMONIALS (DARK) -->
+<!-- TESTIMONIALS -->
 <section class="section sec-dark" id="voice">
   <div class="inner">
-    <div class="r" style="text-align:center">
-      <div class="eyebrow-light" style="justify-content:center">ユーザーの声</div>
-      <h2 class="sh-light" style="text-align:center">使い始めてから、<br><em>練習が変わった。</em></h2>
-    </div>
+    <div class="r" style="text-align:center"><div class="ey-l" style="justify-content:center">ユーザーの声</div><h2 class="sh-l" style="text-align:center">使い始めてから、<br><em>練習が変わった。</em></h2></div>
     <div class="testi-grid">
-      <div class="testi-card r"><div class="testi-stars">★★★★★</div><div class="testi-text">今まで「なんとなく」打ちに行っていたのが、目的を持って練習できるようになった。AIのアドバイスが具体的で、次の打席でやることが明確になるのが一番助かっています。</div><div class="testi-foot"><div class="testi-av">山</div><div><div class="testi-name">山田 浩二さん・45歳</div><div class="testi-info">会社員 / ゴルフ歴5年</div><div class="score-pill">▲ 96→91打に改善</div></div></div></div>
-      <div class="testi-card r rd1"><div class="testi-stars">★★★★★</div><div class="testi-text">月数回のレッスンよりも毎回AIにアドバイスをもらえる方が上達が早かった。ドライバーのスライスの根本原因を指摘されて、3週間で改善できました。</div><div class="testi-foot"><div class="testi-av">鈴</div><div><div class="testi-name">鈴木 達也さん・38歳</div><div class="testi-info">自営業 / ゴルフ歴8年</div><div class="score-pill">▲ 100→93打に改善</div></div></div></div>
-      <div class="testi-card r rd2"><div class="testi-stars">★★★★☆</div><div class="testi-text">入力が2分で終わるので習慣になった。ログが溜まるほどアドバイスの精度が上がるのを実感しています。90切りまであと少しというところまで来ました。</div><div class="testi-foot"><div class="testi-av">中</div><div><div class="testi-name">中村 誠さん・52歳</div><div class="testi-info">管理職 / ゴルフ歴12年</div><div class="score-pill">▲ 94→89打に改善</div></div></div></div>
+      <div class="testi-card r"><div class="testi-stars">★★★★★</div><div class="testi-text">今まで「なんとなく」打ちに行っていたのが、目的を持って練習できるようになった。AIのアドバイスが具体的で助かっています。</div><div class="testi-foot"><div class="testi-av">山</div><div><div class="testi-name">山田 浩二さん・45歳</div><div class="testi-info">会社員 / ゴルフ歴5年</div><div class="score-pill">▲ 96→91打に改善</div></div></div></div>
+      <div class="testi-card r rd1"><div class="testi-stars">★★★★★</div><div class="testi-text">月数回のレッスンよりも毎回AIにアドバイスをもらえる方が上達が早かった。スライスの根本原因を指摘されて3週間で改善できました。</div><div class="testi-foot"><div class="testi-av">鈴</div><div><div class="testi-name">鈴木 達也さん・38歳</div><div class="testi-info">自営業 / ゴルフ歴8年</div><div class="score-pill">▲ 100→93打に改善</div></div></div></div>
+      <div class="testi-card r rd2"><div class="testi-stars">★★★★☆</div><div class="testi-text">入力が2分で終わるので習慣になった。ログが溜まるほどアドバイスの精度が上がるのを実感しています。</div><div class="testi-foot"><div class="testi-av">中</div><div><div class="testi-name">中村 誠さん・52歳</div><div class="testi-info">管理職 / ゴルフ歴12年</div><div class="score-pill">▲ 94→89打に改善</div></div></div></div>
     </div>
   </div>
 </section>
 
-<!-- PRICING (WHITE) -->
+<!-- PRICING -->
 <section class="section sec-white" id="pricing">
   <div class="inner">
-    <div class="r" style="text-align:center">
-      <div class="eyebrow-dark" style="justify-content:center">料金プラン</div>
-      <h2 class="sh-dark" style="text-align:center">まず無料で、<em>試してみてください。</em></h2>
-      <p class="lead-dark" style="margin:0 auto;text-align:center">クレジットカード不要。7日間は全機能をお試しいただけます。</p>
-    </div>
+    <div class="r" style="text-align:center"><div class="ey-d" style="justify-content:center">料金プラン</div><h2 class="sh-d" style="text-align:center">まず無料で、<em>試してみてください。</em></h2><p class="lead-d" style="margin:0 auto;text-align:center">クレジットカード不要。7日間は全機能をお試しいただけます。</p></div>
     <div class="pricing-grid r rd1">
       <div class="plan">
         <div class="plan-name">Free プラン</div>
         <div class="plan-price"><sup>¥</sup>0</div>
         <div class="plan-cycle">ずっと無料</div>
         <ul class="plan-list">
-          <li>練習ログ記録（週3件まで）</li>
-          <li>スコア・球数グラフ（直近1ヶ月）</li>
-          <li>AIアドバイス（一言コメント）</li>
-          <li class="no">AI本格分析・改善ドリル提案</li>
-          <li class="no">今日の練習プラン自動生成</li>
-          <li class="no">弱点レポート・トレンド分析</li>
-          <li class="no">週次サマリーメール</li>
+          <li>練習ログ記録（週3件まで）</li><li>スコア・球数グラフ（直近1ヶ月）</li><li>AIアドバイス（一言コメント）</li>
+          <li class="no">AI本格分析・改善ドリル提案</li><li class="no">今日の練習プラン自動生成</li><li class="no">弱点レポート・トレンド分析</li><li class="no">週次サマリーメール</li>
         </ul>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSe0ebZtuXR_h26YOL33kF_aNvKgx6H3m8j_CrCSSBF5OTdiOQ/viewform" target="_blank" class="btn-plan btn-plan-free">無料で始める</a>
+        <button class="btn-plan btn-plan-free" onclick="openModal()">無料で始める</button>
       </div>
       <div class="plan pro">
         <div class="plan-badge">🏌 一番人気</div>
@@ -425,13 +466,8 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
         <div class="plan-price"><sup>¥</sup>680<sub>/月</sub></div>
         <div class="plan-cycle">7日間無料トライアル付き</div>
         <ul class="plan-list">
-          <li>練習ログ記録（無制限）</li>
-          <li>スコア・球数グラフ（全期間）</li>
-          <li>AIアドバイス（一言コメント）</li>
-          <li>AI本格分析・改善ドリル提案</li>
-          <li>今日の練習プラン自動生成</li>
-          <li>弱点レポート・トレンド分析</li>
-          <li>週次サマリーメール</li>
+          <li>練習ログ記録（無制限）</li><li>スコア・球数グラフ（全期間）</li><li>AIアドバイス（一言コメント）</li>
+          <li>AI本格分析・改善ドリル提案</li><li>今日の練習プラン自動生成</li><li>弱点レポート・トレンド分析</li><li>週次サマリーメール</li>
         </ul>
         <a href="https://buy.stripe.com/test_7sY28r2rR3IMbYY6m9f7i00" class="btn-plan btn-plan-pro">7日間無料で試す</a>
       </div>
@@ -440,13 +476,10 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
   </div>
 </section>
 
-<!-- FAQ (DARK) -->
+<!-- FAQ -->
 <section class="section sec-dark" id="faq">
   <div class="inner">
-    <div class="r" style="text-align:center">
-      <div class="eyebrow-light" style="justify-content:center">よくある質問</div>
-      <h2 class="sh-light" style="text-align:center">気になることを、<em>まとめて解消。</em></h2>
-    </div>
+    <div class="r" style="text-align:center"><div class="ey-l" style="justify-content:center">よくある質問</div><h2 class="sh-l" style="text-align:center">気になることを、<em>まとめて解消。</em></h2></div>
     <div class="faq-wrap r rd1">
       <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">ゴルフ初心者でも使えますか？<div class="faq-icon">+</div></div><div class="faq-a">はい、初心者の方でも安心して使えます。番手やスコアを入力するだけで、AIが噛み砕いた言葉でアドバイスをくれます。</div></div>
       <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">アプリのダウンロードは必要ですか？<div class="faq-icon">+</div></div><div class="faq-a">不要です。スマートフォンのブラウザからそのまま使えるWebアプリです。ホーム画面に追加するとアプリのように快適に使えます。</div></div>
@@ -457,16 +490,14 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
   </div>
 </section>
 
-<!-- CTA (DARK + GOLD) -->
+<!-- CTA -->
 <section class="section cta" id="cta">
   <div class="cta-glow"></div>
   <div class="cta-content inner r">
-    <div class="cta-eyebrow">さあ、始めましょう</div>
+    <div class="cta-ey">さあ、始めましょう</div>
     <h2 class="cta-h">次のラウンドで、<br><em>スコアが変わる。</em></h2>
-    <p class="cta-sub">今日の練習プランを生成するまで3分もかかりません。<br>まずは記録から始めてみてください。</p>
-    <div style="display:flex;justify-content:center">
-      <a href="https://buy.stripe.com/test_7sY28r2rR3IMbYY6m9f7i00" class="btn-gold">→ 7日間無料で試す</a>
-    </div>
+    <p class="cta-sub">今日の練習プランを生成するまで3分もかかりません。</p>
+    <div style="display:flex;justify-content:center"><button class="btn-gold" onclick="openModal()">→ 7日間無料で試す</button></div>
     <div class="cta-note">クレジットカード不要 · 7日間無料 · いつでも解約OK</div>
   </div>
 </section>
@@ -479,12 +510,430 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
     <div class="footer-copy">© 2025 Golf Coach AI. All rights reserved.</div>
   </div>
 </footer>
+</div><!-- /lp-view -->
+
+<!-- ===== APP VIEW ===== -->
+<div id="app-view">
+  <div class="app-header">
+    <div class="app-header-inner">
+      <div class="app-user">
+        <div class="app-user-av" id="user-av">G</div>
+        <div>
+          <div class="app-user-name" id="user-name">ゴルファー</div>
+          <div class="app-user-sub" id="user-email-disp">Pro プラン · 7日間無料中</div>
+        </div>
+      </div>
+      <div class="app-tabs">
+        <button class="app-tab active" onclick="switchTab('log')">📝 ログ記録</button>
+        <button class="app-tab" onclick="switchTab('history')">📋 履歴</button>
+        <button class="app-tab" onclick="switchTab('chart')">📊 グラフ</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-content">
+
+    <!-- TAB: LOG -->
+    <div id="tab-log">
+      <div class="log-form-card">
+        <div class="form-title">今日の練習を記録する</div>
+        <div class="form-subtitle">2分で入力完了。AIがすぐに分析します。</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">練習タイプ</label>
+            <select class="form-select" id="f-type">
+              <option value="">選択してください</option>
+              <option value="打席練習">打席練習</option>
+              <option value="ラウンド">ラウンド</option>
+              <option value="アプローチ練習">アプローチ練習</option>
+              <option value="パター練習">パター練習</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">メイン番手</label>
+            <select class="form-select" id="f-club">
+              <option value="">選択してください</option>
+              <option>ドライバー</option><option>3W</option><option>5W</option>
+              <option>4I</option><option>5I</option><option>6I</option><option>7I</option><option>8I</option><option>9I</option>
+              <option>PW</option><option>AW</option><option>SW</option><option>パター</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">球数 / ホール数</label>
+            <input type="number" class="form-input" id="f-balls" placeholder="例: 100球">
+          </div>
+          <div class="form-group">
+            <label class="form-label">スコア（ラウンドの場合）</label>
+            <input type="number" class="form-input" id="f-score" placeholder="例: 95">
+          </div>
+          <div class="form-group full">
+            <label class="form-label">今日の調子</label>
+            <div class="mood-btns">
+              <button class="mood-btn" onclick="selectMood(this,'😊')">😊</button>
+              <button class="mood-btn" onclick="selectMood(this,'😐')">😐</button>
+              <button class="mood-btn" onclick="selectMood(this,'😞')">😞</button>
+              <button class="mood-btn" onclick="selectMood(this,'🔥')">🔥</button>
+            </div>
+          </div>
+          <div class="form-group full">
+            <label class="form-label">課題・気づき・メモ</label>
+            <textarea class="form-textarea" id="f-note" placeholder="例: ドライバーが右に出る。インパクトで体が開いている感じがある。7番アイアンは好調。"></textarea>
+          </div>
+        </div>
+        <button class="submit-btn" id="submit-btn" onclick="submitLog()">AIに分析してもらう ✦</button>
+      </div>
+
+      <!-- AI RESULT -->
+      <div class="ai-result" id="ai-result">
+        <div class="ai-badge"><div class="ai-badge-dot"></div>AI分析完了</div>
+        <div class="ai-plan-title" id="ai-title">今日の練習プラン</div>
+        <div class="ai-plan-text" id="ai-text"></div>
+        <div class="ai-drills" id="ai-drills"></div>
+        <div class="ai-tags" id="ai-tags"></div>
+      </div>
+    </div>
+
+    <!-- TAB: HISTORY -->
+    <div id="tab-history" style="display:none;">
+      <div class="log-list" id="log-list">
+        <div class="empty-state">
+          <div class="empty-icon">📝</div>
+          <div class="empty-text">まだログがありません。<br>最初の練習を記録してみましょう！</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: CHART -->
+    <div id="tab-chart" style="display:none;">
+      <div class="chart-grid">
+        <div class="chart-card">
+          <div class="chart-title">スコア推移</div>
+          <div class="chart-sub">ラウンドスコアの変化</div>
+          <div class="chart-wrap"><canvas id="chart-score"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">練習球数推移</div>
+          <div class="chart-sub">週ごとの練習量</div>
+          <div class="chart-wrap"><canvas id="chart-balls"></canvas></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div><!-- /app-view -->
 
 <script>
-window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>40);});
-const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});},{threshold:0.1});
+// ===== STATE =====
+let userEmail = '';
+let logs = [];
+let selectedMood = '';
+let charts = {};
+
+// ===== NAV & ROUTING =====
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>40);
+});
+
+function showLP(){
+  document.getElementById('lp-view').style.display='block';
+  document.getElementById('app-view').style.display='none';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function showApp(){
+  document.getElementById('lp-view').style.display='none';
+  document.getElementById('app-view').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+  renderHistory();
+}
+
+function scrollTo(id){
+  setTimeout(()=>{
+    const el=document.querySelector(id);
+    if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+  },100);
+}
+
+// ===== MODAL =====
+function openModal(){
+  document.getElementById('modal').classList.add('show');
+  document.getElementById('modal-email').focus();
+}
+
+function closeModal(){
+  document.getElementById('modal').classList.remove('show');
+}
+
+document.getElementById('modal').addEventListener('click',function(e){
+  if(e.target===this) closeModal();
+});
+
+function startApp(){
+  const email=document.getElementById('modal-email').value.trim();
+  if(!email||!email.includes('@')){
+    document.getElementById('modal-email').style.borderColor='#e55';
+    return;
+  }
+  userEmail=email;
+  const name=email.split('@')[0];
+  document.getElementById('user-name').textContent=name+'さん';
+  document.getElementById('user-email-disp').textContent=email+' · Pro プラン';
+  document.getElementById('user-av').textContent=name[0].toUpperCase();
+  closeModal();
+  showApp();
+  // Load demo logs
+  loadDemoLogs();
+}
+
+// ===== DEMO DATA =====
+function loadDemoLogs(){
+  if(logs.length>0) return;
+  logs=[
+    {date:'2025-03-28',type:'打席練習',club:'ドライバー',balls:100,score:null,mood:'😊',note:'スライスが改善傾向。ビハインドザボールを意識。',ai:'ドライバーの方向性改善中。フォロースルーをさらに意識してください。'},
+    {date:'2025-03-25',type:'ラウンド',club:'7I',balls:18,score:92,mood:'😐',note:'前半は好調だったが後半崩れた。パターが課題。',ai:'後半の崩れはメンタル面の可能性。パターは距離感練習を優先。'},
+    {date:'2025-03-22',type:'打席練習',club:'7I',balls:80,score:null,mood:'🔥',note:'アイアンの調子が良い。距離感が安定してきた。',ai:'アイアンの安定感は向上中。次はドライバーの精度向上を。'},
+  ];
+  renderHistory();
+  renderCharts();
+}
+
+// ===== MOOD =====
+function selectMood(btn,val){
+  selectedMood=val;
+  document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+// ===== SUBMIT LOG =====
+async function submitLog(){
+  const type=document.getElementById('f-type').value;
+  const club=document.getElementById('f-club').value;
+  const balls=document.getElementById('f-balls').value;
+  const score=document.getElementById('f-score').value;
+  const note=document.getElementById('f-note').value;
+
+  if(!type||!club||!note){
+    alert('練習タイプ・番手・メモを入力してください');
+    return;
+  }
+
+  const btn=document.getElementById('submit-btn');
+  btn.disabled=true;
+  btn.textContent='AIが分析中... ✦';
+
+  // Build prompt
+  const historyText=logs.slice(0,3).map(l=>`${l.date}: ${l.type}/${l.club}、メモ:${l.note}`).join('\n');
+  const prompt=`あなたはプロゴルフコーチAIです。以下の練習ログを分析して、具体的な改善アドバイスと今日の練習プランを日本語で回答してください。
+
+【今日の練習】
+- 種類: ${type}
+- 番手: ${club}
+- 球数/ホール: ${balls||'未記入'}
+- スコア: ${score||'未記入'}
+- 調子: ${selectedMood||'未記入'}
+- メモ: ${note}
+
+【過去の練習履歴】
+${historyText||'履歴なし'}
+
+以下のJSON形式で回答してください（他のテキストは不要）:
+{
+  "title": "今日の練習プランタイトル（20文字以内）",
+  "analysis": "課題の分析と改善ポイント（100文字程度）",
+  "drills": [
+    {"name": "ドリル名", "detail": "具体的な練習方法（30文字）", "balls": "球数"},
+    {"name": "ドリル名", "detail": "具体的な練習方法（30文字）", "balls": "球数"},
+    {"name": "ドリル名", "detail": "具体的な練習方法（30文字）", "balls": "球数"}
+  ],
+  "tags": ["タグ1", "タグ2", "タグ3"]
+}`;
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        messages:[{role:'user',content:prompt}]
+      })
+    });
+    const data=await res.json();
+    const text=data.content.map(c=>c.text||'').join('');
+    const clean=text.replace(/```json|```/g,'').trim();
+    const parsed=JSON.parse(clean);
+    showAIResult(parsed);
+
+    // Save log
+    const newLog={
+      date:new Date().toISOString().split('T')[0],
+      type,club,
+      balls:parseInt(balls)||0,
+      score:parseInt(score)||null,
+      mood:selectedMood||'😐',
+      note,
+      ai:parsed.analysis
+    };
+    logs.unshift(newLog);
+    renderHistory();
+    renderCharts();
+
+    // Reset form
+    document.getElementById('f-type').value='';
+    document.getElementById('f-club').value='';
+    document.getElementById('f-balls').value='';
+    document.getElementById('f-score').value='';
+    document.getElementById('f-note').value='';
+    selectedMood='';
+    document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('selected'));
+
+  }catch(e){
+    alert('AI分析中にエラーが発生しました。もう一度お試しください。');
+    console.error(e);
+  }
+
+  btn.disabled=false;
+  btn.textContent='AIに分析してもらう ✦';
+}
+
+function showAIResult(data){
+  const el=document.getElementById('ai-result');
+  document.getElementById('ai-title').textContent=data.title||'今日の練習プラン';
+  document.getElementById('ai-text').textContent=data.analysis||'';
+
+  const drillsEl=document.getElementById('ai-drills');
+  drillsEl.innerHTML=(data.drills||[]).map((d,i)=>`
+    <div class="ai-drill">
+      <div class="ai-drill-num">DRILL ${String(i+1).padStart(2,'0')} · ${d.balls||'30球'}</div>
+      <div class="ai-drill-name">${d.name||''}</div>
+      <div class="ai-drill-detail">${d.detail||''}</div>
+    </div>
+  `).join('');
+
+  const tagsEl=document.getElementById('ai-tags');
+  tagsEl.innerHTML=(data.tags||[]).map(t=>`<span class="ai-tag">${t}</span>`).join('');
+
+  el.classList.add('show');
+  el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ===== HISTORY =====
+function renderHistory(){
+  const el=document.getElementById('log-list');
+  if(logs.length===0){
+    el.innerHTML=`<div class="empty-state"><div class="empty-icon">📝</div><div class="empty-text">まだログがありません。<br>最初の練習を記録してみましょう！</div></div>`;
+    return;
+  }
+  el.innerHTML=logs.map(l=>`
+    <div class="log-item">
+      <div class="log-item-left">
+        <div class="log-item-date">${l.date}</div>
+        <div class="log-item-title">${l.type} · ${l.club}</div>
+        <div class="log-item-sub">${l.balls}${l.type==='ラウンド'?'H':'球'} ${l.ai?'· '+l.ai.slice(0,30)+'…':''}</div>
+      </div>
+      <div class="log-item-right">
+        <div class="log-item-score">${l.score||l.balls}<em>${l.score?'打':l.type==='ラウンド'?'H':'球'}</em></div>
+        <div class="log-item-mood">${l.mood}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ===== CHARTS =====
+function renderCharts(){
+  const roundLogs=logs.filter(l=>l.score).slice(0,8).reverse();
+  const practiceLogs=logs.slice(0,8).reverse();
+
+  const chartDefaults={
+    color:'rgba(255,255,255,0.7)',
+    grid:{color:'rgba(255,255,255,0.06)'},
+    ticks:{color:'rgba(255,255,255,0.4)'},
+  };
+
+  // Score chart
+  if(charts.score) charts.score.destroy();
+  const scoreCtx=document.getElementById('chart-score');
+  if(scoreCtx){
+    charts.score=new Chart(scoreCtx,{
+      type:'line',
+      data:{
+        labels:roundLogs.map(l=>l.date.slice(5)),
+        datasets:[{
+          label:'スコア',
+          data:roundLogs.map(l=>l.score),
+          borderColor:'#74c69d',
+          backgroundColor:'rgba(116,198,157,.1)',
+          borderWidth:2,
+          pointBackgroundColor:'#74c69d',
+          pointRadius:5,
+          tension:.4,
+          fill:true
+        }]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:false}},
+        scales:{
+          x:{grid:chartDefaults.grid,ticks:chartDefaults.ticks},
+          y:{grid:chartDefaults.grid,ticks:chartDefaults.ticks,reverse:true}
+        }
+      }
+    });
+  }
+
+  // Balls chart
+  if(charts.balls) charts.balls.destroy();
+  const ballsCtx=document.getElementById('chart-balls');
+  if(ballsCtx){
+    charts.balls=new Chart(ballsCtx,{
+      type:'bar',
+      data:{
+        labels:practiceLogs.map(l=>l.date.slice(5)),
+        datasets:[{
+          label:'球数',
+          data:practiceLogs.map(l=>l.balls),
+          backgroundColor:'rgba(201,168,76,.7)',
+          borderColor:'rgba(201,168,76,1)',
+          borderWidth:1,
+          borderRadius:6
+        }]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:false}},
+        scales:{
+          x:{grid:chartDefaults.grid,ticks:chartDefaults.ticks},
+          y:{grid:chartDefaults.grid,ticks:chartDefaults.ticks}
+        }
+      }
+    });
+  }
+}
+
+// ===== TABS =====
+function switchTab(name){
+  ['log','history','chart'].forEach(t=>{
+    document.getElementById('tab-'+t).style.display=t===name?'block':'none';
+  });
+  document.querySelectorAll('.app-tab').forEach((btn,i)=>{
+    btn.classList.toggle('active',['log','history','chart'][i]===name);
+  });
+  if(name==='chart') setTimeout(renderCharts,100);
+}
+
+// ===== FAQ =====
+function toggleFaq(el){
+  const item=el.parentElement;
+  const open=item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+  if(!open) item.classList.add('open');
+}
+
+// ===== SCROLL REVEAL =====
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});
+},{threshold:0.1});
 document.querySelectorAll('.r').forEach(el=>obs.observe(el));
-function toggleFaq(el){const item=el.parentElement;const open=item.classList.contains('open');document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));if(!open)item.classList.add('open');}
 </script>
 </body>
 </html>
