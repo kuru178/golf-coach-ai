@@ -7,722 +7,221 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --fairway:   #1a3d2b;
-  --rough:     #0f2618;
-  --green:     #2d6a4f;
-  --pin:       #52b788;
-  --flag:      #74c69d;
-  --morning:   #b7e4c7;
-  --mist:      #d8f3dc;
-  --white:     #ffffff;
-  --cream:     #f8fdf9;
-  --fog:       #f0f9f3;
-  --sand:      #f4f1e8;
-  --sand2:     #ede8d4;
-  --bark:      #4a3728;
-  --sky:       #e8f5e9;
-  --text:      #0f2618;
-  --text2:     #2d5016;
-  --text3:     #52714a;
-  --text4:     #7a9a72;
-  --muted:     #a8c5a0;
-  --line:      rgba(45,106,79,.12);
-  --line2:     rgba(45,106,79,.2);
+  --g900: #0f3320;
+  --g800: #1a5c38;
+  --g700: #2d7a52;
+  --g600: #3a9668;
+  --g500: #52b788;
+  --g400: #74c69d;
+  --g300: #b7e4c7;
+  --g200: #d8f3dc;
+  --g100: #edf7f0;
+  --g50:  #f6fcf8;
+  --white: #ffffff;
+  --text:  #0f1f18;
+  --text2: #2d4a38;
+  --text3: #4a7060;
+  --text4: #7a9a8a;
+  --muted: #aac4b5;
+  --line:  rgba(52,150,104,.1);
+  --line2: rgba(52,150,104,.18);
 }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;font-size:15px;}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--white);color:var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden;}
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; font-size: 15px; }
-body {
-  font-family: 'Noto Sans JP', sans-serif;
-  background: var(--white);
-  color: var(--text);
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-}
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;height:66px;display:flex;align-items:center;justify-content:space-between;padding:0 6vw;background:rgba(255,255,255,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--line);}
+.nav.shadow{box-shadow:0 4px 30px rgba(15,51,32,.07);}
+.nav-brand{display:flex;align-items:center;gap:11px;text-decoration:none;}
+.nav-emblem{width:38px;height:38px;border-radius:10px;background:var(--g800);display:flex;align-items:center;justify-content:center;font-size:18px;}
+.nav-name{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:700;color:var(--g900);}
+.nav-name span{font-size:10px;font-weight:400;color:var(--muted);display:block;letter-spacing:.1em;text-transform:uppercase;font-family:'DM Mono',monospace;margin-top:-3px;}
+.nav-links{display:flex;align-items:center;gap:36px;}
+.nav-links a{font-size:13px;color:var(--text3);text-decoration:none;font-weight:500;transition:color .2s;}
+.nav-links a:hover{color:var(--g700);}
+.nav-btn{background:var(--g800)!important;color:var(--white)!important;padding:9px 22px;border-radius:99px;font-size:13px!important;font-weight:600!important;box-shadow:0 2px 12px rgba(26,92,56,.25);transition:all .2s!important;}
+.nav-btn:hover{background:var(--g900)!important;transform:translateY(-1px)!important;}
 
-/* ─── NAV ─── */
-.nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-  height: 66px;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 6vw;
-  background: rgba(248,253,249,0.92);
-  backdrop-filter: blur(18px) saturate(1.4);
-  border-bottom: 1px solid var(--line);
-  transition: box-shadow .4s;
-}
-.nav.shadow { box-shadow: 0 4px 30px rgba(15,38,24,.07); }
-.nav-brand {
-  display: flex; align-items: center; gap: 11px;
-  text-decoration: none;
-}
-.nav-emblem {
-  width: 38px; height: 38px; border-radius: 10px;
-  background: var(--fairway);
-  display: flex; align-items: center; justify-content: center;
-  position: relative; overflow: hidden;
-}
-.nav-emblem::before {
-  content: '';
-  position: absolute; bottom: 0; left: 0; right: 0; height: 40%;
-  background: var(--pin);
-}
-.nav-emblem-flag {
-  position: relative; z-index: 2;
-  font-size: 16px; line-height: 1;
-  margin-top: -4px;
-}
-.nav-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 21px; font-weight: 700;
-  color: var(--fairway); letter-spacing: .01em;
-}
-.nav-name span {
-  font-size: 11px; font-weight: 400; color: var(--text4);
-  display: block; letter-spacing: .1em; text-transform: uppercase;
-  font-family: 'DM Mono', monospace; margin-top: -3px;
-}
-.nav-links { display: flex; align-items: center; gap: 36px; }
-.nav-links a {
-  font-size: 13px; color: var(--text3); text-decoration: none;
-  font-weight: 500; transition: color .2s; letter-spacing: .01em;
-}
-.nav-links a:hover { color: var(--green); }
-.nav-btn {
-  background: var(--fairway); color: var(--white) !important;
-  padding: 9px 22px; border-radius: 99px;
-  font-size: 13px !important; font-weight: 600 !important;
-  transition: background .2s, transform .15s !important;
-  box-shadow: 0 2px 12px rgba(15,38,24,.25);
-}
-.nav-btn:hover { background: var(--rough) !important; transform: translateY(-1px) !important; }
+.hero{min-height:100vh;background:linear-gradient(160deg,var(--white) 0%,var(--g50) 40%,var(--g100) 100%);position:relative;overflow:hidden;display:flex;align-items:center;padding-top:66px;}
+.hero-deco{position:absolute;inset:0;pointer-events:none;}
+.hero-circle1{position:absolute;top:-10%;right:-5%;width:55vw;height:55vw;max-width:700px;max-height:700px;border-radius:50%;background:radial-gradient(ellipse,rgba(82,183,136,.12) 0%,transparent 70%);}
+.hero-circle2{position:absolute;bottom:-15%;left:-10%;width:45vw;height:45vw;max-width:580px;max-height:580px;border-radius:50%;background:radial-gradient(ellipse,rgba(45,122,82,.07) 0%,transparent 70%);}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:60px 60px;opacity:.4;}
+.hero-inner{position:relative;z-index:2;max-width:1100px;margin:0 auto;padding:0 6vw;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;width:100%;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--g700);border:1px solid var(--g300);background:var(--g100);padding:5px 14px;border-radius:99px;margin-bottom:22px;}
+.hero-eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--g500);animation:pulse 2.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+.hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(42px,5.5vw,72px);font-weight:700;line-height:1.1;color:var(--g900);letter-spacing:-.02em;margin-bottom:12px;}
+.hero-h1 em{font-style:italic;color:var(--g700);display:block;}
+.hero-sub{font-size:clamp(14px,1.5vw,17px);color:var(--text3);line-height:1.9;max-width:480px;margin-bottom:36px;font-weight:300;}
+.hero-sub strong{color:var(--g800);font-weight:600;}
+.hero-btns{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.btn-start{display:inline-flex;align-items:center;gap:8px;padding:15px 32px;border-radius:99px;font-size:15px;font-weight:700;background:var(--g800);color:var(--white);text-decoration:none;transition:all .2s;box-shadow:0 6px 28px rgba(26,92,56,.28);font-family:'Noto Sans JP',sans-serif;}
+.btn-start:hover{background:var(--g900);transform:translateY(-2px);box-shadow:0 10px 36px rgba(26,92,56,.38);}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;padding:15px 28px;border-radius:99px;font-size:14px;font-weight:500;color:var(--g800);border:1.5px solid var(--g300);text-decoration:none;transition:all .2s;font-family:'Noto Sans JP',sans-serif;}
+.btn-ghost:hover{background:var(--g100);border-color:var(--g500);}
+.hero-footnote{margin-top:18px;font-size:12px;color:var(--muted);font-family:'DM Mono',monospace;}
 
-/* ─── HERO ─── */
-.hero {
-  min-height: 100vh;
-  background: var(--fairway);
-  position: relative;
-  overflow: hidden;
-  display: flex; align-items: center;
-}
+.hero-visual{position:relative;}
+.hero-card-main{background:var(--white);border:1px solid var(--line2);border-radius:24px;padding:28px;box-shadow:0 20px 60px rgba(15,51,32,.1);position:relative;z-index:2;}
+.hero-card-badge{display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--g700);background:var(--g100);border:1px solid var(--g200);padding:4px 12px;border-radius:99px;margin-bottom:16px;}
+.hero-card-title{font-size:16px;font-weight:700;color:var(--g900);margin-bottom:8px;}
+.hero-card-text{font-size:12px;color:var(--text4);line-height:1.7;margin-bottom:16px;}
+.hero-chips{display:flex;gap:6px;flex-wrap:wrap;}
+.hero-chip{font-size:11px;font-weight:600;padding:4px 12px;border-radius:99px;}
+.chip-g{background:var(--g100);color:var(--g700);border:1px solid var(--g200);}
+.chip-w{background:var(--g50);color:var(--text4);border:1px solid var(--line);}
+.hero-card-sub{background:var(--g50);border:1px solid var(--line);border-radius:16px;padding:18px;margin-top:14px;}
+.hero-card-sub-label{font-size:10px;font-family:'DM Mono',monospace;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;}
+.hero-score-row{display:flex;justify-content:space-between;align-items:center;}
+.hero-score-item{text-align:center;}
+.hero-score-n{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--g800);line-height:1;}
+.hero-score-n em{font-size:14px;font-style:normal;color:var(--g500);}
+.hero-score-l{font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:2px;}
+.hero-card-float{position:absolute;top:-20px;right:-20px;background:var(--g800);color:var(--white);border-radius:16px;padding:14px 18px;box-shadow:0 8px 24px rgba(26,92,56,.3);z-index:3;}
+.hero-card-float-n{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:700;line-height:1;}
+.hero-card-float-n em{font-size:16px;font-style:normal;color:var(--g400);}
+.hero-card-float-l{font-size:10px;color:rgba(255,255,255,.6);font-family:'DM Mono',monospace;margin-top:2px;}
 
-/* Layered fairway landscape */
-.hero-landscape {
-  position: absolute; inset: 0;
-}
-/* Sky gradient */
-.hero-sky {
-  position: absolute; top: 0; left: 0; right: 0; height: 55%;
-  background: linear-gradient(180deg,
-    #0a1f13 0%,
-    #0f2e1a 35%,
-    #163d23 65%,
-    #1a4a2a 100%
-  );
-}
-/* Distant hills */
-.hero-hills {
-  position: absolute; bottom: 38%; left: 0; right: 0; height: 28%;
-  background: linear-gradient(180deg, transparent 0%, #0e2e18 100%);
-}
-.hero-hills::before {
-  content: '';
-  position: absolute; bottom: 0; left: -5%; right: -5%;
-  height: 100%;
-  background:
-    radial-gradient(ellipse 30% 60% at 20% 100%, #163d23 0%, transparent 60%),
-    radial-gradient(ellipse 40% 70% at 55% 100%, #122d1a 0%, transparent 55%),
-    radial-gradient(ellipse 35% 65% at 85% 100%, #194228 0%, transparent 60%);
-}
-/* Fairway ground */
-.hero-fairway {
-  position: absolute; bottom: 0; left: 0; right: 0; height: 42%;
-  background: linear-gradient(180deg,
-    #1c5c30 0%,
-    #1a5429 30%,
-    #164a22 70%,
-    #123d1c 100%
-  );
-}
-/* Fairway stripes */
-.hero-stripes {
-  position: absolute; bottom: 0; left: 0; right: 0; height: 42%;
-  background: repeating-linear-gradient(
-    90deg,
-    transparent 0%,
-    transparent 6.5%,
-    rgba(255,255,255,.025) 6.5%,
-    rgba(255,255,255,.025) 13%
-  );
-}
-/* Morning mist layer */
-.hero-mist {
-  position: absolute; bottom: 34%; left: 0; right: 0; height: 14%;
-  background: linear-gradient(180deg,
-    transparent 0%,
-    rgba(200,235,210,.07) 40%,
-    rgba(200,235,210,.12) 60%,
-    transparent 100%
-  );
-  filter: blur(12px);
-}
-/* Putting green circle */
-.hero-putting-green {
-  position: absolute; right: 8vw; bottom: 12%;
-  width: 22vw; height: 10vw; max-width: 340px; max-height: 155px;
-  border-radius: 50%;
-  background: radial-gradient(ellipse at 40% 40%, #28784a, #1d5c38);
-  box-shadow: 0 0 60px rgba(40,120,74,.4), inset 0 -8px 20px rgba(0,0,0,.2);
-}
-/* Flag + pin */
-.hero-pin {
-  position: absolute; right: calc(8vw + 9vw); bottom: calc(12% + 10vw);
-  max-right: calc(8vw + 170px);
-  transform: translateX(50%);
-}
-.hero-pin-stick {
-  width: 2px; height: 80px;
-  background: linear-gradient(180deg, #e8e0d0, #c8c0b0);
-  margin: 0 auto;
-}
-.hero-pin-flag {
-  width: 30px; height: 20px;
-  background: linear-gradient(135deg, #e8302a, #c0251f);
-  clip-path: polygon(0 0, 100% 30%, 100% 70%, 0 100%);
-  margin-left: 2px; margin-top: -1px;
-}
-/* Trees silhouette left */
-.hero-trees {
-  position: absolute; bottom: 36%; left: 0;
-  width: 18vw; height: 20vw; max-width: 240px; max-height: 260px;
-  background: #0c2415;
-  clip-path: polygon(
-    0% 100%, 5% 60%, 10% 75%, 18% 40%, 25% 60%, 30% 30%,
-    37% 52%, 42% 20%, 50% 45%, 55% 15%, 62% 38%, 68% 8%,
-    74% 32%, 80% 12%, 86% 36%, 92% 18%, 98% 40%, 100% 100%
-  );
-}
-/* Sun / light source */
-.hero-sun {
-  position: absolute; top: 15%; left: 50%;
-  width: 6px; height: 6px; border-radius: 50%;
-  background: rgba(220,255,200,.5);
-  box-shadow:
-    0 0 30px 15px rgba(180,240,160,.06),
-    0 0 80px 40px rgba(150,220,130,.04),
-    0 0 160px 80px rgba(120,200,100,.02);
-}
-/* Morning light rays */
-.hero-rays {
-  position: absolute; top: 15%; left: 50%;
-  width: 0; height: 0;
-  transform: translateX(-50%);
-}
-.hero-rays::before, .hero-rays::after {
-  content: '';
-  position: absolute; top: 0; left: 0;
-  width: 2px; height: 120vh;
-  background: linear-gradient(180deg, rgba(200,255,180,.05), transparent);
-  transform-origin: top center;
-}
-.hero-rays::before { transform: rotate(-20deg); }
-.hero-rays::after  { transform: rotate(20deg); }
+.stats-bar{background:var(--g900);padding:28px 6vw;}
+.stats-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);}
+.stat-item{text-align:center;padding:8px 0;}
+.stat-n{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:700;color:var(--white);line-height:1;margin-bottom:4px;}
+.stat-n em{font-size:16px;font-style:normal;color:var(--g400);}
+.stat-l{font-size:11px;color:rgba(255,255,255,.4);font-family:'DM Mono',monospace;letter-spacing:.04em;}
 
-/* Hero content */
-.hero-content {
-  position: relative; z-index: 10;
-  padding: 0 6vw; padding-top: 80px;
-  max-width: 680px;
-}
-.hero-eyebrow {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-family: 'DM Mono', monospace;
-  font-size: 11px; font-weight: 500; letter-spacing: .14em;
-  text-transform: uppercase; color: var(--flag);
-  border: 1px solid rgba(116,198,157,.3);
-  background: rgba(116,198,157,.08);
-  padding: 5px 14px; border-radius: 99px;
-  margin-bottom: 22px;
-  animation: fadeUp .7s .1s both;
-}
-.hero-eyebrow-dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--flag); animation: pulse 2.5s infinite;
-}
-@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.8)} }
+.section{padding:100px 6vw;}
+.inner{max-width:1100px;margin:0 auto;}
+.eyebrow{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--g600);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--g500);display:block;}
+.section-h{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,52px);font-weight:700;color:var(--g900);line-height:1.15;letter-spacing:-.01em;margin-bottom:18px;}
+.section-h em{font-style:italic;color:var(--g700);}
+.section-lead{font-size:15px;color:var(--text3);line-height:1.9;max-width:520px;}
 
-.hero-h1 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(44px, 6.5vw, 80px);
-  font-weight: 700; line-height: 1.08;
-  color: var(--white); letter-spacing: -.02em;
-  margin-bottom: 10px;
-  animation: fadeUp .7s .2s both;
-}
-.hero-h1 em {
-  font-style: italic; color: var(--flag);
-  display: block;
-}
-.hero-sub {
-  font-size: clamp(14px, 1.6vw, 17px);
-  color: rgba(255,255,255,.55);
-  line-height: 1.9; max-width: 480px;
-  margin-bottom: 38px; font-weight: 300;
-  animation: fadeUp .7s .3s both;
-}
-.hero-sub strong { color: rgba(255,255,255,.85); font-weight: 500; }
-.hero-btns {
-  display: flex; align-items: center; gap: 14px;
-  flex-wrap: wrap;
-  animation: fadeUp .7s .4s both;
-}
-.btn-start {
-  display: inline-flex; align-items: center; gap: 9px;
-  padding: 15px 34px; border-radius: 99px;
-  font-size: 15px; font-weight: 700;
-  background: var(--pin); color: var(--rough);
-  text-decoration: none; transition: all .2s;
-  box-shadow: 0 6px 28px rgba(82,183,136,.35);
-  font-family: 'Noto Sans JP', sans-serif;
-  letter-spacing: .01em;
-}
-.btn-start:hover { background: var(--flag); transform: translateY(-2px); box-shadow: 0 10px 36px rgba(82,183,136,.45); }
-.btn-ghost-hero {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 15px 28px; border-radius: 99px;
-  font-size: 14px; font-weight: 500; color: rgba(255,255,255,.6);
-  border: 1px solid rgba(255,255,255,.15);
-  text-decoration: none; transition: all .2s;
-  font-family: 'Noto Sans JP', sans-serif;
-}
-.btn-ghost-hero:hover { color: var(--white); border-color: rgba(255,255,255,.35); background: rgba(255,255,255,.05); }
-.hero-footnote {
-  margin-top: 20px; font-size: 12px;
-  color: rgba(255,255,255,.25); font-family: 'DM Mono', monospace;
-  animation: fadeUp .7s .5s both;
-}
+.problem{background:var(--g50);}
+.prob-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:52px;}
+.prob-cell{background:var(--white);border:1px solid var(--line2);border-radius:20px;padding:36px 32px;transition:all .25s;position:relative;overflow:hidden;}
+.prob-cell::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--g300);transition:background .25s;}
+.prob-cell:hover{box-shadow:0 12px 40px rgba(15,51,32,.08);transform:translateY(-2px);}
+.prob-cell:hover::before{background:var(--g500);}
+.prob-tag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--muted);margin-bottom:14px;text-transform:uppercase;}
+.prob-q{font-size:16px;font-weight:700;color:var(--g900);line-height:1.5;margin-bottom:10px;}
+.prob-a{font-size:13px;color:var(--text4);line-height:1.8;}
 
-/* Hero stats — bottom bar */
-.hero-stats {
-  position: absolute; bottom: 0; left: 0; right: 0; z-index: 10;
-  display: flex;
-  border-top: 1px solid rgba(255,255,255,.07);
-  background: rgba(15,38,24,.7);
-  backdrop-filter: blur(12px);
-  animation: fadeUp .7s .6s both;
-}
-.hstat {
-  flex: 1; padding: 20px 0; text-align: center;
-  border-right: 1px solid rgba(255,255,255,.07);
-}
-.hstat:last-child { border-right: none; }
-.hstat-n {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 34px; font-weight: 700; color: var(--white);
-  line-height: 1; margin-bottom: 4px;
-}
-.hstat-n em { font-size: 18px; font-style: normal; color: var(--flag); }
-.hstat-l { font-size: 11px; color: rgba(255,255,255,.35); letter-spacing: .04em; font-family: 'DM Mono', monospace; }
+.how{background:var(--white);}
+.how-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
+.how-step{display:flex;gap:20px;padding:26px 0;border-bottom:1px solid var(--line);}
+.how-step:last-child{border-bottom:none;}
+.how-num{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:700;color:var(--g200);line-height:1;flex-shrink:0;width:42px;text-align:right;margin-top:-2px;transition:color .2s;}
+.how-step:hover .how-num{color:var(--g500);}
+.how-step-title{font-size:15px;font-weight:700;color:var(--g900);margin-bottom:7px;}
+.how-step-text{font-size:13px;color:var(--text4);line-height:1.8;}
+.how-visual{background:var(--g50);border:1px solid var(--line2);border-radius:24px;padding:28px;}
+.mock-card{background:var(--white);border:1px solid var(--line2);border-radius:16px;padding:20px;margin-bottom:12px;box-shadow:0 2px 12px rgba(15,51,32,.04);}
+.mock-card:last-child{margin-bottom:0;}
+.mock-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--g600);font-family:'DM Mono',monospace;margin-bottom:10px;}
+.mock-title{font-size:14px;font-weight:700;color:var(--g900);margin-bottom:6px;}
+.mock-text{font-size:12px;color:var(--text4);line-height:1.7;}
+.mock-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;}
+.mock-chip{font-size:10px;font-weight:600;padding:3px 10px;border-radius:99px;}
 
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
+.features-sec{background:var(--g900);position:relative;overflow:hidden;}
+.features-sec::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0px,transparent 39px,rgba(255,255,255,.015) 39px,rgba(255,255,255,.015) 40px);}
+.feat-inner{position:relative;z-index:2;}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.06);border-radius:20px;overflow:hidden;margin-top:52px;}
+.feat-cell{background:rgba(15,51,32,.5);padding:38px 32px;transition:background .2s;}
+.feat-cell:hover{background:rgba(15,51,32,.85);}
+.feat-ico{width:48px;height:48px;border-radius:14px;background:rgba(82,183,136,.12);border:1px solid rgba(82,183,136,.2);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:18px;}
+.feat-title{font-size:15px;font-weight:700;color:var(--white);margin-bottom:10px;line-height:1.4;}
+.feat-text{font-size:13px;color:rgba(255,255,255,.45);line-height:1.85;}
+.feat-pill{display:inline-block;margin-top:14px;font-size:10px;font-weight:600;letter-spacing:.06em;padding:3px 10px;border-radius:99px;background:rgba(82,183,136,.1);color:var(--g400);font-family:'DM Mono',monospace;}
 
-/* ─── SECTION BASE ─── */
-.section { padding: 100px 6vw; }
-.inner { max-width: 1100px; margin: 0 auto; }
-.eyebrow {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px; font-weight: 500; letter-spacing: .14em;
-  text-transform: uppercase; color: var(--pin);
-  margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
-}
-.eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--pin); display: block; }
-.section-h {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(34px, 4vw, 54px);
-  font-weight: 700; color: var(--fairway);
-  line-height: 1.15; letter-spacing: -.01em;
-  margin-bottom: 18px;
-}
-.section-h em { font-style: italic; color: var(--green); }
-.section-lead {
-  font-size: 15px; color: var(--text3);
-  line-height: 1.9; max-width: 520px;
-}
+.testi-sec{background:var(--white);position:relative;}
+.testi-sec::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--g800),var(--g500));}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:52px;}
+.testi-card{background:var(--g50);border:1px solid var(--line2);border-radius:20px;padding:30px 26px;transition:all .25s;}
+.testi-card:hover{transform:translateY(-5px);box-shadow:0 16px 48px rgba(15,51,32,.1);background:var(--white);}
+.testi-stars{font-size:13px;letter-spacing:2px;color:#c8a040;margin-bottom:12px;}
+.testi-text{font-size:13px;color:var(--text3);line-height:1.9;margin-bottom:20px;}
+.testi-foot{display:flex;align-items:center;gap:12px;}
+.testi-av{width:40px;height:40px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(--g800),var(--g500));display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--white);}
+.testi-name{font-size:13px;font-weight:700;color:var(--g900);}
+.testi-info{font-size:11px;color:var(--muted);margin-top:1px;}
+.score-pill{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;background:var(--g100);color:var(--g700);padding:2px 9px;border-radius:99px;border:1px solid var(--g200);margin-top:4px;}
 
-/* ─── PROBLEM ─── */
-.problem { background: var(--cream); }
-.prob-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 1px; background: var(--line2);
-  border-radius: 20px; overflow: hidden;
-  margin-top: 56px; border: 1px solid var(--line2);
-}
-.prob-cell {
-  background: var(--cream); padding: 40px 38px;
-  transition: background .25s;
-  position: relative;
-}
-.prob-cell:hover { background: var(--white); }
-.prob-cell::after {
-  content: '';
-  position: absolute; left: 38px; bottom: 0;
-  width: 28px; height: 2px; background: var(--pin);
-  transform: scaleX(0); transform-origin: left;
-  transition: transform .3s;
-}
-.prob-cell:hover::after { transform: scaleX(1); }
-.prob-tag {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px; letter-spacing: .1em; color: var(--muted);
-  margin-bottom: 16px; text-transform: uppercase;
-}
-.prob-q {
-  font-size: 17px; font-weight: 700; color: var(--fairway);
-  line-height: 1.5; margin-bottom: 10px;
-}
-.prob-a { font-size: 13px; color: var(--text4); line-height: 1.8; }
+.pricing-sec{background:var(--g50);}
+.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:800px;margin:52px auto 0;}
+.plan{border:1.5px solid var(--line2);border-radius:22px;padding:38px 34px;position:relative;transition:all .2s;background:var(--white);}
+.plan:hover{transform:translateY(-4px);box-shadow:0 20px 60px rgba(15,51,32,.1);}
+.plan.pro{border-color:var(--g500);box-shadow:0 0 0 4px rgba(82,183,136,.08);}
+.plan-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--g800);color:var(--white);font-size:11px;font-weight:700;padding:5px 18px;border-radius:99px;letter-spacing:.04em;white-space:nowrap;box-shadow:0 4px 16px rgba(26,92,56,.3);}
+.plan-name{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;}
+.plan-name.hot{color:var(--g700);}
+.plan-price{font-family:'Cormorant Garamond',serif;font-size:56px;font-weight:700;color:var(--g900);line-height:1;margin-bottom:6px;}
+.plan-price sup{font-size:24px;vertical-align:super;}
+.plan-price sub{font-size:18px;font-weight:400;color:var(--text4);font-family:'Noto Sans JP',sans-serif;}
+.plan-cycle{font-size:13px;color:var(--text4);margin-bottom:26px;}
+.plan-list{list-style:none;margin-bottom:28px;}
+.plan-list li{font-size:13px;color:var(--text3);padding:8px 0;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;gap:10px;line-height:1.5;}
+.plan-list li:last-child{border-bottom:none;}
+.plan-list li::before{content:'✓';color:var(--g500);font-weight:700;flex-shrink:0;}
+.plan-list li.no{color:var(--muted);}
+.plan-list li.no::before{content:'—';color:var(--line2);}
+.btn-plan{display:block;width:100%;padding:14px;border-radius:14px;border:none;cursor:pointer;font-size:14px;font-weight:700;font-family:'Noto Sans JP',sans-serif;text-align:center;text-decoration:none;transition:all .2s;}
+.btn-plan-pro{background:var(--g800);color:var(--white);box-shadow:0 4px 20px rgba(26,92,56,.3);}
+.btn-plan-pro:hover{background:var(--g900);}
+.btn-plan-free{background:var(--g50);color:var(--text3);border:1.5px solid var(--line2);}
+.btn-plan-free:hover{background:var(--g100);}
+.pricing-note{text-align:center;margin-top:20px;font-size:12px;color:var(--muted);}
 
-/* ─── HOW IT WORKS ─── */
-.how { background: var(--white); }
-.how-inner {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 80px; align-items: start;
-}
-.how-steps { margin-top: 4px; }
-.how-step {
-  display: flex; gap: 22px; padding: 28px 0;
-  border-bottom: 1px solid var(--line);
-  position: relative;
-}
-.how-step:last-child { border-bottom: none; }
-.how-num {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 38px; font-weight: 700; color: var(--mist);
-  line-height: 1; flex-shrink: 0; width: 44px;
-  text-align: right; margin-top: -4px;
-  transition: color .2s;
-}
-.how-step:hover .how-num { color: var(--pin); }
-.how-step-body { padding-top: 4px; }
-.how-step-title { font-size: 16px; font-weight: 700; color: var(--fairway); margin-bottom: 8px; }
-.how-step-text  { font-size: 13px; color: var(--text4); line-height: 1.8; }
-.how-visual {
-  position: sticky; top: 100px;
-  background: var(--fairway);
-  border-radius: 24px; overflow: hidden;
-  aspect-ratio: 4/5;
-  display: flex; flex-direction: column; justify-content: flex-end;
-  box-shadow: 0 24px 80px rgba(15,38,24,.2);
-}
-.how-visual-bg {
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 70% 50% at 50% 20%, rgba(82,183,136,.15), transparent),
-    linear-gradient(180deg, var(--fairway) 0%, var(--rough) 100%);
-}
-.how-visual-content {
-  position: relative; z-index: 2;
-  padding: 28px;
-}
-.mock-card {
-  background: rgba(255,255,255,.07);
-  border: 1px solid rgba(255,255,255,.1);
-  border-radius: 16px; padding: 20px;
-  margin-bottom: 10px;
-  backdrop-filter: blur(10px);
-}
-.mock-card:last-child { margin-bottom: 0; }
-.mock-label { font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--flag); font-family: 'DM Mono', monospace; margin-bottom: 10px; }
-.mock-title { font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 6px; }
-.mock-text  { font-size: 12px; color: rgba(255,255,255,.5); line-height: 1.7; }
-.mock-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
-.mock-chip {
-  font-size: 10px; font-weight: 600; padding: 3px 10px; border-radius: 99px;
-}
-.chip-g { background: rgba(82,183,136,.2); color: var(--flag); }
-.chip-w { background: rgba(255,255,255,.1); color: rgba(255,255,255,.6); }
+.faq-sec{background:var(--white);}
+.faq-wrap{max-width:700px;margin:52px auto 0;}
+.faq-item{border-bottom:1px solid var(--line2);}
+.faq-q{padding:22px 0;cursor:pointer;font-size:15px;font-weight:600;color:var(--g900);display:flex;justify-content:space-between;align-items:center;gap:16px;transition:color .15s;line-height:1.5;}
+.faq-q:hover{color:var(--g700);}
+.faq-icon{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--line2);display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--muted);flex-shrink:0;transition:all .2s;}
+.faq-item.open .faq-icon{background:var(--g800);border-color:var(--g800);color:var(--white);transform:rotate(45deg);}
+.faq-a{font-size:14px;color:var(--text4);line-height:1.85;max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s;}
+.faq-item.open .faq-a{max-height:300px;padding-bottom:24px;}
 
-/* ─── FEATURES ─── */
-.features-sec { background: var(--fairway); position: relative; overflow: hidden; }
-.features-sec::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--pin), transparent);
-}
-/* Subtle fairway texture */
-.features-sec::after {
-  content: '';
-  position: absolute; inset: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent 0px, transparent 39px,
-    rgba(255,255,255,.015) 39px, rgba(255,255,255,.015) 40px
-  );
-}
-.feat-inner { position: relative; z-index: 2; }
-.feat-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 1px; background: rgba(255,255,255,.07);
-  border-radius: 20px; overflow: hidden;
-  margin-top: 56px;
-}
-.feat-cell {
-  background: rgba(15,38,24,.6);
-  padding: 40px 34px;
-  transition: background .2s;
-  backdrop-filter: blur(4px);
-}
-.feat-cell:hover { background: rgba(15,38,24,.9); }
-.feat-ico {
-  width: 50px; height: 50px;
-  border-radius: 14px;
-  background: rgba(82,183,136,.12);
-  border: 1px solid rgba(82,183,136,.2);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 23px; margin-bottom: 20px;
-}
-.feat-title { font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 10px; line-height: 1.4; }
-.feat-text  { font-size: 13px; color: rgba(255,255,255,.45); line-height: 1.85; }
-.feat-pill {
-  display: inline-block; margin-top: 16px;
-  font-size: 10px; font-weight: 600; letter-spacing: .06em;
-  padding: 3px 10px; border-radius: 99px;
-  background: rgba(82,183,136,.1); color: var(--flag);
-  font-family: 'DM Mono', monospace;
-}
+.cta{background:linear-gradient(135deg,var(--g900) 0%,var(--g800) 100%);position:relative;overflow:hidden;text-align:center;}
+.cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60vw;height:40vw;background:radial-gradient(ellipse,rgba(82,183,136,.15),transparent 70%);pointer-events:none;}
+.cta-content{position:relative;z-index:2;}
+.cta-eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--g400);margin-bottom:18px;display:flex;align-items:center;justify-content:center;gap:8px;}
+.cta-eyebrow::before,.cta-eyebrow::after{content:'';width:24px;height:1px;background:var(--g400);}
+.cta-h{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,64px);font-weight:700;color:var(--white);line-height:1.12;letter-spacing:-.01em;margin-bottom:16px;}
+.cta-h em{font-style:italic;color:var(--g400);}
+.cta-sub{font-size:16px;color:rgba(255,255,255,.5);line-height:1.85;margin-bottom:34px;}
+.btn-start-light{display:inline-flex;align-items:center;gap:8px;padding:15px 34px;border-radius:99px;font-size:15px;font-weight:700;background:var(--white);color:var(--g900);text-decoration:none;transition:all .2s;box-shadow:0 6px 28px rgba(0,0,0,.2);font-family:'Noto Sans JP',sans-serif;}
+.btn-start-light:hover{background:var(--g100);transform:translateY(-2px);}
+.cta-note{margin-top:18px;font-size:12px;color:rgba(255,255,255,.25);font-family:'DM Mono',monospace;}
 
-/* ─── TESTIMONIALS ─── */
-.testi-sec { background: var(--fog); position: relative; }
-.testi-sec::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0;
-  height: 6px;
-  background: linear-gradient(90deg, var(--green), var(--pin));
-}
-.testi-grid {
-  display: grid; grid-template-columns: repeat(3,1fr);
-  gap: 22px; margin-top: 52px;
-}
-.testi-card {
-  background: var(--white); border: 1px solid var(--line2);
-  border-radius: 20px; padding: 32px 28px;
-  position: relative; overflow: hidden;
-  transition: transform .25s, box-shadow .25s;
-  box-shadow: 0 2px 16px rgba(15,38,24,.05);
-}
-.testi-card::before {
-  content: '"';
-  position: absolute; top: 14px; right: 22px;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 80px; color: var(--mist); line-height: 1;
-  pointer-events: none;
-}
-.testi-card:hover { transform: translateY(-5px); box-shadow: 0 16px 48px rgba(15,38,24,.1); }
-.testi-stars { font-size: 13px; letter-spacing: 2px; color: #c8a040; margin-bottom: 14px; }
-.testi-text {
-  font-size: 14px; color: var(--text3); line-height: 1.9;
-  margin-bottom: 22px; position: relative; z-index: 1;
-}
-.testi-foot { display: flex; align-items: center; gap: 12px; }
-.testi-av {
-  width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0;
-  background: linear-gradient(135deg, var(--green), var(--pin));
-  display: flex; align-items: center; justify-content: center;
-  font-size: 15px; font-weight: 700; color: var(--white);
-}
-.testi-name { font-size: 13px; font-weight: 700; color: var(--fairway); }
-.testi-info { font-size: 11px; color: var(--muted); margin-top: 1px; }
-.score-pill {
-  display: inline-flex; align-items: center; gap: 4px;
-  font-size: 11px; font-weight: 600;
-  background: var(--mist); color: var(--green);
-  padding: 2px 9px; border-radius: 99px;
-  border: 1px solid var(--morning); margin-top: 4px;
-}
+footer{background:var(--g900);border-top:1px solid rgba(255,255,255,.05);padding:44px 6vw 32px;}
+.footer-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;}
+.footer-brand{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:rgba(255,255,255,.6);}
+.footer-links{display:flex;gap:24px;}
+.footer-links a{font-size:12px;color:rgba(255,255,255,.3);text-decoration:none;transition:color .15s;}
+.footer-links a:hover{color:rgba(255,255,255,.6);}
+.footer-copy{font-size:12px;color:rgba(255,255,255,.2);font-family:'DM Mono',monospace;}
 
-/* ─── PRICING ─── */
-.pricing-sec { background: var(--white); }
-.pricing-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 24px; max-width: 800px; margin: 56px auto 0;
-}
-.plan {
-  border: 1.5px solid var(--line2); border-radius: 22px;
-  padding: 40px 36px; position: relative;
-  transition: transform .2s, box-shadow .2s;
-  background: var(--cream);
-}
-.plan:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(15,38,24,.1); }
-.plan.pro {
-  border-color: var(--pin);
-  background: var(--white);
-  box-shadow: 0 0 0 4px rgba(82,183,136,.08);
-}
-.plan-badge {
-  position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
-  background: var(--green); color: var(--white);
-  font-size: 11px; font-weight: 700; padding: 5px 18px; border-radius: 99px;
-  letter-spacing: .04em; white-space: nowrap;
-  box-shadow: 0 4px 16px rgba(45,106,79,.3);
-}
-.plan-name {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
-  color: var(--text4); margin-bottom: 14px;
-}
-.plan-name.hot { color: var(--green); }
-.plan-price {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 58px; font-weight: 700; color: var(--fairway);
-  line-height: 1; margin-bottom: 6px;
-}
-.plan-price sup { font-size: 24px; vertical-align: super; }
-.plan-price sub { font-size: 18px; font-weight: 400; color: var(--text4); font-family: 'Noto Sans JP', sans-serif; }
-.plan-cycle { font-size: 13px; color: var(--text4); margin-bottom: 28px; }
-.plan-list { list-style: none; margin-bottom: 30px; }
-.plan-list li {
-  font-size: 13px; color: var(--text3); padding: 9px 0;
-  border-bottom: 1px solid var(--line); display: flex;
-  align-items: flex-start; gap: 10px; line-height: 1.5;
-}
-.plan-list li:last-child { border-bottom: none; }
-.plan-list li::before { content: '✓'; color: var(--pin); font-weight: 700; flex-shrink: 0; }
-.plan-list li.no { color: var(--muted); }
-.plan-list li.no::before { content: '—'; color: var(--line2); }
-.btn-plan {
-  display: block; width: 100%; padding: 14px;
-  border-radius: 14px; border: none; cursor: pointer;
-  font-size: 14px; font-weight: 700;
-  font-family: 'Noto Sans JP', sans-serif;
-  text-align: center; text-decoration: none;
-  transition: all .2s;
-}
-.btn-plan-pro { background: var(--green); color: var(--white); box-shadow: 0 4px 20px rgba(45,106,79,.3); }
-.btn-plan-pro:hover { background: var(--fairway); }
-.btn-plan-free { background: var(--fog); color: var(--text3); border: 1.5px solid var(--line2); }
-.btn-plan-free:hover { background: var(--mist); }
-.pricing-note { text-align: center; margin-top: 22px; font-size: 12px; color: var(--muted); }
+.r{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1);}
+.r.in{opacity:1;transform:translateY(0);}
+.rd1{transition-delay:.1s;}.rd2{transition-delay:.2s;}.rd3{transition-delay:.3s;}
 
-/* ─── FAQ ─── */
-.faq-sec { background: var(--cream); }
-.faq-wrap { max-width: 700px; margin: 52px auto 0; }
-.faq-item { border-bottom: 1px solid var(--line2); }
-.faq-q {
-  padding: 22px 0; cursor: pointer;
-  font-size: 15px; font-weight: 600; color: var(--fairway);
-  display: flex; justify-content: space-between; align-items: center; gap: 16px;
-  transition: color .15s; line-height: 1.5;
-}
-.faq-q:hover { color: var(--green); }
-.faq-icon {
-  width: 28px; height: 28px; border-radius: 50%;
-  border: 1.5px solid var(--line2);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px; font-weight: 300; color: var(--muted);
-  flex-shrink: 0; transition: all .2s;
-}
-.faq-item.open .faq-icon { background: var(--green); border-color: var(--green); color: var(--white); transform: rotate(45deg); }
-.faq-a {
-  font-size: 14px; color: var(--text4); line-height: 1.85;
-  max-height: 0; overflow: hidden; transition: max-height .35s ease, padding .35s;
-}
-.faq-item.open .faq-a { max-height: 300px; padding-bottom: 24px; }
-
-/* ─── FINAL CTA ─── */
-.cta { background: var(--fairway); position: relative; overflow: hidden; text-align: center; }
-.cta-landscape {
-  position: absolute; bottom: 0; left: 0; right: 0; height: 35%;
-  background: linear-gradient(180deg, transparent, var(--rough));
-}
-.cta-landscape::before {
-  content: '';
-  position: absolute; bottom: 0; left: -10%; right: -10%; height: 100%;
-  background:
-    radial-gradient(ellipse 25% 60% at 15% 100%, #0e2e18, transparent 55%),
-    radial-gradient(ellipse 35% 70% at 50% 100%, #122a17, transparent 50%),
-    radial-gradient(ellipse 25% 60% at 85% 100%, #0f2a16, transparent 55%);
-}
-.cta-mist {
-  position: absolute; bottom: 28%; left: 0; right: 0; height: 10%;
-  background: linear-gradient(180deg, transparent, rgba(180,230,200,.06), transparent);
-  filter: blur(16px);
-}
-.cta-glow {
-  position: absolute; top: 30%; left: 50%; transform: translate(-50%,-50%);
-  width: 50vw; height: 30vw;
-  background: radial-gradient(ellipse, rgba(82,183,136,.1), transparent 70%);
-  pointer-events: none;
-}
-.cta-content { position: relative; z-index: 2; }
-.cta-eyebrow {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
-  color: var(--flag); margin-bottom: 18px;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-}
-.cta-eyebrow::before, .cta-eyebrow::after { content: ''; width: 24px; height: 1px; background: var(--flag); }
-.cta-h {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(38px, 5.5vw, 68px); font-weight: 700;
-  color: var(--white); line-height: 1.12; letter-spacing: -.01em;
-  margin-bottom: 18px;
-}
-.cta-h em { font-style: italic; color: var(--flag); }
-.cta-sub { font-size: 16px; color: rgba(255,255,255,.45); line-height: 1.85; margin-bottom: 36px; }
-.cta-note { margin-top: 18px; font-size: 12px; color: rgba(255,255,255,.25); font-family: 'DM Mono', monospace; }
-
-/* ─── FOOTER ─── */
-footer {
-  background: var(--rough); border-top: 1px solid rgba(255,255,255,.05);
-  padding: 44px 6vw 32px;
-}
-.footer-inner {
-  display: flex; justify-content: space-between; align-items: center;
-  flex-wrap: wrap; gap: 20px;
-}
-.footer-brand {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 20px; font-weight: 700; color: rgba(255,255,255,.6);
-}
-.footer-links { display: flex; gap: 24px; }
-.footer-links a { font-size: 12px; color: rgba(255,255,255,.3); text-decoration: none; transition: color .15s; }
-.footer-links a:hover { color: rgba(255,255,255,.6); }
-.footer-copy { font-size: 12px; color: rgba(255,255,255,.2); font-family: 'DM Mono', monospace; }
-
-/* ─── REVEAL ─── */
-.r {
-  opacity: 0; transform: translateY(28px);
-  transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);
-}
-.r.in { opacity: 1; transform: translateY(0); }
-.rd1 { transition-delay: .1s; }
-.rd2 { transition-delay: .2s; }
-.rd3 { transition-delay: .3s; }
-.rd4 { transition-delay: .4s; }
-
-@media (max-width: 800px) {
-  .nav-links { display: none; }
-  .how-inner, .prob-grid, .feat-grid, .testi-grid, .pricing-grid { grid-template-columns: 1fr; }
-  .hero-stats { flex-direction: column; }
-  .hero-putting-green, .hero-trees, .hero-pin { display: none; }
+@media(max-width:800px){
+  .nav-links{display:none;}
+  .hero-inner,.how-inner,.prob-grid,.feat-grid,.testi-grid,.pricing-grid{grid-template-columns:1fr;}
+  .hero-visual{display:none;}
+  .stats-inner{grid-template-columns:repeat(2,1fr);}
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav class="nav" id="nav">
   <a href="#" class="nav-brand">
-    <div class="nav-emblem">
-      <div class="nav-emblem-flag">⛳</div>
-    </div>
-    <div class="nav-name">
-      Golf Coach AI
-      <span>Powered by AI</span>
-    </div>
+    <div class="nav-emblem">⛳</div>
+    <div class="nav-name">Golf Coach AI<span>Powered by AI</span></div>
   </a>
   <div class="nav-links">
     <a href="#howit">使い方</a>
@@ -733,372 +232,163 @@ footer {
   </div>
 </nav>
 
-<!-- HERO -->
 <section class="hero" id="top">
-  <div class="hero-landscape">
-    <div class="hero-sky"></div>
-    <div class="hero-hills"></div>
-    <div class="hero-fairway"></div>
-    <div class="hero-stripes"></div>
-    <div class="hero-mist"></div>
-    <div class="hero-putting-green"></div>
-    <div class="hero-pin">
-      <div class="hero-pin-flag"></div>
-      <div class="hero-pin-stick"></div>
-    </div>
-    <div class="hero-trees"></div>
-    <div class="hero-sun"></div>
-    <div class="hero-rays"></div>
+  <div class="hero-deco">
+    <div class="hero-circle1"></div>
+    <div class="hero-circle2"></div>
+    <div class="hero-grid"></div>
   </div>
-
-  <div class="hero-content">
-    <div class="hero-eyebrow"><div class="hero-eyebrow-dot"></div>AI Golf Coach</div>
-    <h1 class="hero-h1">
-      練習を記録するだけで、<br>
-      <em>AIコーチが上達を加速する。</em>
-    </h1>
-    <p class="hero-sub">
-      打席・ラウンド・課題をスマホで2分記録するだけ。AIが<strong>あなた専用の今日の練習プラン</strong>を具体的に設計します。
-    </p>
-    <div class="hero-btns">
-      <a href="#pricing" class="btn-start">→ 無料で始める</a>
-      <a href="#howit" class="btn-ghost-hero">使い方を見る</a>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow"><div class="hero-eyebrow-dot"></div>AI Golf Coach</div>
+      <h1 class="hero-h1">練習を記録するだけで、<br><em>AIコーチが上達を加速する。</em></h1>
+      <p class="hero-sub">打席・ラウンド・課題をスマホで2分記録するだけ。AIが<strong>あなた専用の今日の練習プラン</strong>を具体的に設計します。</p>
+      <div class="hero-btns">
+        <a href="https://buy.stripe.com/test_7sY28r2rR3IMbYY6m9f7i00" class="btn-start">→ 無料で始める</a>
+        <a href="#howit" class="btn-ghost">使い方を見る</a>
+      </div>
+      <div class="hero-footnote">クレジットカード不要 · 7日間無料トライアル</div>
     </div>
-    <div class="hero-footnote">クレジットカード不要 · 7日間無料トライアル</div>
-  </div>
-
-  <div class="hero-stats">
-    <div class="hstat">
-      <div class="hstat-n">3<em>打</em></div>
-      <div class="hstat-l">平均スコア改善（1ヶ月）</div>
-    </div>
-    <div class="hstat">
-      <div class="hstat-n">2<em>分</em></div>
-      <div class="hstat-l">1回の記録にかかる時間</div>
-    </div>
-    <div class="hstat">
-      <div class="hstat-n">92<em>%</em></div>
-      <div class="hstat-l">3ヶ月継続率</div>
-    </div>
-    <div class="hstat">
-      <div class="hstat-n">680<em>円</em></div>
-      <div class="hstat-l">月額 Proプラン</div>
+    <div class="hero-visual">
+      <div class="hero-card-float">
+        <div class="hero-card-float-n">3<em>打</em></div>
+        <div class="hero-card-float-l">平均スコア改善</div>
+      </div>
+      <div class="hero-card-main">
+        <div class="hero-card-badge">✦ 今日の練習プラン</div>
+        <div class="hero-card-title">ドライバー方向性の矯正</div>
+        <div class="hero-card-text">過去4回のログからスライスの根本原因を特定。本日はビハインドザボールドリルに集中してください。</div>
+        <div class="hero-chips">
+          <span class="hero-chip chip-g">優先 · 30球</span>
+          <span class="hero-chip chip-w">約20分</span>
+        </div>
+        <div class="hero-card-sub">
+          <div class="hero-card-sub-label">課題スコア</div>
+          <div class="hero-score-row">
+            <div class="hero-score-item"><div class="hero-score-n">45</div><div class="hero-score-l">ドライバー</div></div>
+            <div class="hero-score-item"><div class="hero-score-n">72</div><div class="hero-score-l">アイアン</div></div>
+            <div class="hero-score-item"><div class="hero-score-n">88<em>%</em></div><div class="hero-score-l">継続率</div></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- PROBLEM -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item"><div class="stat-n">3<em>打</em></div><div class="stat-l">平均スコア改善（1ヶ月）</div></div>
+    <div class="stat-item"><div class="stat-n">2<em>分</em></div><div class="stat-l">1回の記録にかかる時間</div></div>
+    <div class="stat-item"><div class="stat-n">92<em>%</em></div><div class="stat-l">3ヶ月継続率</div></div>
+    <div class="stat-item"><div class="stat-n">680<em>円</em></div><div class="stat-l">月額 Proプラン</div></div>
+  </div>
+</div>
+
 <section class="section problem" id="problem">
   <div class="inner">
-    <div class="r">
-      <div class="eyebrow">こんな悩みはありませんか？</div>
-      <h2 class="section-h">多くのゴルファーが、<br><em>同じ壁</em>にぶつかっている。</h2>
-    </div>
+    <div class="r"><div class="eyebrow">こんな悩みはありませんか？</div><h2 class="section-h">多くのゴルファーが、<br><em>同じ壁</em>にぶつかっている。</h2></div>
     <div class="prob-grid r rd1">
-      <div class="prob-cell">
-        <div class="prob-tag">Problem 01</div>
-        <div class="prob-q">練習しているのに、スコアが縮まらない</div>
-        <div class="prob-a">球を打っているだけで「何が悪いのか」が整理されていない。努力が正しい方向を向いていない。</div>
-      </div>
-      <div class="prob-cell">
-        <div class="prob-tag">Problem 02</div>
-        <div class="prob-q">プロのレッスンは高くて続けられない</div>
-        <div class="prob-a">月1〜2回のレッスンでは間隔が空きすぎる。毎週通うには費用も時間もかかりすぎる。</div>
-      </div>
-      <div class="prob-cell">
-        <div class="prob-tag">Problem 03</div>
-        <div class="prob-q">記録しても「次に何をすれば？」がわからない</div>
-        <div class="prob-a">メモや写真で記録はしているが、見返しても具体的な次のアクションに結びつかない。</div>
-      </div>
-      <div class="prob-cell">
-        <div class="prob-tag">Problem 04</div>
-        <div class="prob-q">打席に来てから「今日何をやろう？」と迷う</div>
-        <div class="prob-a">目的なく打ち続けて終了。限られた練習時間をなんとなく使ってしまっている。</div>
-      </div>
+      <div class="prob-cell"><div class="prob-tag">Problem 01</div><div class="prob-q">練習しているのに、スコアが縮まらない</div><div class="prob-a">球を打っているだけで「何が悪いのか」が整理されていない。努力が正しい方向を向いていない。</div></div>
+      <div class="prob-cell"><div class="prob-tag">Problem 02</div><div class="prob-q">プロのレッスンは高くて続けられない</div><div class="prob-a">月1〜2回のレッスンでは間隔が空きすぎる。毎週通うには費用も時間もかかりすぎる。</div></div>
+      <div class="prob-cell"><div class="prob-tag">Problem 03</div><div class="prob-q">記録しても「次に何をすれば？」がわからない</div><div class="prob-a">メモや写真で記録はしているが、見返しても具体的な次のアクションに結びつかない。</div></div>
+      <div class="prob-cell"><div class="prob-tag">Problem 04</div><div class="prob-q">打席に来てから「今日何をやろう？」と迷う</div><div class="prob-a">目的なく打ち続けて終了。限られた練習時間をなんとなく使ってしまっている。</div></div>
     </div>
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
 <section class="section how" id="howit">
   <div class="inner">
     <div class="how-inner">
       <div>
-        <div class="r">
-          <div class="eyebrow">使い方</div>
-          <h2 class="section-h">たった3ステップで、<br><em>プロ級の分析</em>が手に入る。</h2>
-          <p class="section-lead">難しい設定は不要。記録すればするほど、AIの精度が上がっていきます。</p>
-        </div>
-        <div class="how-steps r rd1">
-          <div class="how-step">
-            <div class="how-num">01</div>
-            <div class="how-step-body">
-              <div class="how-step-title">2分で練習を記録する</div>
-              <div class="how-step-text">打席練習・ラウンド・課題メモをタップで記録。番手・球数・調子・気づきをシンプルに入力できます。</div>
-            </div>
-          </div>
-          <div class="how-step">
-            <div class="how-num">02</div>
-            <div class="how-step-body">
-              <div class="how-step-title">AIが過去データをすべて分析する</div>
-              <div class="how-step-text">最新ログと過去の練習履歴を照合し、あなたの弱点パターン・改善トレンド・課題の根本原因を特定します。</div>
-            </div>
-          </div>
-          <div class="how-step">
-            <div class="how-num">03</div>
-            <div class="how-step-body">
-              <div class="how-step-title">今日の練習メニューを受け取る</div>
-              <div class="how-step-text">「今日やるべきドリル・球数・所要時間」まで明示。練習場に着いたらすぐに迷わずスタートできます。</div>
-            </div>
-          </div>
+        <div class="r"><div class="eyebrow">使い方</div><h2 class="section-h">たった3ステップで、<br><em>プロ級の分析</em>が手に入る。</h2><p class="section-lead">難しい設定は不要。記録すればするほど、AIの精度が上がっていきます。</p></div>
+        <div class="r rd1">
+          <div class="how-step"><div class="how-num">01</div><div><div class="how-step-title">2分で練習を記録する</div><div class="how-step-text">打席練習・ラウンド・課題メモをタップで記録。番手・球数・調子・気づきをシンプルに入力できます。</div></div></div>
+          <div class="how-step"><div class="how-num">02</div><div><div class="how-step-title">AIが過去データをすべて分析する</div><div class="how-step-text">最新ログと過去の練習履歴を照合し、あなたの弱点パターン・改善トレンド・課題の根本原因を特定します。</div></div></div>
+          <div class="how-step"><div class="how-num">03</div><div><div class="how-step-title">今日の練習メニューを受け取る</div><div class="how-step-text">「今日やるべきドリル・球数・所要時間」まで明示。練習場に着いたらすぐに迷わずスタートできます。</div></div></div>
         </div>
       </div>
-
       <div class="how-visual r rd2">
-        <div class="how-visual-bg"></div>
-        <div class="how-visual-content">
-          <div class="mock-card">
-            <div class="mock-label">✦ 今日の練習プラン</div>
-            <div class="mock-title">ドライバー方向性の矯正</div>
-            <div class="mock-text">過去4回のログからスライスの根本原因を特定。本日はビハインドザボールドリルに集中。</div>
-            <div class="mock-chips">
-              <span class="mock-chip chip-g">優先 · 30球</span>
-              <span class="mock-chip chip-w">20分</span>
-            </div>
-          </div>
-          <div class="mock-card">
-            <div class="mock-label">📊 課題スコア</div>
-            <div class="mock-title">ドライバー 45 / アイアン 72</div>
-            <div class="mock-text">先月比：アイアン +12pt 改善中。ドライバーが最優先課題。</div>
-          </div>
-        </div>
+        <div class="mock-card"><div class="mock-label">✦ 今日の練習プラン</div><div class="mock-title">ドライバー方向性の矯正</div><div class="mock-text">過去4回のログからスライスの根本原因を特定。本日はビハインドザボールドリルに集中。</div><div class="mock-chips"><span class="mock-chip chip-g">優先 · 30球</span><span class="mock-chip chip-w">20分</span></div></div>
+        <div class="mock-card"><div class="mock-label">📊 課題スコア</div><div class="mock-title">ドライバー 45 / アイアン 72</div><div class="mock-text">先月比：アイアン +12pt 改善中。ドライバーが最優先課題。</div></div>
+        <div class="mock-card"><div class="mock-label">📧 週次サマリー</div><div class="mock-title">今週のフォーカス：飛距離より方向性</div><div class="mock-text">3週連続でドライバーの右ミスが出ています。フェースコントロールを最優先に。</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FEATURES -->
 <section class="section features-sec" id="features">
   <div class="inner feat-inner">
-    <div class="r">
-      <div class="eyebrow" style="color:var(--flag)">主な機能</div>
-      <h2 class="section-h" style="color:var(--white)">上達に必要なすべてが、<br><em>ひとつのアプリに。</em></h2>
-      <p class="section-lead" style="color:rgba(255,255,255,.45)">記録・分析・アドバイスを一元化。練習の質が根本から変わります。</p>
-    </div>
+    <div class="r"><div class="eyebrow" style="color:var(--g400)">主な機能</div><h2 class="section-h" style="color:var(--white)">上達に必要なすべてが、<br><em>ひとつのアプリに。</em></h2><p class="section-lead" style="color:rgba(255,255,255,.45)">記録・分析・アドバイスを一元化。練習の質が根本から変わります。</p></div>
     <div class="feat-grid r rd1">
-      <div class="feat-cell">
-        <div class="feat-ico">✦</div>
-        <div class="feat-title">今日の練習プラン<br>自動生成</div>
-        <div class="feat-text">過去ログをもとに本日のメニューを設計。優先度・球数・ドリルの詳細までパーソナライズ。</div>
-        <div class="feat-pill">PRO限定</div>
-      </div>
-      <div class="feat-cell">
-        <div class="feat-ico">📊</div>
-        <div class="feat-title">スコア・球数・<br>課題の可視化</div>
-        <div class="feat-text">スコア推移グラフ、番手別練習量、課題カテゴリ別スコアを自動集計。自分の成長が一目でわかる。</div>
-        <div class="feat-pill">全プラン</div>
-      </div>
-      <div class="feat-cell">
-        <div class="feat-ico">🎯</div>
-        <div class="feat-title">弱点の根本原因<br>を特定</div>
-        <div class="feat-text">「スライスは左肩の開きが原因」など、表面的なミスの裏にあるパターンをAIが言語化。</div>
-        <div class="feat-pill">PRO限定</div>
-      </div>
-      <div class="feat-cell">
-        <div class="feat-ico">📝</div>
-        <div class="feat-title">打席・ラウンド・<br>課題を一元管理</div>
-        <div class="feat-text">3種類のログを統合管理。ラウンドでのミスと練習での課題を紐付け、改善の連鎖を作る。</div>
-        <div class="feat-pill">全プラン</div>
-      </div>
-      <div class="feat-cell">
-        <div class="feat-ico">📧</div>
-        <div class="feat-title">週次サマリー<br>メール</div>
-        <div class="feat-text">毎週月曜に「先週まとめ＋今週フォーカス」を自動配信。アプリを開かない週もモチベーションを維持。</div>
-        <div class="feat-pill">PRO限定</div>
-      </div>
-      <div class="feat-cell">
-        <div class="feat-ico">📈</div>
-        <div class="feat-title">上達を数字で<br>実感できる</div>
-        <div class="feat-text">入会時と現在のスコアを比較表示。「使い始めてから5打縮んだ」という実績が継続のモチベーションに。</div>
-        <div class="feat-pill">全プラン</div>
-      </div>
+      <div class="feat-cell"><div class="feat-ico">✦</div><div class="feat-title">今日の練習プラン自動生成</div><div class="feat-text">過去ログをもとに本日のメニューを設計。優先度・球数・ドリルの詳細までパーソナライズ。</div><div class="feat-pill">PRO限定</div></div>
+      <div class="feat-cell"><div class="feat-ico">📊</div><div class="feat-title">スコア・球数・課題の可視化</div><div class="feat-text">スコア推移グラフ、番手別練習量、課題カテゴリ別スコアを自動集計。成長が一目でわかる。</div><div class="feat-pill">全プラン</div></div>
+      <div class="feat-cell"><div class="feat-ico">🎯</div><div class="feat-title">弱点の根本原因を特定</div><div class="feat-text">「スライスは左肩の開きが原因」など、表面的なミスの裏にあるパターンをAIが言語化。</div><div class="feat-pill">PRO限定</div></div>
+      <div class="feat-cell"><div class="feat-ico">📝</div><div class="feat-title">打席・ラウンド・課題を一元管理</div><div class="feat-text">3種類のログを統合管理。ラウンドでのミスと練習での課題を紐付け、改善の連鎖を作る。</div><div class="feat-pill">全プラン</div></div>
+      <div class="feat-cell"><div class="feat-ico">📧</div><div class="feat-title">週次サマリーメール</div><div class="feat-text">毎週月曜に「先週まとめ＋今週フォーカス」を自動配信。モチベーションを維持。</div><div class="feat-pill">PRO限定</div></div>
+      <div class="feat-cell"><div class="feat-ico">📈</div><div class="feat-title">上達を数字で実感できる</div><div class="feat-text">入会時と現在のスコアを比較表示。「使い始めてから5打縮んだ」実績が継続のモチベーションに。</div><div class="feat-pill">全プラン</div></div>
     </div>
   </div>
 </section>
 
-<!-- TESTIMONIALS -->
 <section class="section testi-sec" id="voice">
   <div class="inner">
-    <div class="r" style="text-align:center">
-      <div class="eyebrow" style="justify-content:center">ユーザーの声</div>
-      <h2 class="section-h" style="text-align:center">使い始めてから、<br><em>練習が変わった。</em></h2>
-    </div>
+    <div class="r" style="text-align:center"><div class="eyebrow" style="justify-content:center">ユーザーの声</div><h2 class="section-h" style="text-align:center">使い始めてから、<br><em>練習が変わった。</em></h2></div>
     <div class="testi-grid">
-      <div class="testi-card r">
-        <div class="testi-stars">★★★★★</div>
-        <div class="testi-text">今まで「なんとなく」打ちに行っていたのが、目的を持って練習できるようになった。AIのアドバイスが具体的で、次の打席でやることが明確になるのが一番助かっています。</div>
-        <div class="testi-foot">
-          <div class="testi-av">山</div>
-          <div>
-            <div class="testi-name">山田 浩二さん・45歳</div>
-            <div class="testi-info">会社員 / ゴルフ歴5年</div>
-            <div class="score-pill">▲ 96→91打に改善</div>
-          </div>
-        </div>
-      </div>
-      <div class="testi-card r rd1">
-        <div class="testi-stars">★★★★★</div>
-        <div class="testi-text">月数回のレッスンよりも毎回AIにアドバイスをもらえる方が上達が早かった。ドライバーのスライスの根本原因を指摘されて、3週間で改善できました。</div>
-        <div class="testi-foot">
-          <div class="testi-av">鈴</div>
-          <div>
-            <div class="testi-name">鈴木 達也さん・38歳</div>
-            <div class="testi-info">自営業 / ゴルフ歴8年</div>
-            <div class="score-pill">▲ 100→93打に改善</div>
-          </div>
-        </div>
-      </div>
-      <div class="testi-card r rd2">
-        <div class="testi-stars">★★★★☆</div>
-        <div class="testi-text">入力が2分で終わるので習慣になった。ログが溜まるほどアドバイスの精度が上がるのを実感しています。90切りまであと少しというところまで来ました。</div>
-        <div class="testi-foot">
-          <div class="testi-av">中</div>
-          <div>
-            <div class="testi-name">中村 誠さん・52歳</div>
-            <div class="testi-info">管理職 / ゴルフ歴12年</div>
-            <div class="score-pill">▲ 94→89打に改善</div>
-          </div>
-        </div>
-      </div>
+      <div class="testi-card r"><div class="testi-stars">★★★★★</div><div class="testi-text">今まで「なんとなく」打ちに行っていたのが、目的を持って練習できるようになった。AIのアドバイスが具体的で助かっています。</div><div class="testi-foot"><div class="testi-av">山</div><div><div class="testi-name">山田 浩二さん・45歳</div><div class="testi-info">会社員 / ゴルフ歴5年</div><div class="score-pill">▲ 96→91打に改善</div></div></div></div>
+      <div class="testi-card r rd1"><div class="testi-stars">★★★★★</div><div class="testi-text">月数回のレッスンよりも毎回AIにアドバイスをもらえる方が上達が早かった。ドライバーのスライスが3週間で改善できました。</div><div class="testi-foot"><div class="testi-av">鈴</div><div><div class="testi-name">鈴木 達也さん・38歳</div><div class="testi-info">自営業 / ゴルフ歴8年</div><div class="score-pill">▲ 100→93打に改善</div></div></div></div>
+      <div class="testi-card r rd2"><div class="testi-stars">★★★★☆</div><div class="testi-text">入力が2分で終わるので習慣になった。ログが溜まるほどアドバイスの精度が上がるのを実感。90切りまであと少しです。</div><div class="testi-foot"><div class="testi-av">中</div><div><div class="testi-name">中村 誠さん・52歳</div><div class="testi-info">管理職 / ゴルフ歴12年</div><div class="score-pill">▲ 94→89打に改善</div></div></div></div>
     </div>
   </div>
 </section>
 
-<!-- PRICING -->
 <section class="section pricing-sec" id="pricing">
   <div class="inner">
-    <div class="r" style="text-align:center">
-      <div class="eyebrow" style="justify-content:center">料金プラン</div>
-      <h2 class="section-h" style="text-align:center">まず無料で、<em>試してみてください。</em></h2>
-      <p class="section-lead" style="margin:0 auto;text-align:center">クレジットカード不要。7日間は全機能をお試しいただけます。</p>
-    </div>
+    <div class="r" style="text-align:center"><div class="eyebrow" style="justify-content:center">料金プラン</div><h2 class="section-h" style="text-align:center">まず無料で、<em>試してみてください。</em></h2><p class="section-lead" style="margin:0 auto;text-align:center">クレジットカード不要。7日間は全機能をお試しいただけます。</p></div>
     <div class="pricing-grid r rd1">
-      <div class="plan">
-        <div class="plan-name">Free プラン</div>
-        <div class="plan-price"><sup>¥</sup>0</div>
-        <div class="plan-cycle">ずっと無料</div>
-        <ul class="plan-list">
-          <li>練習ログ記録（週3件まで）</li>
-          <li>スコア・球数グラフ（直近1ヶ月）</li>
-          <li>AIアドバイス（一言コメント）</li>
-          <li class="no">AI本格分析・改善ドリル提案</li>
-          <li class="no">今日の練習プラン自動生成</li>
-          <li class="no">弱点レポート・トレンド分析</li>
-          <li class="no">週次サマリーメール</li>
-        </ul>
-        <a href="#" class="btn-plan btn-plan-free">無料で始める</a>
-      </div>
-      <div class="plan pro">
-        <div class="plan-badge">🏌 一番人気</div>
-        <div class="plan-name hot">Pro プラン</div>
-        <div class="plan-price"><sup>¥</sup>680<sub>/月</sub></div>
-        <div class="plan-cycle">7日間無料トライアル付き</div>
-        <ul class="plan-list">
-          <li>練習ログ記録（無制限）</li>
-          <li>スコア・球数グラフ（全期間）</li>
-          <li>AIアドバイス（一言コメント）</li>
-          <li>AI本格分析・改善ドリル提案</li>
-          <li>今日の練習プラン自動生成</li>
-          <li>弱点レポート・トレンド分析</li>
-          <li>週次サマリーメール</li>
-        </ul>
-        <a href="#" class="btn-plan btn-plan-pro">7日間無料で試す</a>
-      </div>
+      <div class="plan"><div class="plan-name">Free プラン</div><div class="plan-price"><sup>¥</sup>0</div><div class="plan-cycle">ずっと無料</div><ul class="plan-list"><li>練習ログ記録（週3件まで）</li><li>スコア・球数グラフ（直近1ヶ月）</li><li>AIアドバイス（一言コメント）</li><li class="no">AI本格分析・改善ドリル提案</li><li class="no">今日の練習プラン自動生成</li><li class="no">弱点レポート・トレンド分析</li><li class="no">週次サマリーメール</li></ul><a href="https://docs.google.com/forms/d/e/1FAIpQLSe0ebZtuXR_h26YOL33kF_aNvKgx6H3m8j_CrCSSBF5OTdiOQ/viewform" target="_blank" class="btn-plan btn-plan-free">無料で始める</a></div>
+      <div class="plan pro"><div class="plan-badge">🏌 一番人気</div><div class="plan-name hot">Pro プラン</div><div class="plan-price"><sup>¥</sup>680<sub>/月</sub></div><div class="plan-cycle">7日間無料トライアル付き</div><ul class="plan-list"><li>練習ログ記録（無制限）</li><li>スコア・球数グラフ（全期間）</li><li>AIアドバイス（一言コメント）</li><li>AI本格分析・改善ドリル提案</li><li>今日の練習プラン自動生成</li><li>弱点レポート・トレンド分析</li><li>週次サマリーメール</li></ul><a href="https://buy.stripe.com/test_7sY28r2rR3IMbYY6m9f7i00" class="btn-plan btn-plan-pro">7日間無料で試す</a></div>
     </div>
     <div class="pricing-note r">※ 無料トライアル終了後は自動で月額プランに移行します。いつでもキャンセル可能。</div>
   </div>
 </section>
 
-<!-- FAQ -->
 <section class="section faq-sec" id="faq">
   <div class="inner">
-    <div class="r" style="text-align:center">
-      <div class="eyebrow" style="justify-content:center">よくある質問</div>
-      <h2 class="section-h" style="text-align:center">気になることを、<em>まとめて解消。</em></h2>
-    </div>
+    <div class="r" style="text-align:center"><div class="eyebrow" style="justify-content:center">よくある質問</div><h2 class="section-h" style="text-align:center">気になることを、<em>まとめて解消。</em></h2></div>
     <div class="faq-wrap r rd1">
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">ゴルフ初心者でも使えますか？<div class="faq-icon">+</div></div>
-        <div class="faq-a">はい、初心者の方でも安心して使えます。番手やスコアを入力するだけで、AIが噛み砕いた言葉でアドバイスをくれます。専門用語の解説も一緒に出るので、ゴルフの知識が深まる効果もあります。</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">アプリのダウンロードは必要ですか？<div class="faq-icon">+</div></div>
-        <div class="faq-a">不要です。スマートフォンのブラウザからそのまま使えるWebアプリです。ホーム画面に追加するとアプリのように快適に使えます。</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">AIのアドバイスはどれくらい正確ですか？<div class="faq-icon">+</div></div>
-        <div class="faq-a">あなた自身の練習データが蓄積されるほど精度が上がります。1ヶ月継続すると「あなた専用」の分析ができるようになります。プロコーチの代替ではなく、毎日の練習サポートとしてご活用ください。</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">キャンセルはいつでもできますか？<div class="faq-icon">+</div></div>
-        <div class="faq-a">はい、設定画面からいつでも解約できます。解約後は次の更新日まで引き続きご利用いただけます。データは解約後30日間保持されますので、再登録の際に引き継げます。</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">記録するのに時間がかかりませんか？<div class="faq-icon">+</div></div>
-        <div class="faq-a">1回の入力は平均2分以内で完了します。番手・球数・調子はタップで選べるので、打席から帰る電車の中でも気軽に記録できます。</div>
-      </div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">ゴルフ初心者でも使えますか？<div class="faq-icon">+</div></div><div class="faq-a">はい、初心者の方でも安心して使えます。番手やスコアを入力するだけで、AIが噛み砕いた言葉でアドバイスをくれます。</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">アプリのダウンロードは必要ですか？<div class="faq-icon">+</div></div><div class="faq-a">不要です。スマートフォンのブラウザからそのまま使えるWebアプリです。ホーム画面に追加するとアプリのように快適に使えます。</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">AIのアドバイスはどれくらい正確ですか？<div class="faq-icon">+</div></div><div class="faq-a">あなた自身の練習データが蓄積されるほど精度が上がります。1ヶ月継続すると「あなた専用」の分析ができるようになります。</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">キャンセルはいつでもできますか？<div class="faq-icon">+</div></div><div class="faq-a">はい、設定画面からいつでも解約できます。解約後は次の更新日まで引き続きご利用いただけます。</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">記録するのに時間がかかりませんか？<div class="faq-icon">+</div></div><div class="faq-a">1回の入力は平均2分以内で完了します。打席から帰る電車の中でも気軽に記録できます。</div></div>
     </div>
   </div>
 </section>
 
-<!-- FINAL CTA -->
 <section class="section cta" id="cta">
-  <div class="cta-landscape"></div>
-  <div class="cta-mist"></div>
   <div class="cta-glow"></div>
   <div class="cta-content inner r">
     <div class="cta-eyebrow">さあ、始めましょう</div>
     <h2 class="cta-h">次のラウンドで、<br><em>スコアが変わる。</em></h2>
     <p class="cta-sub">今日の練習プランを生成するまで3分もかかりません。<br>まずは記録から始めてみてください。</p>
-    <div style="display:flex;justify-content:center">
-      <a href="#pricing" class="btn-start">→ 無料で始める</a>
-    </div>
+    <div style="display:flex;justify-content:center"><a href="https://buy.stripe.com/test_7sY28r2rR3IMbYY6m9f7i00" class="btn-start-light">→ 無料で始める</a></div>
     <div class="cta-note">クレジットカード不要 · 7日間無料 · いつでも解約OK</div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">⛳ Golf Coach AI</div>
-    <div class="footer-links">
-      <a href="#">利用規約</a>
-      <a href="#">プライバシーポリシー</a>
-      <a href="#">お問い合わせ</a>
-    </div>
+    <div class="footer-links"><a href="#">利用規約</a><a href="#">プライバシーポリシー</a><a href="#">お問い合わせ</a></div>
     <div class="footer-copy">© 2025 Golf Coach AI. All rights reserved.</div>
   </div>
 </footer>
 
 <script>
-// Nav shadow
-window.addEventListener('scroll', () => {
-  document.getElementById('nav').classList.toggle('shadow', window.scrollY > 40);
-});
-
-// Scroll reveal
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
-}, { threshold: 0.1 });
-document.querySelectorAll('.r').forEach(el => obs.observe(el));
-
-// FAQ
-function toggleFaq(el) {
-  const item = el.parentElement;
-  const open = item.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-  if (!open) item.classList.add('open');
-}
+window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('shadow',window.scrollY>40);});
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});},{threshold:0.1});
+document.querySelectorAll('.r').forEach(el=>obs.observe(el));
+function toggleFaq(el){const item=el.parentElement;const open=item.classList.contains('open');document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));if(!open)item.classList.add('open');}
 </script>
 </body>
 </html>
