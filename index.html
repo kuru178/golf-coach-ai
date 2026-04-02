@@ -731,8 +731,17 @@ async function submitLog(){
       body:JSON.stringify({prompt:prompt})
     });
     const text=await res.text();
-    const clean=text.replace(/```json|```/g,'').trim();
-    const parsed=JSON.parse(clean);
+    console.log('Make response:', text);
+    let parsed;
+    try{
+      const clean=text.replace(/```json|```/g,'').trim();
+      const jsonMatch=clean.match(/\{[\s\S]*\}/);
+      if(jsonMatch){parsed=JSON.parse(jsonMatch[0]);}
+      else{parsed=JSON.parse(clean);}
+    }catch(parseErr){
+      console.error('Parse error:', parseErr, 'Raw:', text.slice(0,200));
+      throw new Error('JSONパースエラー');
+    }
     showAIResult(parsed);
 
     // Save log
