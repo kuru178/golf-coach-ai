@@ -331,6 +331,7 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
     <div class="modal-title">無料で始める</div>
     <div class="modal-sub">メールアドレスを入力するだけ。<br>7日間すべての機能を無料でお試しいただけます。</div>
     <input type="email" class="modal-input" id="modal-email" placeholder="your@email.com">
+    <input type="password" class="modal-input" id="modal-apikey" placeholder="Anthropic API Key (sk-ant-...)" style="margin-top:8px;font-size:12px;">
     <button class="modal-btn" onclick="startApp()">今すぐ始める →</button>
     <div class="modal-note">クレジットカード不要 · いつでも解約OK</div>
   </div>
@@ -675,6 +676,11 @@ function startApp(){
     return;
   }
   userEmail=email;
+  // Save API key if provided
+  const apiKeyInput=document.getElementById('modal-apikey');
+  if(apiKeyInput&&apiKeyInput.value.trim()){
+    saveApiKey(apiKeyInput.value.trim());
+  }
   const name=email.split('@')[0];
   document.getElementById('user-name').textContent=name+'さん';
   document.getElementById('user-email-disp').textContent=email+' · Pro プラン';
@@ -695,6 +701,14 @@ function loadDemoLogs(){
   ];
   renderHistory();
   renderCharts();
+}
+
+// ===== API KEY =====
+function getApiKey(){
+  return localStorage.getItem('golf_ai_key')||'';
+}
+function saveApiKey(key){
+  localStorage.setItem('golf_ai_key',key);
 }
 
 // ===== MOOD =====
@@ -730,7 +744,7 @@ async function submitLog(){
       method:'POST',
       headers:{
         'Content-Type':'application/json',
-        'x-api-key':'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',
+        'x-api-key':''+getApiKey()+'',
         'anthropic-version':'2023-06-01',
         'anthropic-dangerous-direct-browser-access':'true'
       },
