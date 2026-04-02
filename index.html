@@ -725,13 +725,24 @@ async function submitLog(){
   const prompt=`ゴルフコーチAI。練習を分析してJSONのみ返答してください。種類:${type},番手:${club},球数:${balls||'?'},スコア:${score||'?'},調子:${selectedMood||'?'},メモ:${note}。必ずこのJSON形式のみで返答:{"title":"タイトル20字以内","analysis":"分析60字以内","drills":[{"name":"ドリル1","detail":"方法","balls":"30球"},{"name":"ドリル2","detail":"方法","balls":"30球"},{"name":"ドリル3","detail":"方法","balls":"30球"}],"tags":["タグ1","タグ2","タグ3"]}`;
 
     try{
-    const res=await fetch('https://hook.us2.make.com/z2ywvkqfxtgpyhb62qfy2n9w3vlu6mxj',{
+    // Make.comを経由せず直接Anthropic APIを呼び出す
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
       method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({prompt:prompt})
+      headers:{
+        'Content-Type':'application/json',
+        'x-api-key':'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',
+        'anthropic-version':'2023-06-01',
+        'anthropic-dangerous-direct-browser-access':'true'
+      },
+      body:JSON.stringify({
+        model:'claude-haiku-4-5-20251001',
+        max_tokens:500,
+        messages:[{role:'user',content:prompt}]
+      })
     });
-    const text=await res.text();
-    console.log('Make response:', text);
+    const data=await res.json();
+    console.log('API response:', data);
+    const text=data.content.map(c=>c.text||'').join('');
     let parsed;
     try{
       const clean=text.replace(/```json|```/g,'').trim();
