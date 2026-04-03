@@ -506,7 +506,7 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">⛳ Golf Coach AI</div>
-    <div class="footer-links"><a href="tokushoho.html" target="_blank">特定商取引法</a><a href="mailto:kuru178@outlook.com">お問い合わせ</a></div>
+    <div class="footer-links"><a href="tokushoho.html" target="_blank">特定商取引法</a><a href="/cdn-cgi/l/email-protection#761d03040347414e361903021a19191d5815191b">お問い合わせ</a></div>
     <div class="footer-copy">© 2025 Golf Coach AI. All rights reserved.</div>
   </div>
 </footer>
@@ -622,7 +622,7 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
   </div>
 </div><!-- /app-view -->
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ===== STATE =====
 let userEmail = '';
 let logs = [];
@@ -686,20 +686,39 @@ function startApp(){
   document.getElementById('user-av').textContent=name[0].toUpperCase();
   closeModal();
   showApp();
-  // Load demo logs
-  loadDemoLogs();
+  // Load logs from KV
+  loadLogsFromKV();
 }
 
-// ===== DEMO DATA =====
-function loadDemoLogs(){
-  if(logs.length>0) return;
-  logs=[
-    {date:'2025-03-28',type:'打席練習',club:'ドライバー',balls:100,score:null,mood:'😊',note:'スライスが改善傾向。ビハインドザボールを意識。',ai:'ドライバーの方向性改善中。フォロースルーをさらに意識してください。'},
-    {date:'2025-03-25',type:'ラウンド',club:'7I',balls:18,score:92,mood:'😐',note:'前半は好調だったが後半崩れた。パターが課題。',ai:'後半の崩れはメンタル面の可能性。パターは距離感練習を優先。'},
-    {date:'2025-03-22',type:'打席練習',club:'7I',balls:80,score:null,mood:'🔥',note:'アイアンの調子が良い。距離感が安定してきた。',ai:'アイアンの安定感は向上中。次はドライバーの精度向上を。'},
-  ];
+// ===== KV DATA =====
+async function loadLogsFromKV(){
+  try{
+    const res=await fetch('https://golf-coach-ai-api.kuru178.workers.dev',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({action:'get_logs',email:userEmail})
+    });
+    const data=await res.json();
+    if(Array.isArray(data)&&data.length>0){
+      logs=data;
+    }
+  }catch(e){
+    console.error('ログ読み込みエラー:',e);
+  }
   renderHistory();
   renderCharts();
+}
+
+async function saveLogToKV(log){
+  try{
+    await fetch('https://golf-coach-ai-api.kuru178.workers.dev',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({action:'save_log',email:userEmail,log:log})
+    });
+  }catch(e){
+    console.error('ログ保存エラー:',e);
+  }
 }
 
 // ===== API KEY =====
@@ -775,6 +794,7 @@ async function submitLog(){
       ai:parsed.analysis
     };
     logs.unshift(newLog);
+    saveLogToKV(newLog);
     renderHistory();
     renderCharts();
 
@@ -931,9 +951,4 @@ function toggleFaq(el){
 
 // ===== SCROLL REVEAL =====
 const obs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});
-},{threshold:0.1});
-document.querySelectorAll('.r').forEach(el=>obs.observe(el));
-</script>
-</body>
-</html>
+  entries.forEach(e=>{if(e.isInte
