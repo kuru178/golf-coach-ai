@@ -760,7 +760,7 @@ async function submitLog(){
   btn.textContent='AIが分析中... ✦';
 
   // Build prompt
- const prompt=`ゴルフコーチAI。練習を分析してJSONのみ返答してください。種類:${type},番手:${club},球数:${balls||'?'},スコア:${score||'?'},調子:${selectedMood||'?'},メモ:${note}。必ずこのJSON形式のみで返答:{"title":"タイトル20字以内","analysis":"分析60字以内","drills":[{"name":"ドリル1","detail":"方法","balls":"30球"},{"name":"ドリル2","detail":"方法","balls":"30球"},{"name":"ドリル3","detail":"方法","balls":"30球"}],"tags":["タグ1","タグ2","タグ3"]}`;
+const prompt=`あなたはプロのゴルフコーチです。以下の練習データを分析し、具体的で実践的なアドバイスをJSONのみで返答してください。種類:${type},番手:${club},球数:${balls||'?'},スコア:${score||'?'},調子:${selectedMood||'?'},メモ:${note}。必ずこのJSON形式のみで返答（他のテキスト一切不要）:{"title":"課題を一言で20字以内","analysis":"問題の根本原因を具体的に100字以内で説明。抽象的な表現は禁止。必ず身体の動き・クラブの動きで説明する","drills":[{"name":"ドリル名10字以内","detail":"具体的なやり方を50字以内。何をどう動かすか明記","balls":"30球"},{"name":"ドリル名10字以内","detail":"具体的なやり方を50字以内。何をどう動かすか明記","balls":"20球"},{"name":"ドリル名10字以内","detail":"具体的なやり方を50字以内。何をどう動かすか明記","balls":"20球"}],"tags":["タグ1","タグ2","タグ3"]}`;
     try{
     // Cloudflare Worker経由でAnthropicAPIを呼び出す
     const res=await fetch('https://golf-coach-ai-api.kuru178.workers.dev',{
