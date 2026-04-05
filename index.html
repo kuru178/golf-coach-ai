@@ -956,7 +956,12 @@ function toggleFaq(el){
   if(!open) item.classList.add('open');
 }
 
-// ===== LOG DETAIL ===== function toggleLogDetail(i){   const el=document.getElementById('log-detail-'+i);   if(el) el.style.display=el.style.display==='none'?'block':'none'; } // ===== SCROLL REVEAL =====
+// ===== LOG DETAIL =====
+function toggleLogDetail(i){
+  const el=document.getElementById('log-detail-'+i);
+  if(el) el.style.display=el.style.display==='none'?'block':'none';
+}
+// ===== SCROLL REVEAL =====
 const obs=new IntersectionObserver(entries=>{
 entries.forEach(e=>{if(e.isIntersecting) e.target.classList.add('in');});
 },{threshold:.15});
