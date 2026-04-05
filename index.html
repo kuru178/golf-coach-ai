@@ -351,7 +351,7 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
       <p class="hero-sub">打席・ラウンド・課題をスマホで2分記録するだけ。AIが<strong>あなた専用の今日の練習プラン</strong>を具体的に設計します。</p>
       <div class="hero-btns">
         <button class="btn-gold" onclick="openModal()">→ 7日間無料で始める</button>
-        <a class="btn-ghost-dark" onclick="scrollTo('#howit')">使い方を見る</a>
+        <a class="btn-ghost-dark" onclick="scrollToSection('#howit')">使い方を見る</a>
       </div>
       <div class="hero-footnote">クレジットカード不要 · 7日間無料トライアル · いつでも解約OK</div>
     </div>
@@ -647,7 +647,7 @@ function showApp(){
   renderHistory();
 }
 
-function scrollTo(id){
+function scrollToSection(id){
   setTimeout(()=>{
     const el=document.querySelector(id);
     if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
