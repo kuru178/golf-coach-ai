@@ -790,7 +790,7 @@ const prompt=`あなたはプロのゴルフコーチです。以下の練習デ
       score:parseInt(score)||null,
       mood:selectedMood||'😐',
       note,
-      ai:parsed.analysis
+      ai:parsed.analysis,       drills:parsed.drills||[]
     };
     logs.unshift(newLog);
     saveLogToKV(newLog);
