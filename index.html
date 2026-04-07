@@ -674,8 +674,8 @@ function startApp(){
     document.getElementById('modal-email').style.borderColor='#e55';
     return;
   }
-  userEmail=email;
-  // Save API key if provided
+userEmail=email;
+  userPlan='free';
   const apiKeyInput=document.getElementById('modal-apikey');
   if(apiKeyInput&&apiKeyInput.value.trim()){
     saveApiKey(apiKeyInput.value.trim());
