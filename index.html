@@ -625,6 +625,7 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
   
 // ===== STATE =====
 let userEmail = '';
+let userPlan = 'free';
 let logs = [];
 let selectedMood = '';
 let charts = {};
@@ -821,13 +822,17 @@ function showAIResult(data){
   document.getElementById('ai-text').textContent=data.analysis||'';
 
   const drillsEl=document.getElementById('ai-drills');
-  drillsEl.innerHTML=(data.drills||[]).map((d,i)=>`
+  if(userPlan==='free'){
+    drillsEl.innerHTML=`<div style="background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.25);border-radius:14px;padding:20px;text-align:center;"><div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:8px;">🔒 詳細な練習ドリルはProプラン限定</div><div style="font-size:12px;color:rgba(255,255,255,.5);margin-bottom:14px;">具体的なドリル3つ・根本原因分析・過去データ連携はProプランでご利用いただけます。</div><a href="https://buy.stripe.com/eVqcN47kp3yd6T99hadby00" style="display:inline-block;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--d);font-weight:700;font-size:13px;padding:10px 24px;border-radius:99px;text-decoration:none;">7日間無料でProを試す →</a></div>`;
+  }else{
+    drillsEl.innerHTML=(data.drills||[]).map((d,i)=>`
     <div class="ai-drill">
       <div class="ai-drill-num">DRILL ${String(i+1).padStart(2,'0')} · ${d.balls||'30球'}</div>
       <div class="ai-drill-name">${d.name||''}</div>
       <div class="ai-drill-detail">${d.detail||''}</div>
     </div>
   `).join('');
+  }
 
   const tagsEl=document.getElementById('ai-tags');
   tagsEl.innerHTML=(data.tags||[]).map(t=>`<span class="ai-tag">${t}</span>`).join('');
