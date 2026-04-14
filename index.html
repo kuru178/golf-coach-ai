@@ -35,8 +35,8 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--white);color:var(--t
 .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
 .hamburger.open span:nth-child(2){opacity:0;}
 .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
-.mobile-menu{display:none;position:fixed;top:68px;left:0;right:0;background:rgba(11,35,24,.98);backdrop-filter:blur(20px);border-bottom:1px solid rgba(201,168,76,.15);padding:20px 6vw;z-index:199;flex-direction:column;gap:4px;}
-.mobile-menu.show{display:flex;}
+.mobile-menu{position:fixed;top:68px;left:0;right:0;background:rgba(11,35,24,.98);backdrop-filter:blur(20px);border-bottom:1px solid rgba(201,168,76,.15);padding:20px 6vw;z-index:199;flex-direction:column;gap:4px;}
+
 .mobile-menu a{font-size:14px;color:rgba(255,255,255,.6);text-decoration:none;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;transition:color .2s;}
 .mobile-menu a:hover{color:var(--flag);}
 .mobile-menu a:last-of-type{border-bottom:none;}
@@ -337,7 +337,7 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
     <button class="nav-btn-login" onclick="openLoginModal()">ログイン</button>
     <button class="nav-btn" onclick="openModal()">無料で始める</button>
   </div>
-  <button class="hamburger" id="hamburger-btn" onclick="toggleMenu()">
+  <button class="hamburger" id="hamburger-btn" onclick="(function(){var m=document.getElementById('mobile-menu');var o=document.getElementById('menu-overlay');if(m.style.display==='flex'){m.style.display='none';o.style.display='none';}else{m.style.display='flex';o.style.display='block';}})();">
     <span></span><span></span><span></span>
   </button>
 </nav>
@@ -345,7 +345,7 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
 <!-- モバイルメニュー用オーバーレイ -->
 <div id="menu-overlay" style="display:none;position:fixed;inset:0;z-index:198;" onclick="closeMobileMenu()"></div>
 <!-- モバイルメニュー -->
-<div class="mobile-menu" id="mobile-menu">
+<div class="mobile-menu" id="mobile-menu" style="display:none;">
   <a onclick="closeMobileMenu();showLP();setTimeout(()=>document.querySelector('#problem').scrollIntoView({behavior:'smooth'}),300)">課題</a>
   <a onclick="closeMobileMenu();showLP();setTimeout(()=>document.querySelector('#howit').scrollIntoView({behavior:'smooth'}),300)">使い方</a>
   <a onclick="closeMobileMenu();showLP();setTimeout(()=>document.querySelector('#features').scrollIntoView({behavior:'smooth'}),300)">機能</a>
@@ -739,8 +739,7 @@ function toggleMenu(){
   }
 }
 function closeMobileMenu(){
-  document.getElementById('mobile-menu').classList.remove('show');
-  document.getElementById('hamburger-btn').classList.remove('open');
+  document.getElementById('mobile-menu').style.display='none';
   document.getElementById('menu-overlay').style.display='none';
 }
 
