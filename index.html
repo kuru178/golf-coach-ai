@@ -30,6 +30,18 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--white);color:var(--t
 .nav-btn-login:hover{color:var(--white);border-color:rgba(255,255,255,.5);}
 .nav-btn{background:linear-gradient(135deg,var(--gold),var(--gold2))!important;color:var(--d)!important;padding:9px 22px;border-radius:99px;font-size:13px!important;font-weight:700!important;box-shadow:0 2px 16px rgba(201,168,76,.35);transition:all .2s!important;border:none;cursor:pointer;}
 .nav-btn:hover{transform:translateY(-1px)!important;box-shadow:0 6px 24px rgba(201,168,76,.45)!important;}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none;}
+.hamburger span{display:block;width:24px;height:2px;background:rgba(255,255,255,.7);border-radius:2px;transition:all .3s;}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.mobile-menu{display:none;position:fixed;top:68px;left:0;right:0;background:rgba(11,35,24,.98);backdrop-filter:blur(20px);border-bottom:1px solid rgba(201,168,76,.15);padding:20px 6vw;z-index:199;flex-direction:column;gap:4px;}
+.mobile-menu.show{display:flex;}
+.mobile-menu a{font-size:14px;color:rgba(255,255,255,.6);text-decoration:none;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;transition:color .2s;}
+.mobile-menu a:hover{color:var(--flag);}
+.mobile-menu a:last-of-type{border-bottom:none;}
+.mobile-menu-btns{display:flex;gap:10px;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.08);}
+.mobile-menu-btns button{flex:1;padding:12px;border-radius:99px;font-size:13px;font-weight:600;font-family:'Noto Sans JP',sans-serif;cursor:pointer;}
 #lp-view{}
 .hero{min-height:100vh;background:var(--d);position:relative;overflow:clip;display:flex;align-items:center;padding-top:68px;box-sizing:border-box;background-image:url('hero-bg.jpg');background-size:cover;background-position:center top;}
 .hero-sky{position:absolute;top:0;left:0;right:0;height:100%;background:linear-gradient(180deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,.35) 50%,rgba(0,0,0,.6) 100%);}
@@ -297,6 +309,7 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
 .analyzing-text{font-size:14px;color:rgba(255,255,255,.5);}
 @media(max-width:800px){
   .nav-links{display:none;}
+  .hamburger{display:flex;}
   .hero-inner,.how-inner,.prob-grid,.feat-grid,.testi-grid,.pricing-grid,.form-grid,.ai-drills,.chart-grid,.video-upload-grid,.video-compare{grid-template-columns:1fr;}
   .hero-card{display:none;}
   .stats-inner{grid-template-columns:repeat(2,1fr);}
@@ -324,7 +337,22 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
     <button class="nav-btn-login" onclick="openLoginModal()">ログイン</button>
     <button class="nav-btn" onclick="openModal()">無料で始める</button>
   </div>
+  <button class="hamburger" id="hamburger-btn" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- モバイルメニュー -->
+<div class="mobile-menu" id="mobile-menu">
+  <a onclick="closeMobileMenu();showLP();setTimeout(()=>document.querySelector('#problem').scrollIntoView({behavior:'smooth'}),300)">課題</a>
+  <a onclick="closeMobileMenu();showLP();setTimeout(()=>document.querySelector('#howit').scrollIntoView({behavior:'smooth'}),300)">使い方</a>
+  <a onclick="closeMobileMenu();showLP();setTimeout(()=>document.querySelector('#features').scrollIntoView({behavior:'smooth'}),300)">機能</a>
+  <a onclick="closeMobileMenu();showLP();setTimeout(()=>document.querySelector('#pricing').scrollIntoView({behavior:'smooth'}),300)">料金</a>
+  <div class="mobile-menu-btns">
+    <button class="nav-btn-login" onclick="closeMobileMenu();openLoginModal()">ログイン</button>
+    <button class="nav-btn" onclick="closeMobileMenu();openModal()">無料で始める</button>
+  </div>
+</div>
 
 <!-- 新規登録モーダル -->
 <div class="modal-overlay" id="modal">
@@ -543,7 +571,7 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">⛳ Golf Coach AI</div>
-    <div class="footer-links"><a href="tokushoho.html" target="_blank">特定商取引法</a><a href="mailto:kuru178@outlook.com">お問い合わせ</a></div>
+    <div class="footer-links"><a href="tokushoho.html" target="_blank">特定商取引法</a><a href="/cdn-cgi/l/email-protection#4f243a3d3a7e78770f203a3b23202024612c2022">お問い合わせ</a></div>
     <div class="footer-copy">© 2025 Golf Coach AI. All rights reserved.</div>
   </div>
 </footer>
@@ -676,7 +704,7 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const WORKER='https://golf-coach-ai-api.kuru178.workers.dev';
 let userEmail='',userPlan='free',logs=[],selectedMood='',charts={};
 let resetToken='';
@@ -691,6 +719,25 @@ window.addEventListener('DOMContentLoaded',()=>{
 });
 
 // NAV
+
+// ===== モバイルメニュー =====
+function toggleMenu(){
+  const menu=document.getElementById('mobile-menu');
+  const btn=document.getElementById('hamburger-btn');
+  menu.classList.toggle('show');
+  btn.classList.toggle('open');
+}
+function closeMobileMenu(){
+  document.getElementById('mobile-menu').classList.remove('show');
+  document.getElementById('hamburger-btn').classList.remove('open');
+}
+document.addEventListener('click',function(e){
+  const menu=document.getElementById('mobile-menu');
+  const btn=document.getElementById('hamburger-btn');
+  if(menu&&btn&&menu.classList.contains('show')&&!menu.contains(e.target)&&!btn.contains(e.target)){
+    closeMobileMenu();
+  }
+});
 window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>40);});
 function showLP(){document.getElementById('lp-view').style.display='block';document.getElementById('app-view').style.display='none';window.scrollTo({top:0,behavior:'smooth'});}
 function showApp(){document.getElementById('lp-view').style.display='none';document.getElementById('app-view').style.display='block';window.scrollTo({top:0,behavior:'smooth'});renderHistory();}
@@ -1069,8 +1116,4 @@ function switchTab(name){
 }
 function toggleFaq(el){const item=el.parentElement;const open=item.classList.contains('open');document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));if(!open)item.classList.add('open');}
 function toggleLogDetail(i){const el=document.getElementById('log-detail-'+i);if(el)el.style.display=el.style.display==='none'?'block':'none';}
-const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});},{threshold:.15});
-document.querySelectorAll('.r').forEach(el=>obs.observe(el));
-</script>
-</body>
-</html>
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isInt
