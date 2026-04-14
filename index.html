@@ -33,7 +33,6 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--white);color:var(--t
 #lp-view{}
 .hero{min-height:100vh;background:var(--d);position:relative;overflow:clip;display:flex;align-items:center;padding-top:68px;box-sizing:border-box;background-image:url('hero-bg.jpg');background-size:cover;background-position:center top;}
 .hero-sky{position:absolute;top:0;left:0;right:0;height:100%;background:linear-gradient(180deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,.35) 50%,rgba(0,0,0,.6) 100%);}
-.hero-glow{position:absolute;top:20%;left:50%;transform:translateX(-50%);width:60vw;height:30vw;background:radial-gradient(ellipse,rgba(82,183,136,.06) 0%,transparent 70%);}
 .hero-inner{position:relative;z-index:10;max-width:1100px;margin:0 auto;padding:0 6vw;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;width:100%;}
 .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,168,76,.3);background:rgba(201,168,76,.07);padding:5px 14px;border-radius:99px;margin-bottom:24px;}
 .hero-dot{width:5px;height:5px;border-radius:50%;background:var(--gold2);animation:pulse 2.5s infinite;}
@@ -173,6 +172,7 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
 .r{opacity:1;transform:translateY(0);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1);}
 .r.in{opacity:1;transform:translateY(0);}
 .rd1{transition-delay:.1s;}.rd2{transition-delay:.2s;}.rd3{transition-delay:.3s;}
+/* APP */
 #app-view{display:none;min-height:100vh;background:var(--d);padding-top:68px;}
 .app-header{background:var(--d2);border-bottom:1px solid rgba(201,168,76,.12);padding:24px 6vw;}
 .app-header-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;}
@@ -185,6 +185,13 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
 .app-tab.active{background:var(--green);color:var(--white);}
 .app-tab:hover:not(.active){color:var(--white);}
 .app-content{max-width:1100px;margin:0 auto;padding:40px 6vw;}
+/* LOG MODE SWITCHER */
+.mode-switcher{display:flex;gap:12px;margin-bottom:28px;}
+.mode-btn{flex:1;padding:16px;border-radius:16px;border:1.5px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:rgba(255,255,255,.5);cursor:pointer;transition:all .2s;font-family:'Noto Sans JP',sans-serif;font-size:14px;font-weight:500;display:flex;align-items:center;justify-content:center;gap:10px;}
+.mode-btn.active{border-color:var(--pin);background:rgba(82,183,136,.12);color:var(--white);}
+.mode-btn:hover:not(.active){border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.8);}
+.mode-icon{font-size:20px;}
+/* LOG FORM */
 .log-form-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:36px;margin-bottom:32px;}
 .form-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--white);margin-bottom:6px;}
 .form-subtitle{font-size:13px;color:rgba(255,255,255,.4);margin-bottom:32px;}
@@ -202,6 +209,20 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
 .submit-btn{width:100%;margin-top:24px;padding:16px;border-radius:14px;border:none;cursor:pointer;font-size:15px;font-weight:700;font-family:'Noto Sans JP',sans-serif;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--d);transition:all .2s;box-shadow:0 4px 20px rgba(201,168,76,.3);}
 .submit-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(201,168,76,.45);}
 .submit-btn:disabled{opacity:.6;cursor:not-allowed;transform:none;}
+/* VIDEO UPLOAD */
+.video-section{display:none;}
+.video-upload-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px;}
+.video-drop{border:2px dashed rgba(255,255,255,.15);border-radius:16px;padding:32px 20px;text-align:center;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;background:rgba(255,255,255,.03);}
+.video-drop:hover{border-color:var(--pin);background:rgba(82,183,136,.06);}
+.video-drop.has-video{border-color:var(--pin);border-style:solid;background:rgba(82,183,136,.08);}
+.video-drop input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.video-drop-icon{font-size:32px;margin-bottom:10px;opacity:.6;}
+.video-drop-label{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--flag);margin-bottom:6px;}
+.video-drop-text{font-size:12px;color:rgba(255,255,255,.4);line-height:1.6;}
+.video-preview{width:100%;border-radius:12px;margin-top:12px;max-height:200px;object-fit:cover;display:none;}
+.video-name{font-size:11px;color:var(--flag);margin-top:8px;font-family:'DM Mono',monospace;display:none;}
+.video-memo-group{margin-bottom:0;}
+/* AI RESULT */
 .ai-result{background:linear-gradient(135deg,rgba(26,61,43,.8),rgba(18,46,34,.9));border:1px solid rgba(82,183,136,.25);border-radius:24px;padding:36px;margin-bottom:32px;display:none;}
 .ai-result.show{display:block;animation:fadeUp .5s ease;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
@@ -216,6 +237,19 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
 .ai-drill-detail{font-size:11px;color:rgba(255,255,255,.45);}
 .ai-tags{display:flex;gap:8px;flex-wrap:wrap;}
 .ai-tag{font-size:11px;font-weight:600;padding:4px 12px;border-radius:99px;background:rgba(82,183,136,.12);color:var(--flag);border:1px solid rgba(82,183,136,.2);}
+/* VIDEO ANALYSIS RESULT */
+.video-result{background:linear-gradient(135deg,rgba(26,61,43,.8),rgba(18,46,34,.9));border:1px solid rgba(82,183,136,.25);border-radius:24px;padding:36px;margin-bottom:32px;display:none;}
+.video-result.show{display:block;animation:fadeUp .5s ease;}
+.video-compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;}
+.video-compare-item{border-radius:12px;overflow:hidden;background:rgba(0,0,0,.3);}
+.video-compare-label{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--flag);padding:10px 14px;background:rgba(0,0,0,.3);}
+.video-compare video{width:100%;max-height:220px;object-fit:cover;display:block;}
+.swing-points{display:flex;flex-direction:column;gap:12px;margin-bottom:24px;}
+.swing-point{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:16px 20px;display:flex;gap:14px;align-items:flex-start;}
+.swing-point-icon{font-size:18px;flex-shrink:0;margin-top:2px;}
+.swing-point-title{font-size:13px;font-weight:700;color:var(--white);margin-bottom:4px;}
+.swing-point-text{font-size:12px;color:rgba(255,255,255,.55);line-height:1.7;}
+/* LOG LIST */
 .log-list{display:flex;flex-direction:column;gap:14px;}
 .log-item{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;transition:all .2s;}
 .log-item:hover{background:rgba(255,255,255,.07);}
@@ -226,6 +260,9 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
 .log-item-score{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--white);}
 .log-item-score em{font-size:13px;font-style:normal;color:var(--flag);}
 .log-item-mood{font-size:20px;margin-top:4px;}
+.log-type-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;padding:2px 8px;border-radius:99px;font-family:'DM Mono',monospace;margin-bottom:6px;}
+.log-type-text{background:rgba(82,183,136,.15);color:var(--flag);border:1px solid rgba(82,183,136,.2);}
+.log-type-video{background:rgba(201,168,76,.15);color:var(--gold2);border:1px solid rgba(201,168,76,.2);}
 .empty-state{text-align:center;padding:60px 20px;color:rgba(255,255,255,.3);}
 .empty-icon{font-size:48px;margin-bottom:16px;opacity:.4;}
 .empty-text{font-size:14px;}
@@ -234,7 +271,7 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
 .chart-title{font-size:15px;font-weight:700;color:var(--white);margin-bottom:4px;}
 .chart-sub{font-size:12px;color:rgba(255,255,255,.35);margin-bottom:20px;}
 .chart-wrap{position:relative;height:200px;}
-/* ===== モーダル共通 ===== */
+/* MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:300;display:none;align-items:center;justify-content:center;backdrop-filter:blur(8px);}
 .modal-overlay.show{display:flex;}
 .modal{background:var(--d2);border:1px solid rgba(201,168,76,.2);border-radius:24px;padding:40px;max-width:440px;width:90%;text-align:center;}
@@ -250,18 +287,24 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
 .modal-error{color:#f87;font-size:12px;margin-bottom:8px;display:none;text-align:left;padding:0 2px;}
 .modal-success{color:var(--flag);font-size:13px;margin-bottom:8px;display:none;text-align:center;line-height:1.7;}
 .modal-link{color:var(--flag);cursor:pointer;text-decoration:underline;font-size:12px;}
+/* ANALYZING OVERLAY */
+.analyzing-overlay{position:fixed;inset:0;background:rgba(11,35,24,.92);z-index:400;display:none;align-items:center;justify-content:center;backdrop-filter:blur(12px);}
+.analyzing-overlay.show{display:flex;}
+.analyzing-inner{text-align:center;}
+.analyzing-spinner{width:64px;height:64px;border:3px solid rgba(82,183,136,.2);border-top-color:var(--pin);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 24px;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.analyzing-title{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--white);margin-bottom:8px;}
+.analyzing-text{font-size:14px;color:rgba(255,255,255,.5);}
 @media(max-width:800px){
   .nav-links{display:none;}
-  .hero-inner,.how-inner,.prob-grid,.feat-grid,.testi-grid,.pricing-grid,.form-grid,.ai-drills,.chart-grid{grid-template-columns:1fr;}
+  .hero-inner,.how-inner,.prob-grid,.feat-grid,.testi-grid,.pricing-grid,.form-grid,.ai-drills,.chart-grid,.video-upload-grid,.video-compare{grid-template-columns:1fr;}
   .hero-card{display:none;}
   .stats-inner{grid-template-columns:repeat(2,1fr);}
   .hero-h1{font-size:clamp(30px,8vw,44px);}
   .hero-sub{font-size:13px;}
-  .form-title{font-size:18px;}
-  .app-user-name{font-size:13px;}
-  .app-user-sub{font-size:10px;}
+  .mode-switcher{flex-direction:column;}
   .app-tabs{gap:2px;}
-  .app-tab{padding:8px 12px;font-size:12px;}
+  .app-tab{padding:8px 10px;font-size:11px;}
 }
 </style>
 </head>
@@ -283,7 +326,7 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
   </div>
 </nav>
 
-<!-- ===== 新規登録モーダル ===== -->
+<!-- 新規登録モーダル -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
     <div class="modal-icon">⛳</div>
@@ -295,14 +338,11 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
     <div class="modal-error" id="register-error"></div>
     <button class="modal-btn" id="register-btn" onclick="startApp()">今すぐ始める →</button>
     <div class="modal-note">クレジットカード不要 · いつでも解約OK</div>
-    <div style="margin-top:16px;font-size:12px;color:rgba(255,255,255,.35);">
-      すでにアカウントをお持ちの方は
-      <span class="modal-link" onclick="closeModal();openLoginModal()">ログインはこちら</span>
-    </div>
+    <div style="margin-top:16px;font-size:12px;color:rgba(255,255,255,.35);">すでにアカウントをお持ちの方は<span class="modal-link" onclick="closeModal();openLoginModal()">ログインはこちら</span></div>
   </div>
 </div>
 
-<!-- ===== ログインモーダル ===== -->
+<!-- ログインモーダル -->
 <div class="modal-overlay" id="login-modal">
   <div class="modal">
     <div class="modal-icon">🔑</div>
@@ -312,18 +352,12 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
     <input type="password" class="modal-input" id="login-password" placeholder="パスワード">
     <div class="modal-error" id="login-error"></div>
     <button class="modal-btn" id="login-btn" onclick="doLogin()">ログイン →</button>
-    <!-- パスワードをお忘れの方リンク -->
-    <div style="margin-top:14px;">
-      <span class="modal-link" onclick="closeLoginModal();openForgotModal()">パスワードをお忘れの方はこちら</span>
-    </div>
-    <div style="margin-top:10px;font-size:12px;color:rgba(255,255,255,.35);">
-      アカウントをお持ちでない方は
-      <span class="modal-link" onclick="closeLoginModal();openModal()">こちらから無料登録</span>
-    </div>
+    <div style="margin-top:14px;"><span class="modal-link" onclick="closeLoginModal();openForgotModal()">パスワードをお忘れの方はこちら</span></div>
+    <div style="margin-top:10px;font-size:12px;color:rgba(255,255,255,.35);">アカウントをお持ちでない方は<span class="modal-link" onclick="closeLoginModal();openModal()">こちらから無料登録</span></div>
   </div>
 </div>
 
-<!-- ===== パスワードリセット要求モーダル ===== -->
+<!-- パスワードリセット要求モーダル -->
 <div class="modal-overlay" id="forgot-modal">
   <div class="modal">
     <div class="modal-icon">📧</div>
@@ -331,17 +365,13 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
     <div class="modal-sub">登録したメールアドレスを入力してください。<br>リセット用リンクをお送りします。</div>
     <input type="email" class="modal-input" id="forgot-email" placeholder="your@email.com">
     <div class="modal-error" id="forgot-error"></div>
-    <div class="modal-success" id="forgot-success">
-      ✅ メールを送信しました！<br>受信箱をご確認ください。<br><span style="font-size:11px;color:rgba(255,255,255,.4);">※ 届かない場合は迷惑メールフォルダもご確認ください</span>
-    </div>
+    <div class="modal-success" id="forgot-success">✅ メールを送信しました！<br>受信箱をご確認ください。</div>
     <button class="modal-btn" id="forgot-btn" onclick="doRequestReset()">リセットメールを送る →</button>
-    <div style="margin-top:14px;">
-      <span class="modal-link" onclick="closeForgotModal();openLoginModal()">← ログインに戻る</span>
-    </div>
+    <div style="margin-top:14px;"><span class="modal-link" onclick="closeForgotModal();openLoginModal()">← ログインに戻る</span></div>
   </div>
 </div>
 
-<!-- ===== 新パスワード設定モーダル ===== -->
+<!-- 新パスワード設定モーダル -->
 <div class="modal-overlay" id="reset-modal">
   <div class="modal">
     <div class="modal-icon">🔐</div>
@@ -354,7 +384,16 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
   </div>
 </div>
 
-<!-- ===== LP VIEW ===== -->
+<!-- AI分析中オーバーレイ -->
+<div class="analyzing-overlay" id="analyzing-overlay">
+  <div class="analyzing-inner">
+    <div class="analyzing-spinner"></div>
+    <div class="analyzing-title">AIがスイングを分析中</div>
+    <div class="analyzing-text">動画からフレームを抽出して解析しています...<br>少々お待ちください（20〜40秒）</div>
+  </div>
+</div>
+
+<!-- LP VIEW -->
 <div id="lp-view">
 <section class="hero" id="top">
   <div class="hero-inner">
@@ -418,7 +457,7 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
       <div class="how-visual r rd2">
         <div class="mock-card"><div class="mock-label">✦ 今日の練習プラン</div><div class="mock-title">ドライバー方向性の矯正</div><div class="mock-text">過去4回のログからスライスの根本原因を特定。本日はビハインドザボールドリルに集中。</div></div>
         <div class="mock-card"><div class="mock-label">📊 課題スコア</div><div class="mock-title">ドライバー 45 / アイアン 72</div><div class="mock-text">先月比：アイアン +12pt 改善中。ドライバーが最優先課題。</div></div>
-        <div class="mock-card"><div class="mock-label">📧 週次サマリー</div><div class="mock-title">今週のフォーカス：方向性</div><div class="mock-text">3週連続でドライバーの右ミス。フェースコントロールを最優先に。</div></div>
+        <div class="mock-card"><div class="mock-label">🎥 スイング動画分析</div><div class="mock-title">before/after 比較対応</div><div class="mock-text">スイング動画をアップロードするだけでAIが改善点を指摘。</div></div>
       </div>
     </div>
   </div>
@@ -428,10 +467,10 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
     <div class="r" style="text-align:center"><div class="ey-d" style="justify-content:center">主な機能</div><h2 class="sh-d" style="text-align:center">上達に必要なすべてが、<br><em>ひとつのアプリに。</em></h2></div>
     <div class="feat-grid r rd1">
       <div class="feat-cell"><div class="feat-ico">✦</div><div class="feat-title">記録するほど賢くなるAI</div><div class="feat-text">初回から的確なアドバイス。記録が積み重なるほどあなたの癖・パターン・弱点をAIが深く把握。繰り返す課題を自動検出して根本から改善。</div><div class="feat-pill">PRO限定</div></div>
-      <div class="feat-cell"><div class="feat-ico">📊</div><div class="feat-title">スコア・球数の可視化</div><div class="feat-text">スコア推移グラフ、番手別練習量、課題カテゴリ別スコアを自動集計。</div><div class="feat-pill">全プラン</div></div>
+      <div class="feat-cell"><div class="feat-ico">🎥</div><div class="feat-title">スイング動画AI分析</div><div class="feat-text">before/after 2本の動画をアップロードするだけ。AIがスイングの改善点・変化を具体的に分析してアドバイス。</div><div class="feat-pill">PRO限定</div></div>
       <div class="feat-cell"><div class="feat-ico">🎯</div><div class="feat-title">弱点の根本原因を特定</div><div class="feat-text">「スライスは左肩の開きが原因」など、表面的なミスの裏にあるパターンをAIが言語化。</div><div class="feat-pill">PRO限定</div></div>
-      <div class="feat-cell"><div class="feat-ico">📝</div><div class="feat-title">ログ一元管理</div><div class="feat-text">打席・ラウンド・課題の3種類のログを統合管理。改善の連鎖を可視化。</div><div class="feat-pill">全プラン</div></div>
-      <div class="feat-cell"><div class="feat-ico">📧</div><div class="feat-title">週次LINEサマリー（近日公開）</div><div class="feat-text">毎週月曜に「先週まとめ＋今週フォーカス」を自動配信。</div><div class="feat-pill">PRO限定</div></div>
+      <div class="feat-cell"><div class="feat-ico">📝</div><div class="feat-title">ログ一元管理</div><div class="feat-text">打席・ラウンド・動画の3種類のログを統合管理。改善の連鎖を可視化。</div><div class="feat-pill">全プラン</div></div>
+      <div class="feat-cell"><div class="feat-ico">📊</div><div class="feat-title">スコア・球数の可視化</div><div class="feat-text">スコア推移グラフ、番手別練習量、課題カテゴリ別スコアを自動集計。</div><div class="feat-pill">全プラン</div></div>
       <div class="feat-cell"><div class="feat-ico">📈</div><div class="feat-title">上達を数字で実感</div><div class="feat-text">入会時と現在のスコアを比較表示。継続のモチベーションに。</div><div class="feat-pill">全プラン</div></div>
     </div>
   </div>
@@ -441,7 +480,7 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
     <div class="r" style="text-align:center"><div class="ey-l" style="justify-content:center">ユーザーの声</div><h2 class="sh-l" style="text-align:center">使い始めてから、<br><em>練習が変わった。</em></h2></div>
     <div class="testi-grid">
       <div class="testi-card r"><div class="testi-stars">★★★★★</div><div class="testi-text">今まで「なんとなく」打ちに行っていたのが、目的を持って練習できるようになった。AIのアドバイスが具体的で助かっています。</div><div class="testi-foot"><div class="testi-av">山</div><div><div class="testi-name">山田 浩二さん・45歳</div><div class="testi-info">会社員 / ゴルフ歴5年</div><div class="score-pill">▲ 96→91打に改善</div></div></div></div>
-      <div class="testi-card r rd1"><div class="testi-stars">★★★★★</div><div class="testi-text">月数回のレッスンよりも毎回AIにアドバイスをもらえる方が上達が早かった。スライスの根本原因を指摘されて3週間で改善できました。</div><div class="testi-foot"><div class="testi-av">鈴</div><div><div class="testi-name">鈴木 達也さん・38歳</div><div class="testi-info">自営業 / ゴルフ歴8年</div><div class="score-pill">▲ 100→93打に改善</div></div></div></div>
+      <div class="testi-card r rd1"><div class="testi-stars">★★★★★</div><div class="testi-text">動画を送ったら「テイクバックで右肘が外に逃げている」と即指摘。3週間で改善できました。</div><div class="testi-foot"><div class="testi-av">鈴</div><div><div class="testi-name">鈴木 達也さん・38歳</div><div class="testi-info">自営業 / ゴルフ歴8年</div><div class="score-pill">▲ 100→93打に改善</div></div></div></div>
       <div class="testi-card r rd2"><div class="testi-stars">★★★★☆</div><div class="testi-text">入力が2分で終わるので習慣になった。ログが溜まるほどアドバイスの精度が上がるのを実感しています。</div><div class="testi-foot"><div class="testi-av">中</div><div><div class="testi-name">中村 誠さん・52歳</div><div class="testi-info">管理職 / ゴルフ歴12年</div><div class="score-pill">▲ 94→89打に改善</div></div></div></div>
     </div>
   </div>
@@ -451,7 +490,7 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
     <div class="r" style="text-align:center"><div class="ey-d" style="justify-content:center">料金プラン</div><h2 class="sh-d" style="text-align:center">まず無料で、<em>試してみてください。</em></h2><p class="lead-d" style="margin:0 auto;text-align:center">クレジットカード不要。7日間は全機能をお試しいただけます。</p></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:800px;margin:40px auto 0;">
       <div style="text-align:center;"><div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:12px;">Free プラン</div><img src="screenshot-free.png" alt="Freeプラン画面" style="width:100%;border-radius:16px;border:1px solid rgba(45,106,79,.2);box-shadow:0 4px 20px rgba(15,51,32,.08);"><div style="margin-top:12px;font-size:13px;color:var(--text4);line-height:1.7;">一言コメントのみ<br>過去データ参照なし</div></div>
-      <div style="text-align:center;"><div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green);font-family:'DM Mono',monospace;margin-bottom:12px;">Pro プラン</div><img src="screenshot-pro.png" alt="Proプラン画面" style="width:100%;border-radius:16px;border:2px solid var(--pin);box-shadow:0 4px 24px rgba(45,106,79,.2);"><div style="margin-top:12px;font-size:13px;color:var(--text3);line-height:1.7;">根本原因分析＋ドリル3つ<br>過去5回のデータで分析</div></div>
+      <div style="text-align:center;"><div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green);font-family:'DM Mono',monospace;margin-bottom:12px;">Pro プラン</div><img src="screenshot-pro.png" alt="Proプラン画面" style="width:100%;border-radius:16px;border:2px solid var(--pin);box-shadow:0 4px 24px rgba(45,106,79,.2);"><div style="margin-top:12px;font-size:13px;color:var(--text3);line-height:1.7;">根本原因分析＋ドリル3つ<br>動画スイング分析対応</div></div>
     </div>
     <div class="pricing-grid r rd1">
       <div class="plan">
@@ -460,7 +499,7 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
         <div class="plan-cycle">ずっと無料</div>
         <ul class="plan-list">
           <li>練習ログ記録（週3件まで）</li><li>スコア・球数グラフ（直近1ヶ月）</li><li>AIアドバイス（一言コメント）</li>
-          <li class="no">AI本格分析・改善ドリル提案</li><li class="no">今日の練習プラン自動生成</li><li class="no">弱点レポート・トレンド分析</li><li class="no">週次LINEサマリー（近日公開）</li>
+          <li class="no">AI本格分析・改善ドリル提案</li><li class="no">スイング動画AI分析</li><li class="no">弱点レポート・トレンド分析</li><li class="no">週次LINEサマリー（近日公開）</li>
         </ul>
         <button class="btn-plan btn-plan-free" onclick="openModal()">無料で始める（機能制限あり）</button>
       </div>
@@ -471,7 +510,7 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
         <div class="plan-cycle">7日間無料トライアル付き</div>
         <ul class="plan-list">
           <li>練習ログ記録（無制限）</li><li>スコア・球数グラフ（全期間）</li><li>AIアドバイス（一言コメント）</li>
-          <li>AI本格分析・改善ドリル提案</li><li>今日の練習プラン自動生成</li><li>弱点レポート・トレンド分析</li><li>週次LINEサマリー（近日公開）</li>
+          <li>AI本格分析・改善ドリル提案</li><li>スイング動画AI分析</li><li>弱点レポート・トレンド分析</li><li>週次LINEサマリー（近日公開）</li>
         </ul>
         <a href="https://buy.stripe.com/eVqcN47kp3yd6T99hadby00" class="btn-plan btn-plan-pro">7日間無料で試す</a>
       </div>
@@ -484,10 +523,10 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
     <div class="r" style="text-align:center"><div class="ey-l" style="justify-content:center">よくある質問</div><h2 class="sh-l" style="text-align:center">気になることを、<em>まとめて解消。</em></h2></div>
     <div class="faq-wrap r rd1">
       <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">ゴルフ初心者でも使えますか？<div class="faq-icon">+</div></div><div class="faq-a">はい、初心者の方でも安心して使えます。番手やスコアを入力するだけで、AIが噛み砕いた言葉でアドバイスをくれます。</div></div>
-      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">アプリのダウンロードは必要ですか？<div class="faq-icon">+</div></div><div class="faq-a">不要です。スマートフォンのブラウザからそのまま使えるWebアプリです。ホーム画面に追加するとアプリのように快適に使えます。</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">動画はどんな形式でも大丈夫ですか？<div class="faq-icon">+</div></div><div class="faq-a">MP4・MOV・AVI など一般的な動画形式に対応しています。スマートフォンで撮影したものをそのままアップロードできます。</div></div>
       <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">AIのアドバイスはどれくらい正確ですか？<div class="faq-icon">+</div></div><div class="faq-a">あなた自身の練習データが蓄積されるほど精度が上がります。1ヶ月継続すると「あなた専用」の分析ができるようになります。</div></div>
       <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">キャンセルはいつでもできますか？<div class="faq-icon">+</div></div><div class="faq-a">はい、設定画面からいつでも解約できます。解約後は次の更新日まで引き続きご利用いただけます。</div></div>
-      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">記録するのに時間がかかりませんか？<div class="faq-icon">+</div></div><div class="faq-a">1回の入力は平均2分以内で完了します。打席から帰る電車の中でも気軽に記録できます。</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">アプリのダウンロードは必要ですか？<div class="faq-icon">+</div></div><div class="faq-a">不要です。スマートフォンのブラウザからそのまま使えるWebアプリです。ホーム画面に追加するとアプリのように快適に使えます。</div></div>
     </div>
   </div>
 </section>
@@ -510,7 +549,7 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
 </footer>
 </div>
 
-<!-- ===== APP VIEW ===== -->
+<!-- APP VIEW -->
 <div id="app-view">
   <div class="app-header">
     <div class="app-header-inner">
@@ -529,8 +568,21 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
     </div>
   </div>
   <div class="app-content">
+
+    <!-- TAB: LOG -->
     <div id="tab-log">
-      <div class="log-form-card">
+      <!-- モード切替 -->
+      <div class="mode-switcher">
+        <button class="mode-btn active" id="mode-text-btn" onclick="switchMode('text')">
+          <span class="mode-icon">📝</span>テキストで記録
+        </button>
+        <button class="mode-btn" id="mode-video-btn" onclick="switchMode('video')">
+          <span class="mode-icon">🎥</span>動画でスイング分析
+        </button>
+      </div>
+
+      <!-- テキスト入力フォーム -->
+      <div class="log-form-card" id="text-section">
         <div class="form-title">今日の練習を記録する</div>
         <div class="form-subtitle">2分で入力完了。AIがすぐに分析します。</div>
         <div class="form-grid">
@@ -543,6 +595,50 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
         </div>
         <button class="submit-btn" id="submit-btn" onclick="submitLog()">AIに分析してもらう ✦</button>
       </div>
+
+      <!-- 動画アップロードフォーム -->
+      <div class="log-form-card video-section" id="video-section">
+        <div class="form-title">スイング動画をAI分析</div>
+        <div class="form-subtitle">before/after 2本の動画をアップロードしてください。AIがスイングを詳細に分析します。</div>
+
+        <div class="video-upload-grid">
+          <!-- Before動画 -->
+          <div>
+            <div class="form-label" style="margin-bottom:10px;">BEFORE（改善前）</div>
+            <div class="video-drop" id="before-drop">
+              <input type="file" accept="video/*" id="before-input" onchange="handleVideoSelect(this,'before')">
+              <div class="video-drop-icon">🎬</div>
+              <div class="video-drop-label">Before スイング</div>
+              <div class="video-drop-text">タップして動画を選択<br>または動画をドロップ</div>
+              <video class="video-preview" id="before-preview" controls></video>
+              <div class="video-name" id="before-name"></div>
+            </div>
+          </div>
+          <!-- After動画 -->
+          <div>
+            <div class="form-label" style="margin-bottom:10px;">AFTER（改善後・最新）</div>
+            <div class="video-drop" id="after-drop">
+              <input type="file" accept="video/*" id="after-input" onchange="handleVideoSelect(this,'after')">
+              <div class="video-drop-icon">🎬</div>
+              <div class="video-drop-label">After スイング</div>
+              <div class="video-drop-text">タップして動画を選択<br>または動画をドロップ</div>
+              <video class="video-preview" id="after-preview" controls></video>
+              <div class="video-name" id="after-name"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group video-memo-group">
+          <label class="form-label">気になる点・分析してほしいこと（任意）</label>
+          <textarea class="form-textarea" id="v-note" placeholder="例: ドライバーのスライスが改善したか確認したい。テイクバックの軌道が変わったか見てほしい。"></textarea>
+        </div>
+
+        <button class="submit-btn" id="video-submit-btn" onclick="submitVideoAnalysis()" style="margin-top:24px;">
+          🎥 AIにスイングを分析してもらう ✦
+        </button>
+      </div>
+
+      <!-- テキスト分析結果 -->
       <div class="ai-result" id="ai-result">
         <div class="ai-badge"><div class="ai-badge-dot"></div>AI分析完了</div>
         <div class="ai-plan-title" id="ai-title">今日の練習プラン</div>
@@ -550,8 +646,27 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
         <div class="ai-drills" id="ai-drills"></div>
         <div class="ai-tags" id="ai-tags"></div>
       </div>
+
+      <!-- 動画分析結果 -->
+      <div class="video-result" id="video-result">
+        <div class="ai-badge"><div class="ai-badge-dot"></div>スイング分析完了</div>
+        <div class="ai-plan-title" id="video-result-title">スイング分析レポート</div>
+        <!-- 動画比較表示 -->
+        <div class="video-compare" id="video-compare-area"></div>
+        <!-- AI分析ポイント -->
+        <div class="swing-points" id="swing-points"></div>
+        <div class="ai-tags" id="video-tags"></div>
+      </div>
     </div>
-    <div id="tab-history" style="display:none;"><div class="log-list" id="log-list"><div class="empty-state"><div class="empty-icon">📝</div><div class="empty-text">まだログがありません。<br>最初の練習を記録してみましょう！</div></div></div></div>
+
+    <!-- TAB: HISTORY -->
+    <div id="tab-history" style="display:none;">
+      <div class="log-list" id="log-list">
+        <div class="empty-state"><div class="empty-icon">📝</div><div class="empty-text">まだログがありません。<br>最初の練習を記録してみましょう！</div></div>
+      </div>
+    </div>
+
+    <!-- TAB: CHART -->
     <div id="tab-chart" style="display:none;">
       <div class="chart-grid">
         <div class="chart-card"><div class="chart-title">スコア推移</div><div class="chart-sub">ラウンドスコアの変化</div><div class="chart-wrap"><canvas id="chart-score"></canvas></div></div>
@@ -564,27 +679,205 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
 <script>
 const WORKER='https://golf-coach-ai-api.kuru178.workers.dev';
 let userEmail='',userPlan='free',logs=[],selectedMood='',charts={};
-let resetToken=''; // URLから取得したリセットトークン
+let resetToken='';
+let beforeVideoFile=null,afterVideoFile=null;
+let currentMode='text';
 
-// ===== ページ読み込み時：URLにreset_tokenがあればリセットモーダルを開く =====
+// ページ読み込み時トークン検知
 window.addEventListener('DOMContentLoaded',()=>{
   const params=new URLSearchParams(window.location.search);
   const token=params.get('reset_token');
-  if(token){
-    resetToken=token;
-    // URLからトークンを除去（見た目をきれいに）
-    window.history.replaceState({},'',window.location.pathname);
-    openResetModal();
-  }
+  if(token){resetToken=token;window.history.replaceState({},'',window.location.pathname);openResetModal();}
 });
 
-// ===== NAV =====
+// NAV
 window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>40);});
 function showLP(){document.getElementById('lp-view').style.display='block';document.getElementById('app-view').style.display='none';window.scrollTo({top:0,behavior:'smooth'});}
 function showApp(){document.getElementById('lp-view').style.display='none';document.getElementById('app-view').style.display='block';window.scrollTo({top:0,behavior:'smooth'});renderHistory();}
 function scrollToSection(id){setTimeout(()=>{const el=document.querySelector(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});},100);}
 
-// ===== 新規登録モーダル =====
+// ===== モード切替 =====
+function switchMode(mode){
+  currentMode=mode;
+  document.getElementById('text-section').style.display=mode==='text'?'block':'none';
+  document.getElementById('video-section').style.display=mode==='video'?'block':'none';
+  document.getElementById('ai-result').classList.remove('show');
+  document.getElementById('video-result').classList.remove('show');
+  document.getElementById('mode-text-btn').classList.toggle('active',mode==='text');
+  document.getElementById('mode-video-btn').classList.toggle('active',mode==='video');
+  // Proプランチェック
+  if(mode==='video'&&userPlan!=='pro'){
+    document.getElementById('video-submit-btn').disabled=true;
+    document.getElementById('video-submit-btn').textContent='🔒 動画分析はProプラン限定';
+    document.getElementById('video-submit-btn').style.background='rgba(255,255,255,.1)';
+    document.getElementById('video-submit-btn').style.color='rgba(255,255,255,.4)';
+  }
+}
+
+// ===== 動画選択 =====
+function handleVideoSelect(input,type){
+  const file=input.files[0];
+  if(!file)return;
+  const url=URL.createObjectURL(file);
+  const preview=document.getElementById(type+'-preview');
+  const nameEl=document.getElementById(type+'-name');
+  const drop=document.getElementById(type+'-drop');
+  preview.src=url;
+  preview.style.display='block';
+  nameEl.textContent=file.name;
+  nameEl.style.display='block';
+  drop.classList.add('has-video');
+  if(type==='before') beforeVideoFile=file;
+  else afterVideoFile=file;
+}
+
+// ===== 動画からフレーム抽出（base64）=====
+async function extractFrameFromVideo(file, timePercent=0.3){
+  return new Promise((resolve,reject)=>{
+    const video=document.createElement('video');
+    video.src=URL.createObjectURL(file);
+    video.crossOrigin='anonymous';
+    video.addEventListener('loadedmetadata',()=>{
+      video.currentTime=video.duration*timePercent;
+    });
+    video.addEventListener('seeked',()=>{
+      const canvas=document.createElement('canvas');
+      canvas.width=Math.min(video.videoWidth,1280);
+      canvas.height=Math.round(canvas.width*(video.videoHeight/video.videoWidth));
+      const ctx=canvas.getContext('2d');
+      ctx.drawImage(video,0,0,canvas.width,canvas.height);
+      const base64=canvas.toDataURL('image/jpeg',0.85).split(',')[1];
+      URL.revokeObjectURL(video.src);
+      resolve(base64);
+    });
+    video.addEventListener('error',reject);
+    video.load();
+  });
+}
+
+// ===== 動画分析送信 =====
+async function submitVideoAnalysis(){
+  if(userPlan!=='pro'){
+    alert('動画分析はProプラン限定機能です。');
+    return;
+  }
+  if(!beforeVideoFile&&!afterVideoFile){
+    alert('少なくとも1本の動画をアップロードしてください。');
+    return;
+  }
+  const note=document.getElementById('v-note').value;
+  const overlay=document.getElementById('analyzing-overlay');
+  overlay.classList.add('show');
+
+  try{
+    // フレーム抽出
+    const frames=[];
+    if(beforeVideoFile){
+      const f1=await extractFrameFromVideo(beforeVideoFile,0.3);
+      const f2=await extractFrameFromVideo(beforeVideoFile,0.5);
+      frames.push({label:'Before①（テイクバック付近）',data:f1});
+      frames.push({label:'Before②（インパクト付近）',data:f2});
+    }
+    if(afterVideoFile){
+      const f1=await extractFrameFromVideo(afterVideoFile,0.3);
+      const f2=await extractFrameFromVideo(afterVideoFile,0.5);
+      frames.push({label:'After①（テイクバック付近）',data:f1});
+      frames.push({label:'After②（インパクト付近）',data:f2});
+    }
+
+    // プロンプト構築
+    const hasCompare=beforeVideoFile&&afterVideoFile;
+    const prompt=`あなたはプロのゴルフコーチです。${hasCompare?'BeforeとAfterのスイング画像を比較して':'スイング画像を分析して'}、具体的なアドバイスをJSONのみで返答してください。${note?'【ユーザーの気になる点】'+note:''}必ずこのJSON形式のみで返答（他テキスト不要）:{"title":"分析タイトル20字以内","summary":"全体的な評価を100字以内","points":[{"icon":"✅","title":"良い点10字以内","text":"具体的に50字以内"},{"icon":"⚠️","title":"改善点10字以内","text":"具体的に50字以内"},{"icon":"🎯","title":"最優先課題10字以内","text":"具体的なドリルや練習法を50字以内"}${hasCompare?',{"icon":"📈","title":"変化・改善10字以内","text":"Beforeと比べた変化を50字以内"}':''}],"tags":["タグ1","タグ2","タグ3"]}`;
+
+    // Claude APIへ（画像付き）
+    const content=[{type:'text',text:prompt}];
+    frames.forEach(f=>{
+      content.push({type:'text',text:`[${f.label}]`});
+      content.push({type:'image',source:{type:'base64',media_type:'image/jpeg',data:f.data}});
+    });
+
+    const res=await fetch(WORKER,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({action:'analyze_video',content})
+    });
+    const text=await res.text();
+    let parsed;
+    try{
+      const clean=text.replace(/```json|```/g,'').trim();
+      const m=clean.match(/\{[\s\S]*\}/);
+      parsed=m?JSON.parse(m[0]):JSON.parse(clean);
+    }catch(e){throw new Error('JSONパースエラー');}
+
+    overlay.classList.remove('show');
+    showVideoResult(parsed,hasCompare);
+
+    // ログ保存
+    const newLog={
+      date:new Date().toISOString().split('T')[0],
+      type:'動画分析',
+      club:'スイング',
+      balls:0,score:null,
+      mood:'🎥',
+      note:note||'スイング動画分析',
+      ai:parsed.summary,
+      logType:'video',
+      aiTitle:parsed.title||'スイング分析'
+    };
+    logs.unshift(newLog);
+    saveLogToKV(newLog);
+    renderHistory();
+
+    // フォームリセット
+    beforeVideoFile=null;afterVideoFile=null;
+    ['before','after'].forEach(t=>{
+      document.getElementById(t+'-preview').style.display='none';
+      document.getElementById(t+'-name').style.display='none';
+      document.getElementById(t+'-drop').classList.remove('has-video');
+      document.getElementById(t+'-input').value='';
+    });
+    document.getElementById('v-note').value='';
+
+  }catch(e){
+    overlay.classList.remove('show');
+    alert('分析中にエラーが発生しました。もう一度お試しください。');
+    console.error(e);
+  }
+}
+
+function showVideoResult(data,hasCompare){
+  const el=document.getElementById('video-result');
+  document.getElementById('video-result-title').textContent=data.title||'スイング分析レポート';
+
+  // 動画比較表示
+  const compareArea=document.getElementById('video-compare-area');
+  let compareHTML='';
+  if(beforeVideoFile||afterVideoFile){
+    if(beforeVideoFile){
+      const url=URL.createObjectURL(beforeVideoFile);
+      compareHTML+=`<div class="video-compare-item"><div class="video-compare-label">🎬 BEFORE</div><video src="${url}" controls playsinline></video></div>`;
+    }
+    if(afterVideoFile){
+      const url=URL.createObjectURL(afterVideoFile);
+      compareHTML+=`<div class="video-compare-item"><div class="video-compare-label">🎬 AFTER</div><video src="${url}" controls playsinline></video></div>`;
+    }
+  }
+  compareArea.innerHTML=compareHTML;
+
+  // 概要
+  const pointsEl=document.getElementById('swing-points');
+  let pointsHTML=`<div class="swing-point" style="border-color:rgba(255,255,255,.08);"><div class="swing-point-icon">📋</div><div><div class="swing-point-title">総評</div><div class="swing-point-text">${data.summary||''}</div></div></div>`;
+  (data.points||[]).forEach(p=>{
+    pointsHTML+=`<div class="swing-point"><div class="swing-point-icon">${p.icon||'•'}</div><div><div class="swing-point-title">${p.title||''}</div><div class="swing-point-text">${p.text||''}</div></div></div>`;
+  });
+  pointsEl.innerHTML=pointsHTML;
+
+  document.getElementById('video-tags').innerHTML=(data.tags||[]).map(t=>`<span class="ai-tag">${t}</span>`).join('');
+  el.classList.add('show');
+  el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// 新規登録
 function openModal(){document.getElementById('modal').classList.add('show');setTimeout(()=>document.getElementById('modal-email').focus(),100);}
 function closeModal(){document.getElementById('modal').classList.remove('show');document.getElementById('register-error').style.display='none';}
 document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
@@ -601,17 +894,17 @@ async function startApp(){
     const res=await fetch(WORKER,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'register',email,password,name:name||email.split('@')[0]})});
     const data=await res.json();
     if(data.success===false){errEl.textContent=data.message||'登録に失敗しました。';errEl.style.display='block';btn.disabled=false;btn.textContent='今すぐ始める →';return;}
-  }catch(e){console.warn('register not supported');}
+  }catch(e){console.warn('register');}
   userEmail=email;userPlan='free';
-  const displayName=name||email.split('@')[0];
-  document.getElementById('user-name').textContent=displayName+'さん';
+  const dn=name||email.split('@')[0];
+  document.getElementById('user-name').textContent=dn+'さん';
   document.getElementById('user-email-disp').textContent=email+' · Free プラン';
-  document.getElementById('user-av').textContent=displayName[0].toUpperCase();
+  document.getElementById('user-av').textContent=dn[0].toUpperCase();
   closeModal();showApp();loadLogsFromKV();
   btn.disabled=false;btn.textContent='今すぐ始める →';
 }
 
-// ===== ログインモーダル =====
+// ログイン
 function openLoginModal(){document.getElementById('login-modal').classList.add('show');document.getElementById('login-error').style.display='none';document.getElementById('login-password').value='';setTimeout(()=>document.getElementById('login-email').focus(),100);}
 function closeLoginModal(){document.getElementById('login-modal').classList.remove('show');}
 document.getElementById('login-modal').addEventListener('click',function(e){if(e.target===this)closeLoginModal();});
@@ -633,88 +926,62 @@ async function doLogin(){
       document.getElementById('user-email-disp').textContent=email+' · '+(userPlan==='pro'?'Pro プラン':'Free プラン');
       document.getElementById('user-av').textContent=name[0].toUpperCase();
       closeLoginModal();showApp();loadLogsFromKV();
-    }else{
-      errEl.textContent=data.message||'メールアドレスまたはパスワードが正しくありません';
-      errEl.style.display='block';
-    }
+    }else{errEl.textContent=data.message||'メールアドレスまたはパスワードが正しくありません';errEl.style.display='block';}
   }catch(e){errEl.textContent='通信エラーが発生しました。';errEl.style.display='block';}
   btn.disabled=false;btn.textContent='ログイン →';
 }
 
-// ===== パスワードリセット要求モーダル =====
-function openForgotModal(){
-  document.getElementById('forgot-modal').classList.add('show');
-  document.getElementById('forgot-error').style.display='none';
-  document.getElementById('forgot-success').style.display='none';
-  document.getElementById('forgot-btn').style.display='block';
-  document.getElementById('forgot-btn').disabled=false;
-  document.getElementById('forgot-btn').textContent='リセットメールを送る →';
-  setTimeout(()=>document.getElementById('forgot-email').focus(),100);
-}
+// パスワードリセット
+function openForgotModal(){document.getElementById('forgot-modal').classList.add('show');document.getElementById('forgot-error').style.display='none';document.getElementById('forgot-success').style.display='none';document.getElementById('forgot-btn').style.display='block';document.getElementById('forgot-btn').disabled=false;document.getElementById('forgot-btn').textContent='リセットメールを送る →';setTimeout(()=>document.getElementById('forgot-email').focus(),100);}
 function closeForgotModal(){document.getElementById('forgot-modal').classList.remove('show');}
 document.getElementById('forgot-modal').addEventListener('click',function(e){if(e.target===this)closeForgotModal();});
 async function doRequestReset(){
   const email=document.getElementById('forgot-email').value.trim();
   const errEl=document.getElementById('forgot-error');
-  const successEl=document.getElementById('forgot-success');
   const btn=document.getElementById('forgot-btn');
   if(!email||!email.includes('@')){errEl.textContent='有効なメールアドレスを入力してください';errEl.style.display='block';return;}
   btn.disabled=true;btn.textContent='送信中...';errEl.style.display='none';
-  try{
-    await fetch(WORKER,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'request_reset',email})});
-  }catch(e){console.error(e);}
-  // 成功・失敗どちらでも同じ表示（セキュリティのため）
+  try{await fetch(WORKER,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'request_reset',email})});}catch(e){}
   btn.style.display='none';
-  successEl.style.display='block';
+  document.getElementById('forgot-success').style.display='block';
 }
-
-// ===== 新パスワード設定モーダル =====
 function openResetModal(){document.getElementById('reset-modal').classList.add('show');}
-function closeResetModal(){document.getElementById('reset-modal').classList.remove('show');}
 async function doResetPassword(){
-  const newPassword=document.getElementById('reset-password').value;
-  const newPassword2=document.getElementById('reset-password2').value;
+  const p1=document.getElementById('reset-password').value;
+  const p2=document.getElementById('reset-password2').value;
   const errEl=document.getElementById('reset-error');
   const btn=document.getElementById('reset-btn');
-  if(!newPassword||newPassword.length<6){errEl.textContent='パスワードは6文字以上で入力してください';errEl.style.display='block';return;}
-  if(newPassword!==newPassword2){errEl.textContent='パスワードが一致しません';errEl.style.display='block';return;}
+  if(!p1||p1.length<6){errEl.textContent='パスワードは6文字以上で入力してください';errEl.style.display='block';return;}
+  if(p1!==p2){errEl.textContent='パスワードが一致しません';errEl.style.display='block';return;}
   btn.disabled=true;btn.textContent='変更中...';errEl.style.display='none';
   try{
-    const res=await fetch(WORKER,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'reset_password',token:resetToken,newPassword})});
+    const res=await fetch(WORKER,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'reset_password',token:resetToken,newPassword:p1})});
     const data=await res.json();
     if(data.success){
-      closeResetModal();
-      // 成功したらログインモーダルを開く
+      document.getElementById('reset-modal').classList.remove('show');
       setTimeout(()=>{
         openLoginModal();
-        document.getElementById('login-error').style.display='none';
-        // 成功メッセージをエラー欄に緑色で表示
-        const errEl=document.getElementById('login-error');
-        errEl.style.color='var(--flag)';
-        errEl.textContent='✅ パスワードを変更しました。新しいパスワードでログインしてください。';
-        errEl.style.display='block';
+        const e=document.getElementById('login-error');
+        e.style.color='var(--flag)';e.textContent='✅ パスワードを変更しました。新しいパスワードでログインしてください。';e.style.display='block';
       },300);
-    }else{
-      errEl.textContent=data.message||'リンクが無効または期限切れです。';
-      errEl.style.display='block';
-    }
+    }else{errEl.textContent=data.message||'リンクが無効または期限切れです。';errEl.style.display='block';}
   }catch(e){errEl.textContent='通信エラーが発生しました。';errEl.style.display='block';}
   btn.disabled=false;btn.textContent='パスワードを変更する →';
 }
 
-// ===== KV DATA =====
+// KV
 async function loadLogsFromKV(){
-  try{const res=await fetch(WORKER,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'get_logs',email:userEmail})});const data=await res.json();if(Array.isArray(data)&&data.length>0)logs=data;}catch(e){console.error(e);}
+  try{const res=await fetch(WORKER,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'get_logs',email:userEmail})});const data=await res.json();if(Array.isArray(data)&&data.length>0)logs=data;}catch(e){}
   renderHistory();renderCharts();
 }
 async function saveLogToKV(log){
-  try{await fetch(WORKER,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'save_log',email:userEmail,log})});}catch(e){console.error(e);}
+  try{await fetch(WORKER,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'save_log',email:userEmail,log})});}catch(e){}
 }
 
-// ===== MOOD =====
+// MOOD
 function selectMood(btn,val){selectedMood=val;document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');}
 
-// ===== SUBMIT LOG =====
+// テキスト分析
 async function submitLog(){
   const type=document.getElementById('f-type').value;
   const club=document.getElementById('f-club').value;
@@ -726,67 +993,75 @@ async function submitLog(){
   btn.disabled=true;btn.textContent='AIが分析中... ✦';
   const recentHistory=logs.slice(0,5).map(l=>`[${l.date}]${l.type}・${l.club}・${l.balls}球${l.score?'・スコア'+l.score:''}・課題:${l.note}${l.ai?'・AI診断:'+l.ai:''}`).join(' / ');
   const hasHistory=logs.length>0;
-  const prompt=`あなたはプロのゴルフコーチです。${hasHistory?`【過去${Math.min(logs.length,5)}回の練習履歴】${recentHistory}。この履歴を踏まえて、`:''}以下の今日の練習データを分析し、具体的で実践的なアドバイスをJSONのみで返答してください。【今日の練習】種類:${type},番手:${club},球数:${balls||'?'},スコア:${score||'?'},調子:${selectedMood||'?'},メモ:${note}。${hasHistory?'繰り返し出ている課題パターンがあれば必ず指摘すること。':''}必ずこのJSON形式のみで返答（他のテキスト一切不要）:{"title":"課題を一言で20字以内","analysis":"問題の根本原因を具体的に100字以内で説明。抽象的な表現は禁止。必ず身体の動き・クラブの動きで説明する${hasHistory?'。過去の履歴から繰り返しパターンがあれば言及':''}","drills":[{"name":"ドリル名10字以内","detail":"具体的なやり方を50字以内。何をどう動かすか明記","balls":"30球"},{"name":"ドリル名10字以内","detail":"具体的なやり方を50字以内。何をどう動かすか明記","balls":"20球"},{"name":"ドリル名10字以内","detail":"具体的なやり方を50字以内。何をどう動かすか明記","balls":"20球"}],"tags":["タグ1","タグ2","タグ3"]}`;
+  const prompt=`あなたはプロのゴルフコーチです。${hasHistory?`【過去${Math.min(logs.length,5)}回の練習履歴】${recentHistory}。この履歴を踏まえて、`:''}以下の今日の練習データを分析し、具体的で実践的なアドバイスをJSONのみで返答してください。【今日の練習】種類:${type},番手:${club},球数:${balls||'?'},スコア:${score||'?'},調子:${selectedMood||'?'},メモ:${note}。${hasHistory?'繰り返し出ている課題パターンがあれば必ず指摘すること。':''}必ずこのJSON形式のみで返答（他のテキスト一切不要）:{"title":"課題を一言で20字以内","analysis":"問題の根本原因を具体的に100字以内で説明。抽象的な表現は禁止。必ず身体の動き・クラブの動きで説明する","drills":[{"name":"ドリル名10字以内","detail":"具体的なやり方を50字以内","balls":"30球"},{"name":"ドリル名10字以内","detail":"具体的なやり方を50字以内","balls":"20球"},{"name":"ドリル名10字以内","detail":"具体的なやり方を50字以内","balls":"20球"}],"tags":["タグ1","タグ2","タグ3"]}`;
   try{
     const res=await fetch(WORKER,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt})});
     const text=await res.text();
     let parsed;
-    try{const clean=text.replace(/```json|```/g,'').trim();const m=clean.match(/\{[\s\S]*\}/);parsed=m?JSON.parse(m[0]):JSON.parse(clean);}catch(e){throw new Error('JSONパースエラー');}
+    try{const c=text.replace(/```json|```/g,'').trim();const m=c.match(/\{[\s\S]*\}/);parsed=m?JSON.parse(m[0]):JSON.parse(c);}catch(e){throw new Error('パースエラー');}
     showAIResult(parsed);
-    const newLog={date:new Date().toISOString().split('T')[0],type,club,balls:parseInt(balls)||0,score:parseInt(score)||null,mood:selectedMood||'😐',note,ai:parsed.analysis,drills:parsed.drills||[],aiTitle:parsed.title||''};
+    const newLog={date:new Date().toISOString().split('T')[0],type,club,balls:parseInt(balls)||0,score:parseInt(score)||null,mood:selectedMood||'😐',note,ai:parsed.analysis,drills:parsed.drills||[],aiTitle:parsed.title||'',logType:'text'};
     logs.unshift(newLog);saveLogToKV(newLog);renderHistory();renderCharts();
     document.getElementById('f-type').value='';document.getElementById('f-club').value='';document.getElementById('f-balls').value='';document.getElementById('f-score').value='';document.getElementById('f-note').value='';
     selectedMood='';document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('selected'));
   }catch(e){alert('AI分析中にエラーが発生しました。');console.error(e);}
   btn.disabled=false;btn.textContent='AIに分析してもらう ✦';
 }
+
 function showAIResult(data){
-  const el=document.getElementById('ai-result');
   document.getElementById('ai-title').textContent=data.title||'今日の練習プラン';
   document.getElementById('ai-text').textContent=data.analysis||'';
   const drillsEl=document.getElementById('ai-drills');
   if(userPlan==='free'){
-    drillsEl.innerHTML=`<div style="background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.25);border-radius:14px;padding:20px;text-align:center;"><div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:8px;">🔒 詳細な練習ドリルはProプラン限定</div><div style="font-size:12px;color:rgba(255,255,255,.5);margin-bottom:14px;">具体的なドリル3つ・根本原因分析・過去データ連携はProプランでご利用いただけます。</div><a href="https://buy.stripe.com/eVqcN47kp3yd6T99hadby00" style="display:inline-block;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--d);font-weight:700;font-size:13px;padding:10px 24px;border-radius:99px;text-decoration:none;">7日間無料でProを試す →</a></div>`;
+    drillsEl.innerHTML=`<div style="background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.25);border-radius:14px;padding:20px;text-align:center;"><div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:8px;">🔒 詳細な練習ドリルはProプラン限定</div><div style="font-size:12px;color:rgba(255,255,255,.5);margin-bottom:14px;">具体的なドリル3つ・根本原因分析はProプランでご利用いただけます。</div><a href="https://buy.stripe.com/eVqcN47kp3yd6T99hadby00" style="display:inline-block;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--d);font-weight:700;font-size:13px;padding:10px 24px;border-radius:99px;text-decoration:none;">7日間無料でProを試す →</a></div>`;
   }else{
     drillsEl.innerHTML=(data.drills||[]).map((d,i)=>`<div class="ai-drill"><div class="ai-drill-num">DRILL ${String(i+1).padStart(2,'0')} · ${d.balls||'30球'}</div><div class="ai-drill-name">${d.name||''}</div><div class="ai-drill-detail">${d.detail||''}</div></div>`).join('');
   }
   document.getElementById('ai-tags').innerHTML=(data.tags||[]).map(t=>`<span class="ai-tag">${t}</span>`).join('');
-  el.classList.add('show');el.scrollIntoView({behavior:'smooth',block:'start'});
+  document.getElementById('ai-result').classList.add('show');
+  document.getElementById('ai-result').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
-// ===== HISTORY =====
+// 履歴
 function renderHistory(){
   const el=document.getElementById('log-list');
   if(logs.length===0){el.innerHTML=`<div class="empty-state"><div class="empty-icon">📝</div><div class="empty-text">まだログがありません。<br>最初の練習を記録してみましょう！</div></div>`;return;}
   el.innerHTML=logs.map((l,i)=>`
     <div class="log-item" onclick="toggleLogDetail(${i})" style="cursor:pointer;flex-direction:column;align-items:stretch;">
       <div style="display:flex;justify-content:space-between;align-items:center;">
-        <div><div class="log-item-date">${l.date}</div><div class="log-item-title">${l.type} · ${l.club}</div><div class="log-item-sub">${l.balls}${l.type==='ラウンド'?'H':'球'} · タップで詳細を見る</div></div>
-        <div class="log-item-right"><div class="log-item-score">${l.score||l.balls}<em>${l.score?'打':l.type==='ラウンド'?'H':'球'}</em></div><div class="log-item-mood">${l.mood}</div></div>
+        <div>
+          <div class="log-type-badge ${l.logType==='video'?'log-type-video':'log-type-text'}">${l.logType==='video'?'🎥 動画分析':'📝 テキスト'}</div>
+          <div class="log-item-date">${l.date}</div>
+          <div class="log-item-title">${l.type} · ${l.club}</div>
+          <div class="log-item-sub">${l.logType==='video'?'タップで詳細を見る':l.balls+(l.type==='ラウンド'?'H':'球')+' · タップで詳細を見る'}</div>
+        </div>
+        <div class="log-item-right">
+          ${l.logType!=='video'?`<div class="log-item-score">${l.score||l.balls}<em>${l.score?'打':l.type==='ラウンド'?'H':'球'}</em></div>`:''}
+          <div class="log-item-mood">${l.mood}</div>
+        </div>
       </div>
       <div id="log-detail-${i}" style="display:none;margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,.08);">
         <div style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--flag);font-family:'DM Mono',monospace;margin-bottom:8px;">📝 メモ</div>
         <div style="font-size:13px;color:rgba(255,255,255,.6);line-height:1.8;margin-bottom:12px;">${l.note||'なし'}</div>
-        ${l.ai?`<div style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--flag);font-family:'DM Mono',monospace;margin-bottom:8px;">✦ AIアドバイス</div><div style="font-size:13px;color:rgba(255,255,255,.75);line-height:1.8;background:rgba(82,183,136,.08);border:1px solid rgba(82,183,136,.15);border-radius:12px;padding:14px;">${l.ai}</div>`:''}
-        ${l.drills&&l.drills.length?`<div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--flag);font-family:'DM Mono',monospace;margin:16px 0 10px;">🏌 今日の練習メニュー</div>${l.drills.map((d,di)=>{const c=['#52b788','#c9a84c','#74c69d'][di]||'#52b788';return`<div style="border-left:3px solid ${c};background:rgba(255,255,255,.06);border-radius:0 10px 10px 0;padding:14px 16px;margin-bottom:10px;"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;"><span style="font-size:11px;font-weight:700;color:${c};font-family:'DM Mono',monospace;">DRILL ${String(di+1).padStart(2,'0')}</span><span style="font-size:11px;font-weight:600;color:${c};background:rgba(255,255,255,.08);padding:2px 8px;border-radius:99px;">${d.balls||'30球'}</span></div><div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:6px;">${d.name||''}</div><div style="font-size:13px;color:rgba(255,255,255,.8);line-height:1.7;">${d.detail||''}</div></div>`;}).join('')}`:''}
+        ${l.ai?`<div style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--flag);font-family:'DM Mono',monospace;margin-bottom:8px;">✦ AI分析</div><div style="font-size:13px;color:rgba(255,255,255,.75);line-height:1.8;background:rgba(82,183,136,.08);border:1px solid rgba(82,183,136,.15);border-radius:12px;padding:14px;">${l.ai}</div>`:''}
+        ${l.drills&&l.drills.length?`<div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--flag);font-family:'DM Mono',monospace;margin:16px 0 10px;">🏌 練習メニュー</div>${l.drills.map((d,di)=>{const c=['#52b788','#c9a84c','#74c69d'][di]||'#52b788';return`<div style="border-left:3px solid ${c};background:rgba(255,255,255,.06);border-radius:0 10px 10px 0;padding:14px 16px;margin-bottom:10px;"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;"><span style="font-size:11px;font-weight:700;color:${c};font-family:'DM Mono',monospace;">DRILL ${String(di+1).padStart(2,'0')}</span><span style="font-size:11px;color:${c};background:rgba(255,255,255,.08);padding:2px 8px;border-radius:99px;">${d.balls||'30球'}</span></div><div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:6px;">${d.name||''}</div><div style="font-size:13px;color:rgba(255,255,255,.8);line-height:1.7;">${d.detail||''}</div></div>`;}).join('')}`:''}
       </div>
     </div>`).join('');
 }
 
-// ===== CHARTS =====
+// グラフ
 function renderCharts(){
-  const roundLogs=logs.filter(l=>l.score).slice(0,8).reverse();
-  const practiceLogs=logs.slice(0,8).reverse();
+  const rl=logs.filter(l=>l.score).slice(0,8).reverse();
+  const pl=logs.slice(0,8).reverse();
   const g={grid:{color:'rgba(255,255,255,0.06)'},ticks:{color:'rgba(255,255,255,0.4)'}};
   if(charts.score)charts.score.destroy();
   const sc=document.getElementById('chart-score');
-  if(sc)charts.score=new Chart(sc,{type:'line',data:{labels:roundLogs.map(l=>l.date.slice(5)),datasets:[{label:'スコア',data:roundLogs.map(l=>l.score),borderColor:'#74c69d',backgroundColor:'rgba(116,198,157,.1)',borderWidth:2,pointBackgroundColor:'#74c69d',pointRadius:5,tension:.4,fill:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:g.grid,ticks:g.ticks},y:{grid:g.grid,ticks:g.ticks,reverse:true}}}});
+  if(sc)charts.score=new Chart(sc,{type:'line',data:{labels:rl.map(l=>l.date.slice(5)),datasets:[{label:'スコア',data:rl.map(l=>l.score),borderColor:'#74c69d',backgroundColor:'rgba(116,198,157,.1)',borderWidth:2,pointBackgroundColor:'#74c69d',pointRadius:5,tension:.4,fill:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:g.grid,ticks:g.ticks},y:{grid:g.grid,ticks:g.ticks,reverse:true}}}});
   if(charts.balls)charts.balls.destroy();
   const bc=document.getElementById('chart-balls');
-  if(bc)charts.balls=new Chart(bc,{type:'bar',data:{labels:practiceLogs.map(l=>l.date.slice(5)),datasets:[{label:'球数',data:practiceLogs.map(l=>l.balls),backgroundColor:'rgba(201,168,76,.7)',borderColor:'rgba(201,168,76,1)',borderWidth:1,borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:g.grid,ticks:g.ticks},y:{grid:g.grid,ticks:g.ticks}}}});
+  if(bc)charts.balls=new Chart(bc,{type:'bar',data:{labels:pl.map(l=>l.date.slice(5)),datasets:[{label:'球数',data:pl.map(l=>l.balls),backgroundColor:'rgba(201,168,76,.7)',borderColor:'rgba(201,168,76,1)',borderWidth:1,borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:g.grid,ticks:g.ticks},y:{grid:g.grid,ticks:g.ticks}}}});
 }
 
-// ===== TABS =====
 function switchTab(name){
   ['log','history','chart'].forEach(t=>{document.getElementById('tab-'+t).style.display=t===name?'block':'none';});
   document.querySelectorAll('.app-tab').forEach((btn,i)=>{btn.classList.toggle('active',['log','history','chart'][i]===name);});
