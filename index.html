@@ -336,14 +336,14 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
     <div class="nav-name">Golf Coach AI<span>Powered by AI</span></div>
   </div>
   <div class="nav-links">
-    <a onclick="scrollToLP('#problem')">課題</a>
-    <a onclick="scrollToLP('#howit')">使い方</a>
-    <a onclick="scrollToLP('#features')">機能</a>
-    <a onclick="scrollToLP('#pricing')">料金</a>
+    <a href="#problem" onclick="navScroll(event,'problem')">課題</a>
+    <a href="#howit" onclick="navScroll(event,'howit')">使い方</a>
+    <a href="#features" onclick="navScroll(event,'features')">機能</a>
+    <a href="#pricing" onclick="navScroll(event,'pricing')">料金</a>
     <button class="nav-btn-login" onclick="openLoginModal()">ログイン</button>
     <button class="nav-btn" onclick="openModal()">無料で始める</button>
   </div>
-  <button class="hamburger" id="hamburger-btn" onclick="toggleMenu()">
+  <button class="hamburger" id="hamburger-btn" onclick="toggleMobileMenu()">
     <span></span><span></span><span></span>
   </button>
 </nav>
@@ -351,13 +351,13 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
 <!-- モバイルメニュー用オーバーレイ -->
 <!-- モバイルメニュー -->
 <div class="mobile-menu" id="mobile-menu" style="display:none;">
-  <a onclick="closeMobileMenu();scrollToLP('#problem')">課題</a>
-  <a onclick="closeMobileMenu();scrollToLP('#howit')">使い方</a>
-  <a onclick="closeMobileMenu();scrollToLP('#features')">機能</a>
-  <a onclick="closeMobileMenu();scrollToLP('#pricing')">料金</a>
+  <a href="#problem" onclick="mobileNavScroll(event,'problem')">課題</a>
+  <a href="#howit" onclick="mobileNavScroll(event,'howit')">使い方</a>
+  <a href="#features" onclick="mobileNavScroll(event,'features')">機能</a>
+  <a href="#pricing" onclick="mobileNavScroll(event,'pricing')">料金</a>
   <div class="mobile-menu-btns">
-    <button class="nav-btn-login" onclick="closeMobileMenu();openLoginModal()">ログイン</button>
-    <button class="nav-btn" onclick="closeMobileMenu();openModal()">無料で始める</button>
+    <button class="nav-btn-login" onclick="document.getElementById('mobile-menu').style.display='none';document.getElementById('menu-overlay').style.display='none';openLoginModal();">ログイン</button>
+    <button class="nav-btn" onclick="document.getElementById('mobile-menu').style.display='none';document.getElementById('menu-overlay').style.display='none';openModal();">無料で始める</button>
   </div>
 </div>
 
@@ -738,6 +738,17 @@ function toggleMenu(){
   }else{
     menu.style.display='flex';
     btn.classList.add('open');
+  }
+}
+function toggleMobileMenu(){
+  var menu=document.getElementById('mobile-menu');
+  var overlay=document.getElementById('menu-overlay');
+  if(menu.style.display==='flex'){
+    menu.style.display='none';
+    overlay.style.display='none';
+  }else{
+    menu.style.display='flex';
+    overlay.style.display='block';
   }
 }
 function closeMobileMenu(){
