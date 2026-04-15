@@ -351,10 +351,10 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
 <!-- モバイルメニュー用オーバーレイ -->
 <!-- モバイルメニュー -->
 <div class="mobile-menu" id="mobile-menu" style="display:none;">
-  <a href="#problem" onclick="mobileNavScroll(event,'problem')">課題</a>
-  <a href="#howit" onclick="mobileNavScroll(event,'howit')">使い方</a>
-  <a href="#features" onclick="mobileNavScroll(event,'features')">機能</a>
-  <a href="#pricing" onclick="mobileNavScroll(event,'pricing')">料金</a>
+  <button onclick="mobileNavScroll('problem')" style="background:none;border:none;border-bottom:1px solid rgba(255,255,255,.06);padding:12px 0;font-size:14px;color:rgba(255,255,255,.6);cursor:pointer;text-align:left;width:100%;font-family:'Noto Sans JP',sans-serif;">課題</button>
+  <button onclick="mobileNavScroll('howit')" style="background:none;border:none;border-bottom:1px solid rgba(255,255,255,.06);padding:12px 0;font-size:14px;color:rgba(255,255,255,.6);cursor:pointer;text-align:left;width:100%;font-family:'Noto Sans JP',sans-serif;">使い方</button>
+  <button onclick="mobileNavScroll('features')" style="background:none;border:none;border-bottom:1px solid rgba(255,255,255,.06);padding:12px 0;font-size:14px;color:rgba(255,255,255,.6);cursor:pointer;text-align:left;width:100%;font-family:'Noto Sans JP',sans-serif;">機能</button>
+  <button onclick="mobileNavScroll('pricing')" style="background:none;border:none;padding:12px 0;font-size:14px;color:rgba(255,255,255,.6);cursor:pointer;text-align:left;width:100%;font-family:'Noto Sans JP',sans-serif;">料金</button>
   <div class="mobile-menu-btns">
     <button class="nav-btn-login" onclick="document.getElementById('mobile-menu').style.display='none';document.getElementById('menu-overlay').style.display='none';openLoginModal();">ログイン</button>
     <button class="nav-btn" onclick="document.getElementById('mobile-menu').style.display='none';document.getElementById('menu-overlay').style.display='none';openModal();">無料で始める</button>
