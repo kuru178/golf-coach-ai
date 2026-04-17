@@ -23,7 +23,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;font-size:15px;}
 body{font-family:'Noto Sans JP',sans-serif;background:var(--white);color:var(--text);-webkit-font-smoothing:antialiased;overflow-x:clip;}
-.nav{position:fixed;top:0;left:0;right:0;z-index:200;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 6vw;background:rgba(11,35,24,.96);backdrop-filter:blur(20px);border-bottom:1px solid rgba(201,168,76,.15);}
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 6vw;background:rgba(11,35,24,.96);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-bottom:1px solid rgba(201,168,76,.15);-webkit-transform:translateZ(0);transform:translateZ(0);}
 .nav.scrolled{box-shadow:0 4px 40px rgba(0,0,0,.3);}
 .nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;cursor:pointer;}
 .nav-emblem{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--green),var(--pin));display:flex;align-items:center;justify-content:center;font-size:18px;}
@@ -350,7 +350,7 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
   </button>
 </nav>
 <div id="menu-overlay" style="display:none;position:fixed;inset:0;z-index:198;" onclick="closeMobileMenu()"></div>
-<div id="mobile-menu" style="display:none;position:fixed;top:68px;left:0;right:0;background:rgba(11,35,24,.98);border-bottom:1px solid rgba(201,168,76,.15);padding:20px 6vw;z-index:199;flex-direction:column;gap:4px;">
+<div id="mobile-menu" style="display:none;position:fixed;top:68px;left:0;right:0;background:rgb(11,35,24);border-bottom:1px solid rgba(201,168,76,.15);padding:20px 6vw;z-index:199;flex-direction:column;gap:4px;-webkit-overflow-scrolling:touch;">
   <button onclick="goTo('problem')" style="background:none;border:none;border-bottom:1px solid rgba(255,255,255,.06);padding:14px 0;font-size:15px;color:rgba(255,255,255,.7);cursor:pointer;text-align:left;width:100%;font-family:'Noto Sans JP',sans-serif;">課題</button>
   <button onclick="goTo('howit')" style="background:none;border:none;border-bottom:1px solid rgba(255,255,255,.06);padding:14px 0;font-size:15px;color:rgba(255,255,255,.7);cursor:pointer;text-align:left;width:100%;font-family:'Noto Sans JP',sans-serif;">使い方</button>
   <button onclick="goTo('features')" style="background:none;border:none;border-bottom:1px solid rgba(255,255,255,.06);padding:14px 0;font-size:15px;color:rgba(255,255,255,.7);cursor:pointer;text-align:left;width:100%;font-family:'Noto Sans JP',sans-serif;">機能</button>
@@ -749,25 +749,35 @@ function goTo(id){
     var el=document.getElementById(id);
     if(!el) return;
     var top=el.getBoundingClientRect().top+window.pageYOffset-68;
-    window.scrollTo({top:top,behavior:'smooth'});
-  },80);
+    // iOS Safari対応：scrollToのbehavior:smoothが効かない場合あり
+    try{
+      window.scrollTo({top:top,behavior:'smooth'});
+    }catch(e){
+      window.scrollTo(0,top);
+    }
+  },200);
 }
 
 function toggleMobileMenu(){
   var m=document.getElementById('mobile-menu');
   var o=document.getElementById('menu-overlay');
-  if(m.style.display==='flex'){
+  var isOpen=(m.style.display==='flex'||m.style.display==='block');
+  if(isOpen){
     m.style.display='none';
     o.style.display='none';
   }else{
     m.style.display='flex';
     o.style.display='block';
+    // iOS Safari強制再描画
+    m.style.webkitTransform='translateZ(0)';
   }
 }
 
 function closeMobileMenu(){
-  document.getElementById('mobile-menu').style.display='none';
-  document.getElementById('menu-overlay').style.display='none';
+  var m=document.getElementById('mobile-menu');
+  var o=document.getElementById('menu-overlay');
+  m.style.display='none';
+  o.style.display='none';
 }
 
 function scrollToSection(id){
