@@ -32,6 +32,8 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--white);color:var(--t
 .nav-links{display:flex;align-items:center;gap:32px;}
 .nav-links a{font-size:13px;color:rgba(255,255,255,.55);text-decoration:none;font-weight:400;transition:color .2s;cursor:pointer;}
 .nav-links a:hover{color:var(--flag);}
+.nav-link-btn{background:none;border:none;font-size:13px;color:rgba(255,255,255,.55);font-weight:400;cursor:pointer;font-family:'Noto Sans JP',sans-serif;padding:4px 0;transition:color .2s;}
+.nav-link-btn:hover{color:var(--flag);}
 .nav-btn-login{background:transparent;color:rgba(255,255,255,.7);padding:9px 22px;border-radius:99px;font-size:13px;font-weight:500;border:1px solid rgba(255,255,255,.2);cursor:pointer;transition:all .2s;font-family:'Noto Sans JP',sans-serif;}
 .nav-btn-login:hover{color:var(--white);border-color:rgba(255,255,255,.5);}
 .nav-btn{background:linear-gradient(135deg,var(--gold),var(--gold2))!important;color:var(--d)!important;padding:9px 22px;border-radius:99px;font-size:13px!important;font-weight:700!important;box-shadow:0 2px 16px rgba(201,168,76,.35);transition:all .2s!important;border:none;cursor:pointer;}
@@ -336,10 +338,10 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
     <div class="nav-name">Golf Coach AI<span>Powered by AI</span></div>
   </div>
   <div class="nav-links">
-    <a href="#problem" onclick="navScroll(event,'problem')">課題</a>
-    <a href="#howit" onclick="navScroll(event,'howit')">使い方</a>
-    <a href="#features" onclick="navScroll(event,'features')">機能</a>
-    <a href="#pricing" onclick="navScroll(event,'pricing')">料金</a>
+    <button class="nav-link-btn" onclick="goTo('problem')">課題</button>
+    <button class="nav-link-btn" onclick="goTo('howit')">使い方</button>
+    <button class="nav-link-btn" onclick="goTo('features')">機能</button>
+    <button class="nav-link-btn" onclick="goTo('pricing')">料金</button>
     <button class="nav-btn-login" onclick="openLoginModal()">ログイン</button>
     <button class="nav-btn" onclick="openModal()">無料で始める</button>
   </div>
@@ -347,20 +349,17 @@ footer{background:var(--d2);border-top:1px solid rgba(255,255,255,.05);padding:4
     <span></span><span></span><span></span>
   </button>
 </nav>
-
-<!-- モバイルメニュー用オーバーレイ -->
-<!-- モバイルメニュー -->
-<div class="mobile-menu" id="mobile-menu" style="display:none;">
-  <button onclick="mobileNavScroll('problem')" style="background:none;border:none;border-bottom:1px solid rgba(255,255,255,.06);padding:12px 0;font-size:14px;color:rgba(255,255,255,.6);cursor:pointer;text-align:left;width:100%;font-family:'Noto Sans JP',sans-serif;">課題</button>
-  <button onclick="mobileNavScroll('howit')" style="background:none;border:none;border-bottom:1px solid rgba(255,255,255,.06);padding:12px 0;font-size:14px;color:rgba(255,255,255,.6);cursor:pointer;text-align:left;width:100%;font-family:'Noto Sans JP',sans-serif;">使い方</button>
-  <button onclick="mobileNavScroll('features')" style="background:none;border:none;border-bottom:1px solid rgba(255,255,255,.06);padding:12px 0;font-size:14px;color:rgba(255,255,255,.6);cursor:pointer;text-align:left;width:100%;font-family:'Noto Sans JP',sans-serif;">機能</button>
-  <button onclick="mobileNavScroll('pricing')" style="background:none;border:none;padding:12px 0;font-size:14px;color:rgba(255,255,255,.6);cursor:pointer;text-align:left;width:100%;font-family:'Noto Sans JP',sans-serif;">料金</button>
-  <div class="mobile-menu-btns">
-    <button class="nav-btn-login" onclick="document.getElementById('mobile-menu').style.display='none';document.getElementById('menu-overlay').style.display='none';openLoginModal();">ログイン</button>
-    <button class="nav-btn" onclick="document.getElementById('mobile-menu').style.display='none';document.getElementById('menu-overlay').style.display='none';openModal();">無料で始める</button>
+<div id="menu-overlay" style="display:none;position:fixed;inset:0;z-index:198;" onclick="closeMobileMenu()"></div>
+<div id="mobile-menu" style="display:none;position:fixed;top:68px;left:0;right:0;background:rgba(11,35,24,.98);border-bottom:1px solid rgba(201,168,76,.15);padding:20px 6vw;z-index:199;flex-direction:column;gap:4px;">
+  <button onclick="goTo('problem')" style="background:none;border:none;border-bottom:1px solid rgba(255,255,255,.06);padding:14px 0;font-size:15px;color:rgba(255,255,255,.7);cursor:pointer;text-align:left;width:100%;font-family:'Noto Sans JP',sans-serif;">課題</button>
+  <button onclick="goTo('howit')" style="background:none;border:none;border-bottom:1px solid rgba(255,255,255,.06);padding:14px 0;font-size:15px;color:rgba(255,255,255,.7);cursor:pointer;text-align:left;width:100%;font-family:'Noto Sans JP',sans-serif;">使い方</button>
+  <button onclick="goTo('features')" style="background:none;border:none;border-bottom:1px solid rgba(255,255,255,.06);padding:14px 0;font-size:15px;color:rgba(255,255,255,.7);cursor:pointer;text-align:left;width:100%;font-family:'Noto Sans JP',sans-serif;">機能</button>
+  <button onclick="goTo('pricing')" style="background:none;border:none;border-bottom:1px solid rgba(255,255,255,.06);padding:14px 0;font-size:15px;color:rgba(255,255,255,.7);cursor:pointer;text-align:left;width:100%;font-family:'Noto Sans JP',sans-serif;">料金</button>
+  <div style="display:flex;gap:10px;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.08);">
+    <button class="nav-btn-login" style="flex:1;" onclick="closeMobileMenu();openLoginModal()">ログイン</button>
+    <button class="nav-btn" style="flex:1;" onclick="closeMobileMenu();openModal()">無料で始める</button>
   </div>
 </div>
-
 <!-- 新規登録モーダル -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
@@ -727,43 +726,60 @@ window.addEventListener('DOMContentLoaded',()=>{
 
 // NAV
 
-// ===== モバイルメニュー =====
-function toggleMenu(){
-  const menu=document.getElementById('mobile-menu');
-  const btn=document.getElementById('hamburger-btn');
-  const isOpen=menu.style.display==='flex';
-  if(isOpen){
-    menu.style.display='none';
-    btn.classList.remove('open');
-  }else{
+else{
     menu.style.display='flex';
     btn.classList.add('open');
   }
 }
-function toggleMobileMenu(){
-  var menu=document.getElementById('mobile-menu');
-  var overlay=document.getElementById('menu-overlay');
-  if(menu.style.display==='flex'){
-    menu.style.display='none';
-    overlay.style.display='none';
-  }else{
+else{
     menu.style.display='flex';
     overlay.style.display='block';
   }
 }
+
+
+// ===== ナビゲーション =====
+function goTo(id){
+  closeMobileMenu();
+  if(document.getElementById('app-view').style.display!=='none'){
+    document.getElementById('lp-view').style.display='block';
+    document.getElementById('app-view').style.display='none';
+  }
+  setTimeout(function(){
+    var el=document.getElementById(id);
+    if(!el) return;
+    var top=el.getBoundingClientRect().top+window.pageYOffset-68;
+    window.scrollTo({top:top,behavior:'smooth'});
+  },80);
+}
+
+function toggleMobileMenu(){
+  var m=document.getElementById('mobile-menu');
+  var o=document.getElementById('menu-overlay');
+  if(m.style.display==='flex'){
+    m.style.display='none';
+    o.style.display='none';
+  }else{
+    m.style.display='flex';
+    o.style.display='block';
+  }
+}
+
 function closeMobileMenu(){
   document.getElementById('mobile-menu').style.display='none';
-  }
+  document.getElementById('menu-overlay').style.display='none';
+}
+
+function scrollToSection(id){
+  setTimeout(function(){
+    var el=document.querySelector(id);
+    if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+  },100);
+}
 
 window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>40);});
 function showLP(){document.getElementById('lp-view').style.display='block';document.getElementById('app-view').style.display='none';window.scrollTo({top:0,behavior:'smooth'});}
-function scrollToLP(id){
-  // アプリ画面表示中なら先にLP表示（スクロールなし）
-  const appView=document.getElementById('app-view');
-  if(appView.style.display!=='none'){
-    document.getElementById('lp-view').style.display='block';
-    appView.style.display='none';
-  }
+
   // 少し待ってからスクロール（DOM反映待ち）
   setTimeout(()=>{
     const el=document.querySelector(id);
